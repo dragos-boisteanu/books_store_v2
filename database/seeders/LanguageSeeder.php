@@ -1,0 +1,29 @@
+<?php
+
+namespace Database\Seeders;
+
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+
+class LanguageSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run()
+    {
+        DB::table('languages')->insert([ 
+            'name'=> 'romana'
+        ]); 
+
+        DB::table('languages')->insert([ 
+            'name'=> 'engleza'
+        ]); 
+
+        DB::table('languages')->insert([ 
+            'name'=> 'rusa'
+        ]); 
+    }
+}

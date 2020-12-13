@@ -1,0 +1,62 @@
+<?php
+
+namespace Database\Seeders;
+
+use App\Models\Tag;
+use App\Models\Book;
+use App\Models\Stock;
+use App\Models\Author;
+use Illuminate\Database\Seeder;
+use Database\Seeders\CitySeeder;
+use Database\Seeders\RoleSeeder;
+use Database\Seeders\UserSeeder;
+use Database\Seeders\CountySeeder;
+use Database\Seeders\AddressSeeder;
+
+class DatabaseSeeder extends Seeder
+{
+    /**
+     * Seed the application's database.
+     *
+     * @return void
+     */
+    public function run()
+    {
+        $this->call([
+            CountySeeder::class,
+            CitySeeder::class,
+            RoleSeeder::class,
+
+            UserSeeder::class,
+            AddressSeeder::class,
+
+            CategorySeeder::class,
+            CoverSeeder::class,
+            LanguageSeeder::class,
+            PublisherSeeder::class
+    
+        ]);
+
+        Book::factory()->count(300)->create();
+        Author::factory()->count(10)->create();
+        Tag::factory()->count(100)->create();
+
+        $authors = Author::all();
+
+        Book::all()->each(function ($book) use ($authors) { 
+            $book->authors()->attach(
+                $authors->random(rand(1, 5))->pluck('id')->toArray()
+            ); 
+        });
+
+        $tags = Tag::all();
+
+        Book::all()->each(function ($book) use ($tags) { 
+            $book->tags()->attach(
+                $tags->random(rand(1, 10))->pluck('id')->toArray()
+            ); 
+        });
+
+        Stock::factory()->count(300)->create();
+    }
+}
