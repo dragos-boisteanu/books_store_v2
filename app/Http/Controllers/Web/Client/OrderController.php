@@ -67,7 +67,7 @@ class OrderController extends Controller
             $shippingAddress->postal_code = '00000';
 
             $shippingAddress->save();
-            $shippingAddress->fresh();
+            $shippingAddress->refresh();
 
             $order->user_id = Auth::id();
 
@@ -75,8 +75,10 @@ class OrderController extends Controller
             $order->status_id = '1';
             $order->shipping_method_id = $input['shippingMethod'];
 
+            $order->operator_id = '2';
+
             $order->save();
-            $order->fresh();
+            $order->refresh();
 
             if(!$input['useAsInvoice']) {
                 $invoiceAddress = new Address();
@@ -103,10 +105,8 @@ class OrderController extends Controller
             
             foreach($cart->books as $book) {
                 if($book->stock->quantity > 0 && $book->stock->quantity >= $book->pivot->quantity) {
-                    // $book->pivot->quantity = $book->quantity;
-                    // $book->pivot->price = $book->price;
                     $order->books()->attach($book->id, ['quantity'=>$book->pivot->quantity, 'price'=>$book->price]);
-                    $book->stock->quantity = $book->stock->quantity-$book->pivot->quantity;
+                    $book->stock->quantity = $book->stock->quantity - $book->pivot->quantity;
                     $book->stock->save();
                     $cart->books()->detach($book->id);
                 }else {

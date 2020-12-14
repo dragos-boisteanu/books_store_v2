@@ -136,7 +136,7 @@
 @endsection
 
 
-@section('scripts')
+@push('vue-scripts')
     <script>
         new Vue({
             el: '#order',
@@ -153,12 +153,6 @@
             created() {
                 console.log('vue instance from order');
             },
-
-            // computed: {
-            //     citiesLength() {
-            //         return this.cities.length;
-            //     }
-            // },
 
             methods: {
                 toggleInvoiceAddress() {
@@ -182,4 +176,4 @@
 
     </script>
 
-@endsection
+@endpush

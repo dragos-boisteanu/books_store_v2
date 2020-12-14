@@ -20,4 +20,8 @@ class County extends Model
     public function city() {
         return $this->hasMany('App\Models\City');
     }
+
+    public function address() {
+        return $this->hasMany('App\Models\Address');
+    }
 }

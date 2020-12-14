@@ -20,30 +20,23 @@ class CitySeeder extends Seeder
     {
         $counties = County::all();
         $cities = array();
+
         foreach($counties as $county) {
-            // Storage::append('cities.json', $response->body());
-
-            // get cities from api
-            // $response = Http::get('https://roloca.coldfuse.io/orase/'.$county->auto);
-            // if($response->successful() && $response->status() === 200) {
-               
-            //     $cities = json_decode($response->body());  
-            //     foreach($cities as $city) {
-            //         City::create(array(
-            //             'name'=> $city->nume,
-            //             'county_id' => $county->id
-            //         ));
-            // }
-
             // get cities from json file
-            $json = File::get('database/data/judete.json');
-            $cities = json_decode($json);          
-            foreach($cities as $city) {
-                City::create(array(
-                    'name'=> $city->nume,
-                    'county_id' => $county->id
-                ));
-            }       
+
+            $json = File::get('database/data/judete-orase.json');
+            $data = json_decode($json,true);
+         
+            foreach($data["judete"] as $judet) {
+                foreach($judet->localitati as $city) {
+                    if($county->name = $judet["nume"]) {
+                        City::create(array(
+                            'name'=> $city->nume,
+                            'county_id' => $county->id
+                        ));
+                    }
+                }
+            }
         }
     }
 }

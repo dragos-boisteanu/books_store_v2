@@ -28,7 +28,7 @@ const CountyCityComponent = {
     props: {
         counties: {
             type: String,
-            default: ''
+            required: true
         },
 
         selectedcounty: {

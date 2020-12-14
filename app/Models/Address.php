@@ -13,11 +13,13 @@ class Address extends Model
     use HasFactory, SoftDeletes;
     
     protected $fillable = [
+        'user_id',
         'name',
         'first_name',
-        'district',
-        'city',
+        'county_id',
+        'city_id',
         'address',
+        'phone_number',
         'postal_code',
         'default_for_shipping',
         'default_for_invoice'
@@ -30,11 +32,11 @@ class Address extends Model
     }
     
     public function city() {
-        return $this->hasOne('App\Models\City');
+        return $this->belongsTo('App\Models\City');
     }
 
     public function county() {
-        return $this->hasOne('App\Models\County');
+        return $this->belongsTo('App\Models\County');
     }
 
     public function orders() {

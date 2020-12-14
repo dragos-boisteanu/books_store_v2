@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CrateAddressOrderTable extends Migration
+class CreateAddressOrderTable extends Migration
 {
     /**
      * Run the migrations.
@@ -21,7 +21,8 @@ class CrateAddressOrderTable extends Migration
             $table->unsignedBigInteger('invoice_id');
 
             $table->foreign('order_id')->references('id')->on('orders');
-            $table->foreign('address_id')->references('id')->on('addresses');         
+            $table->foreign('address_id')->references('id')->on('addresses');   
+            $table->foreign('invoice_id')->references('id')->on('addresses');          
         });
     }
 

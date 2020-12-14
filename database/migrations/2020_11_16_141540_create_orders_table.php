@@ -22,9 +22,9 @@ class CreateOrdersTable extends Migration
             
             $table->unsignedBigInteger('shipping_method_id');
 
-            $table->unsignedBigInteger('status_id')->nullable();
+            $table->unsignedBigInteger('status_id');
 
-            $table->unsignedBigInteger('operator_id');
+            $table->unsignedBigInteger('operator_id')->nullable();
 
             $table->softDeletes();
 

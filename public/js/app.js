@@ -2106,7 +2106,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_CartComponent__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/CartComponent */ "./resources/js/components/CartComponent.js");
 /* harmony import */ var _components_DemoComponent__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/DemoComponent */ "./resources/js/components/DemoComponent.js");
 /* harmony import */ var _components_AddToCartBtnComponent__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/AddToCartBtnComponent */ "./resources/js/components/AddToCartBtnComponent.js");
+/* harmony import */ var _components_CountyCityComponent__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/CountyCityComponent */ "./resources/js/components/CountyCityComponent.js");
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
+
 
 
 
@@ -2114,6 +2116,7 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 Vue.component('cart-component', _components_CartComponent__WEBPACK_IMPORTED_MODULE_0__["default"]);
 Vue.component('demo-component', _components_DemoComponent__WEBPACK_IMPORTED_MODULE_1__["default"]);
 Vue.component('add-to-cart-btn-component', _components_AddToCartBtnComponent__WEBPACK_IMPORTED_MODULE_2__["default"]);
+Vue.component('county-city-component', _components_CountyCityComponent__WEBPACK_IMPORTED_MODULE_3__["default"]);
 Vue.prototype.$bus = new Vue();
 
 /***/ }),
@@ -2287,6 +2290,71 @@ var CartComponent = {
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = (CartComponent);
+
+/***/ }),
+
+/***/ "./resources/js/components/CountyCityComponent.js":
+/*!********************************************************!*\
+  !*** ./resources/js/components/CountyCityComponent.js ***!
+  \********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var CountyCityComponent = {
+  template: "\n        <div>\n            <div>\n                <label>Judet</label>\n                <select v-on:change=\"loadCities\" v-model=\"selectedCountyId\">\n                    <option value=\"0\" selected disabled>Alege judetul</option>\n                    <option :value=\"county.id\" v-for=\"(county, index) in countiesList\" :key=\"index\"> {{county.name}}</option>\n                    \n                </select>\n            </div>\n            <div>\n                <label>Oras</label>\n                <select v-on:change=\"cityChanged\" v-model=\"selectedCityId\">\n                    <option value=\"0\" selected disabled> Alege orasul </option>\n                    <option v-for=\"(city, index) in cities\" :value=\"city.id\" :key=\"index\">{{city.name}}</option>\n                </select>           \n            </div>\n        </div>\n    ",
+  created: function created() {
+    console.log(this.selectedCountyId);
+  },
+  props: {
+    counties: {
+      type: String,
+      required: true
+    },
+    selectedcounty: {
+      type: String,
+      "default": "0"
+    },
+    selectedcity: {
+      type: String,
+      "default": "0"
+    }
+  },
+  data: function data() {
+    return {
+      selectedCountyId: this.selectedcounty,
+      selectedCityId: this.selectedcity,
+      cities: [],
+      countiesList: JSON.parse(this.counties)
+    };
+  },
+  computed: {
+    citiesLength: function citiesLength() {
+      return this.cities.length;
+    }
+  },
+  methods: {
+    loadCities: function loadCities() {
+      var _this = this;
+
+      axios.get("api/cities/".concat(this.selectedCountyId)).then(function (response) {
+        _this.cities = response.data;
+
+        _this.countyChanged();
+      })["catch"](function (error) {
+        console.error(error);
+      });
+    },
+    countyChanged: function countyChanged() {
+      this.$emit('county-selected', this.selectedCountyId);
+    },
+    cityChanged: function cityChanged() {
+      this.$emit('city-selected', this.selectedCityId);
+    }
+  }
+};
+/* harmony default export */ __webpack_exports__["default"] = (CountyCityComponent);
 
 /***/ }),
 
