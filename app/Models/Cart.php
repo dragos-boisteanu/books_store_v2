@@ -51,29 +51,47 @@ class Cart extends Model
             $cart = new Cart();
         
             $cart->user_id = $userId;
+
+            $cart->save();
+
+            session(['cartId' => $cart->fresh()->id]);
         }
 
-        $cart->save();
-
-        session(['cartId' => $cart->fresh()->id]);
-      
     }
 
-    public static function assignedCart()
+    public static function assignCart()
     {
-        $cart = Cart::getCart();
+        if(!Cart::where('user_id', Auth::id())->exists()) {
+            $cart = Cart::find(session('cartId'));
+            
+            $cart->user_id = Auth::id();
+            $cart->session_id = null;
 
-        $cart->user_id = Auth::id();
-        $cart->session_id = null;
+            $cart->save();
+        } else {
 
-        $cart->save();
+            $authCart = Cart::where('user_id', Auth::id())->first();
+       
+            $sessionCart = Cart::find(session('cartId'));
+
+            if(count($sessionCart->books) > 0) {
+                $authCart->books()->sync($sessionCart->books);
+            }
+          
+
+            $sessionCart->delete();
+        }     
     }
 
     public static function getCart() 
     {
  
-        $cart = Cart::findOrFail(session('cartId'));
-
+        if(Auth::check() && Cart::where('user_id', Auth::id())->exists()) {
+            $cart = Cart::where('user_id', Auth::id())->first();
+        }else {
+            $cart = Cart::find(session('cartId'));
+        }
+       
         return $cart;
     }
 }
