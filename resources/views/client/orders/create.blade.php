@@ -52,7 +52,7 @@
                 </tr>
             </table>
         </div>
-        <form method="POST" action="{{ route('client-order.store')}}"> 
+        <form method="POST" action="{{ route('orders-client.store')}}"> 
             @csrf          
 
             <h2>Adrese</h2>

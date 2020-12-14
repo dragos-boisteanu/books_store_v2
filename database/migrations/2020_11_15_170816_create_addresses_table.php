@@ -34,6 +34,9 @@ class CreateAddressesTable extends Migration
             // $table->string('iban')->nullable();
             // $table->string('fiscal_code')->nullable();
 
+            $table->softDeletes();
+            $table->timestamps();
+
             $table->foreign('user_id')->references('id')->on('users');
 
             $table->foreign('county_id')->references('id')->on('counties');

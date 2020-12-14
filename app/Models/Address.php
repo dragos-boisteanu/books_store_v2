@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Address extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
     
     protected $fillable = [
         'name',
@@ -35,5 +35,9 @@ class Address extends Model
 
     public function county() {
         return $this->hasOne('App\Models\County');
+    }
+
+    public function orders() {
+        return $this->belongsToMany('App\Models\Order');
     }
 }

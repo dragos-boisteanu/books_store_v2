@@ -33,8 +33,13 @@ class DatabaseSeeder extends Seeder
             CategorySeeder::class,
             CoverSeeder::class,
             LanguageSeeder::class,
-            PublisherSeeder::class
+            PublisherSeeder::class,
+
+            PaymentMethodSeeder::class,
+            ShippingMethodSeeder::class,
     
+            StatusSeeder::class
+
         ]);
 
         Book::factory()->count(300)->create();
