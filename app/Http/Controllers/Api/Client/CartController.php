@@ -52,8 +52,6 @@ class CartController extends Controller
     {
         $cart = $this->getCart();
 
-        // Book::findOrFail($id)->stock->quantity >= ( $book->pivot->quantity + 1 );
-
         foreach($cart->books as $book) {
             if($book->pivot->book_id == $id) {
                 if(Book::findOrFail($book->pivot->book_id)->stock->quantity >= ( $book->pivot->quantity + 1 )) {
@@ -83,11 +81,11 @@ class CartController extends Controller
       
     }
 
-    public function removeItem($id) 
+    public function removeItem(Request $request) 
     {
         $cart = $this->getCart();
 
-        $cart->books->detach($id);
+        $cart->books()->detach($request->id);
 
         return response()->json([
             'message' => 'The book was removed from cart'

@@ -2216,14 +2216,13 @@ var AddToCartBtnComponent = {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 var CartComponent = {
-  template: "\n        <div class=\"cart\">\n            <div class=\"btn-cart__container\" v-bind:class=\"{'btn-cart__container--left-align' : showCart}\">\n                <button @click=\"toggleShowCart\" v-if=\"showCartButton && !showCart\" class=\"btn btn-cart btn-cart--fixed\">\n                    <svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"black\" width=\"24px\" height=\"24px\"><path d=\"M0 0h24v24H0z\" fill=\"none\"/>\n                        <path d=\"M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z\"/>\n                    </svg>    \n                    <span class=\"btn-cart__counter\">\n                        {{ booksCount }}\n                    </span>\n                </button>\n                <div v-else-if=\"showCart\" class=\"cart__header\">\n                    <h3 class=\"cart__title\">Cos cumparaturi</h3>\n                    <button @click=\"toggleShowCart\" class=\"btn btn-cart__close\">\n                        <svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"black\" width=\"24px\" height=\"24px\">\n                            <path d=\"M0 0h24v24H0z\" fill=\"none\"/>\n                            <path d=\"M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z\"/>\n                        </svg>\n                    </button>\n                </div>      \n                <svg v-else xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"black\" width=\"24px\" height=\"24px\"><path d=\"M0 0h24v24H0z\" fill=\"none\"/>\n                    <path d=\"M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z\"/>\n                </svg>\n            </div>  \n            <div v-if=\"showCart\">\n                <ul class=\"items__list\">\n                    <li v-for=\"(book,index) in items\" :key=\"index\" class=\"item\">\n                        <a :href=\"'/books/' + book.id\" class=\"link link-cart title\">{{ book.title }}</a>\n                        <span class=\"divider\">x</span>\n                        <span class=\"quantity\">{{ book.quantity }} buc.</span>\n                        <span class=\"price\">{{ book.price }} RON</span>\n                        <button @click=\"removeFromCart(book.id)\" class=\"btn\">\n                            <svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"red\" width=\"18px\" height=\"18px\"><path d=\"M0 0h24v24H0z\" fill=\"none\"/>\n                                <path d=\"M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z\"/>\n                            </svg>\n                        </button>\n                    </li>\n                </ul>\n                <form method=\"get\" action=\"/comenzi/create\">\n                    <button type=\"submit\" class=\"btn btn-order\">Comanda</button>\n                </form>\n            </div>\n        </div>\n    ",
+  template: "\n        <div class=\"cart\">\n            <div class=\"cart__button\" @click=\"toggleCart\">\n                <div>\n                    Cart\n                </div>\n                <div>\n                    {{ count }}\n                </div>\n            </div>\n            <div v-if=\"showCart\">\n                <div class=\"cart__header\">\n                    <div>\n                        Shopping cart \n                    </div>\n                    <div @click=\"toggleCart\">\n                        X\n                    </div>\n                </div>\n                <ul class=\"items__list\">\n                    <li v-for=\"(book,index) in items\" :key=\"index\" class=\"item\">\n                        <a :href=\"'/books/' + book.id\" class=\"link link-cart title\">{{ book.title }}</a>\n                        <span class=\"divider\">x</span>\n                        <span class=\"quantity\">{{ book.quantity }} buc.</span>\n                        <span class=\"price\">{{ book.price }} RON</span>\n                        <button @click=\"removeFromCart(book.id)\" class=\"btn\">\n                            <svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"red\" width=\"18px\" height=\"18px\"><path d=\"M0 0h24v24H0z\" fill=\"none\"/>\n                                <path d=\"M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z\"/>\n                            </svg>\n                        </button>\n                    </li>\n                </ul>\n                <form method=\"get\" action=\"/comenzi/create\">\n                    <button type=\"submit\" class=\"btn btn-order\">Place order</button>\n                </form>\n            </div>\n        </div>\n    ",
   created: function created() {
     var _this = this;
 
     axios.get('/api/carts').then(function (response) {
-      if (response.data.items) {
+      if (response.data.cart) {
         _this.items = response.data.cart;
-        console.log(_this.items);
       }
     })["catch"](function (error) {
       console.error(error);
@@ -2231,36 +2230,32 @@ var CartComponent = {
   },
   mounted: function mounted() {
     this.$bus.$on('added', this.addToCart);
-    this.$bus.$on('requestItems', this.sendItems);
   },
   data: function data() {
     return {
       items: [],
-      showCart: false
+      showCart: true
     };
   },
   computed: {
     showCartButton: function showCartButton() {
       return this.items.length > 0 ? true : false;
     },
-    booksCount: function booksCount() {
+    count: function count() {
       var total = 0;
       this.items.forEach(function (item) {
         total += parseFloat(item.quantity);
       });
       return total;
-    },
-    cartID: function cartID() {
-      return this.id;
     }
   },
   methods: {
     removeFromCart: function removeFromCart(id) {
       var _this2 = this;
 
-      axios["delete"]("/api/cart/".concat(this.id), {
+      axios["delete"]("/api/carts/".concat(this.id), {
         data: {
-          book_id: id
+          id: id
         }
       }).then(function (response) {
         _this2.items.splice(_this2.items.findIndex(function (item) {
@@ -2286,7 +2281,7 @@ var CartComponent = {
         this.items.push(data);
       }
     },
-    toggleShowCart: function toggleShowCart() {
+    toggleCart: function toggleCart() {
       this.showCart = !this.showCart;
     },
     sendItems: function sendItems() {
