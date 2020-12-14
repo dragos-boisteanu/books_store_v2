@@ -33,6 +33,8 @@ class UserSeeder extends Seeder
             'password' => Hash::make('12345678')
         ]);
 
+       
+
         DB::table('users')->insert([
             'first_name' => 'client',
             'name' => 'client',
@@ -41,6 +43,8 @@ class UserSeeder extends Seeder
             'role_id' => '4',
             'password' => Hash::make('12345678')
         ]);
+
+      
         
     }
 }

@@ -58,5 +58,6 @@ class DatabaseSeeder extends Seeder
         });
 
         Stock::factory()->count(300)->create();
+
     }
 }

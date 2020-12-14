@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Cart extends Model
@@ -21,18 +22,23 @@ class Cart extends Model
         return $this->belongsTo('App\Models\User');
     }
 
-    public function newCart() 
+
+    public static function createNewCart($userId) 
     {
-        if(Auth::check()) {
-            $this->user_id = Auth::id();
+        if(Cart::where('session_id', session()->getId())->exists()) {
+            $cart = Cart::where('session_id', session()->getId())->first();
+
+            $cart->session_id = null;
+            $cart->user_id = $userId;
+        
         }else {
-            $this->session_id = session()->getId();
+            $cart = new Cart();
+        
+            $cart->user_id = $userId;
         }
 
-        $this->save();
-
-        return $this->fresh();
-
+        $cart->save();
+      
     }
 
     public static function getCart() 
@@ -40,7 +46,7 @@ class Cart extends Model
         if(Auth::check()) {
             $cart = Cart::where('user_id', Auth::id());
         }else {
-            $cart = Cart::where('session_id', session()->getId());
+            $cart = Cart::where('session_id', Session::getId());
         }
 
         return $cart ;

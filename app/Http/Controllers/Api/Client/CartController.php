@@ -2,28 +2,93 @@
 
 namespace App\Http\Controllers\Api\Client;
 
-use App\Http\Controllers\Controller;
+use App\Models\Cart;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class CartController extends Controller
 {
     public function show() 
     {
+        $this->getCart();
+
+        return response()->json([
+            'cart'=> $cart
+        ], 200);
+    }
+
+
+    public function update(Request $request) 
+    {
+        $cart = $this->getCart();
+
+        if($request->has('quantity') && $request->qunatity > 0) {
+            foreach($cart->books as $book) {
+                if($book->pivot->book_id === $request->book_id) {
+                    if(Book::findOrFail($book->pivot->book_id)->stock->quantity >= $request->qunatity) {
+
+                        $book->pivot->quantity = $request->quantity;
+
+                        return response()->json([
+                            'message' => 'Quantity updated successfull !' 
+                        ], 200);
+
+                    }else {
+
+                        return response()->json([
+                            'message' => 'Not enough products in stock'
+                        ], 412);
+                    };
+                }
+            }
+        }
+    }
+
+    public function addItem($id) 
+    {
+        $cart = $this->getCart();
+
+        $cart->books()->attach($request->input('book_id'));
+
+        return response()->json([
+            'message' => 'Book added in cart'
+        ], 200);
+    }
+
+    public function removeItem($id) 
+    {
+        $cart = $this->getCart();
+
+        $cart->books->detach($id);
+
+        return response()->json([
+            'message' => 'The book was removed from cart'
+        ], 200);
+    }
+
+
+    public function destroy($id) 
+    {
+        $cart = Cart::findOrFail($id);
+
+        $cart->delete();
+
+        return response()->json([
+            'message' => 'Cart is empty !'
+        ], 200);
         
     }
 
-    public function store() 
+    private function getCart() 
     {
+        if(Auth::check()) {
+            $cart = Cart::where('user_id', Auth::id())->first();
+        }else {
+            $cart = Cart::where('session_id', session()->getId());
+        }
 
-    }
-
-    public function update() 
-    {
-
-    }
-
-    public function destroy() 
-    {
-        
+        return $cart;
     }
 }

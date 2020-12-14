@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
-use App\Providers\RouteServiceProvider;
+use App\Models\Cart;
 use App\Models\User;
-use Illuminate\Foundation\Auth\RegistersUsers;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Auth\Events\Registered;
+use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Validator;
+use Symfony\Component\HttpFoundation\Request;
+use Illuminate\Foundation\Auth\RegistersUsers;
 
 class RegisterController extends Controller
 {
@@ -50,7 +53,9 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
+            'first_name' => ['required', 'string', 'max:255'],
             'name' => ['required', 'string', 'max:255'],
+            'phone_number' => ['required', 'string'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
@@ -64,10 +69,25 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user =  User::create([
+            'role_id' => 4,
+            'first_name' => $data['first_name'],
             'name' => $data['name'],
+            'phone_number' => $data['phone_number'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+
+        Cart::createNewCart($user->id);   
+             
+        return $user;
+    }
+
+    public function register(Request $request)
+    {
+        $this->validator($request->all())->validate();
+        event(new Registered($user = $this->create($request->all())));
+        // $this->guard()->login($user);
+        return $this->registered($request, $user) ?: redirect($this->redirectPath());
     }
 }

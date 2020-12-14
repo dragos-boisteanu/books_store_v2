@@ -18,7 +18,7 @@ Auth::routes(['verify' => true]);
 
 Route::get('/', 'HomeController@index')->name('home');
 
-Route::get('books/{id}', 'Web\Client\BookController@show')->name('books-client.show');
+// Route::get('books/{id}', 'Web\Client\BookController@show')->name('books-client.show');
 
 Route::middleware(['auth'])->group(function() {
     
