@@ -11,10 +11,6 @@ const AddToCartBtnComponent = {
         }
     },
 
-    // created() {
-    //     console.log('book id: ', this.id);
-    // },
-
     mounted() {
         this.$bus.$on('cartItems', this.reciveItems);
     },

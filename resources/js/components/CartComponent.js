@@ -32,7 +32,7 @@ const CartComponent = {
                         </button>
                     </li>
                 </ul>
-                <form method="get" action="/comenzi/create">
+                <form method="GET" action="/orders/create">
                     <button type="submit" class="btn btn-order">Place order</button>
                 </form>
             </div>

@@ -14,7 +14,13 @@ class CartController extends Controller
     public function show() 
     {
 
-        $books = Book::getBooksFromCart($this->getCart()->id); 
+        if(!Auth::check() && !Cart::where('session_id', session()->getId())->exists()) {
+            $cart = new Cart();
+            $cart->session_id = session()->getId();
+            $cart->save();
+        }
+        
+        $books = Book::getBooksFromCart(Cart::getCart()->id); 
 
         return response()->json([
             'cart'=> $books
@@ -24,7 +30,7 @@ class CartController extends Controller
 
     public function update(Request $request) 
     {
-        $cart = $this->getCart();
+        $cart = Cart::getCart();
 
         if($request->has('quantity') && $request->qunatity > 0) {
             foreach($cart->books as $book) {
@@ -50,30 +56,35 @@ class CartController extends Controller
 
     public function addItem($id) 
     {
-        $cart = $this->getCart();
+        $cart = Cart::getCart();
 
-        foreach($cart->books as $book) {
-            if($book->pivot->book_id == $id) {
-                if(Book::findOrFail($book->pivot->book_id)->stock->quantity >= ( $book->pivot->quantity + 1 )) {
-                   
-                    $newQuantity = $book->pivot->quantity + 1;
-                    $cart->books()->updateExistingPivot($book->pivot->book_id, ['quantity' => $newQuantity]);
-
-                    break;
-
+        if(count($cart->books) > 0) {
+            foreach($cart->books as $book) {
+                if($book->pivot->book_id == $id) {
+                    if(Book::findOrFail($book->pivot->book_id)->stock->quantity >= ( $book->pivot->quantity + 1 )) {
+                       
+                        $newQuantity = $book->pivot->quantity + 1;
+                        $cart->books()->updateExistingPivot($book->pivot->book_id, ['quantity' => $newQuantity]);
+    
+                        break;
+    
+                    }else {
+    
+                        return response()->json([
+                            'message' => 'Not enough products in stock'
+                        ], 412);
+    
+                    };
                 }else {
-
-                    return response()->json([
-                        'message' => 'Not enough products in stock'
-                    ], 412);
-
-                };
-            }else {
-                $cart->books()->attach($id);
-
-                break;
+                    $cart->books()->attach($id);
+    
+                    break;
+                }
             }
+        }else {
+            $cart->books()->attach($id);
         }
+        
         
         return response()->json([
             'message' => 'Book added in cart'
@@ -83,7 +94,7 @@ class CartController extends Controller
 
     public function removeItem(Request $request) 
     {
-        $cart = $this->getCart();
+        $cart = Cart::getCart();
 
         $cart->books()->detach($request->id);
 
@@ -95,7 +106,7 @@ class CartController extends Controller
 
     public function empty() 
     {
-        $cart = $this->getCart();
+        $cart = Cart::getCart();
 
         $cart->delete();
 
@@ -105,14 +116,4 @@ class CartController extends Controller
         
     }
 
-    private function getCart() 
-    {
-        if(Auth::check()) {
-            $cart = Cart::where('user_id', Auth::id())->first();
-        }else {
-            $cart = Cart::where('session_id', session()->getId());
-        }
-
-        return $cart;
-    }
 }

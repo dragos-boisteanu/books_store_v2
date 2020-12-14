@@ -28,7 +28,7 @@ class Cart extends Model
         if(Cart::where('session_id', session()->getId())->exists()) {
             $cart = Cart::where('session_id', session()->getId())->first();
 
-            $cart->session_id = null;
+            // $cart->session_id = null;
             $cart->user_id = $userId;
         
         }else {
@@ -44,12 +44,12 @@ class Cart extends Model
     public static function getCart() 
     {
         if(Auth::check()) {
-            $cart = Cart::where('user_id', Auth::id());
+            $cart = Cart::where('user_id', Auth::id()->first());
         }else {
-            $cart = Cart::where('session_id', Session::getId());
+            $cart = Cart::where('session_id', session()->getId())->first();
         }
-
-        return $cart ;
+        
+        return $cart;
     }
 }
 
