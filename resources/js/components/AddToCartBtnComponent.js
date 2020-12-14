@@ -11,13 +11,36 @@ const AddToCartBtnComponent = {
         }
     },
 
-    created() {
-        console.log('book id: ', this.id);
+    // created() {
+    //     console.log('book id: ', this.id);
+    // },
+
+    mounted() {
+        this.$bus.$on('cartItems', this.reciveItems);
+    },
+
+    data() {
+        return {
+            cartItems: [],
+        }
     },
     
     methods: {
+        reciveItems(data) {
+            this.cartItems = data; 
+        },
+
         addToCart() {
-            console.log(`book ${this.id} added in cart`);
+            axios.post(`api/carts/${this.id}`)
+            .then( response => {
+                console.log(response.data);
+                console.log(`book ${this.id} added in cart`);
+            })
+            .catch( error => {
+                console.error( error );
+            });
+            
+            
         }
     }
 }

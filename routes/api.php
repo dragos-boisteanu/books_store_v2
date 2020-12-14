@@ -16,7 +16,15 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth'])->group(function() {
     Route::namespace('Api\Client')->group(function () {
-        Route::resource('cart', 'CartController')->except(['index', 'create','edit']);
-        
+        Route::prefix('carts')->group(function() {
+
+            Route::get('/', 'CartController@show')->name('carts.show');
+            Route::patch('/', 'CartController@update')->name('carts.patch');
+          
+            Route::delete('/', 'CartController@empty')->name('carts.empty');
+
+            Route::post('/{id}', 'CartController@addItem')->name('carts.add-item');
+            Route::delete('/{id}', 'CartController@removeItem')->name('carts.remove-item');
+        });        
     });
 });

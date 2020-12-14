@@ -2,7 +2,6 @@
   
     <img src="{{ asset('storage/cover.svg') }}"/>
     <cart-component></cart-component>
-    @{{ message }}
 
 </header>
 

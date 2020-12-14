@@ -45,13 +45,12 @@ const CartComponent = {
         </div>
     `,
     created() {
-        axios.get('/api/cart')
+        axios.get('/api/carts')
         .then( response => {
             if(response.data.items) {
-                this.items = response.data.items;
+                this.items = response.data.cart;
+                console.log(this.items);
             }
-            this.id = response.data.id;
-            this.$bus.$emit("cartId", response.data.id)
         })
         .catch( error => {
             console.error ( error );
@@ -65,7 +64,6 @@ const CartComponent = {
 
     data() { 
         return {
-            id: 0,
             items: [],
             showCart: false,
         }
@@ -119,7 +117,7 @@ const CartComponent = {
         },
 
         sendItems() {
-            this.$bus.$emit('sentItems', this.items);
+            this.$bus.$emit('cartItems', this.items);
         }
     }
 }

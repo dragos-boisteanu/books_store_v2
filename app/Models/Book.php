@@ -112,14 +112,14 @@ class Book extends Model
     }
 
 
-    
 
 
     public static function getBooksFromCart($cartId) 
     {
         $books = DB::select('SELECT books.id, books.title, book_cart.quantity, 
         books.discount as discount,
-        FORMAT(books.price - (books.price * books.discount / 100), 2) * book_cart.quantity AS price
+        FORMAT(books.price - (books.price * books.discount / 100), 2) * book_cart.quantity AS final_price,
+        price as price
         FROM book_cart
         JOIN books ON book_cart.book_id = books.id
         JOIN carts on carts.id = book_cart.cart_id

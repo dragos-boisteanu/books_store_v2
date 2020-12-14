@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\Client;
 
+use App\Models\Book;
 use App\Models\Cart;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -12,10 +13,11 @@ class CartController extends Controller
 {
     public function show() 
     {
-        $this->getCart();
+
+        $books = Book::getBooksFromCart($this->getCart()->id); 
 
         return response()->json([
-            'cart'=> $cart
+            'cart'=> $books
         ], 200);
     }
 
@@ -26,13 +28,13 @@ class CartController extends Controller
 
         if($request->has('quantity') && $request->qunatity > 0) {
             foreach($cart->books as $book) {
-                if($book->pivot->book_id === $request->book_id) {
+                if($book->pivot->book_id === $request->bookId) {
                     if(Book::findOrFail($book->pivot->book_id)->stock->quantity >= $request->qunatity) {
 
                         $book->pivot->quantity = $request->quantity;
 
                         return response()->json([
-                            'message' => 'Quantity updated successfull !' 
+                            'message' => 'Quantity updated successfully !' 
                         ], 200);
 
                     }else {
@@ -50,11 +52,35 @@ class CartController extends Controller
     {
         $cart = $this->getCart();
 
-        $cart->books()->attach($request->input('book_id'));
+        // Book::findOrFail($id)->stock->quantity >= ( $book->pivot->quantity + 1 );
 
+        foreach($cart->books as $book) {
+            if($book->pivot->book_id == $id) {
+                if(Book::findOrFail($book->pivot->book_id)->stock->quantity >= ( $book->pivot->quantity + 1 )) {
+                   
+                    $newQuantity = $book->pivot->quantity + 1;
+                    $cart->books()->updateExistingPivot($book->pivot->book_id, ['quantity' => $newQuantity]);
+
+                    break;
+
+                }else {
+
+                    return response()->json([
+                        'message' => 'Not enough products in stock'
+                    ], 412);
+
+                };
+            }else {
+                $cart->books()->attach($id);
+
+                break;
+            }
+        }
+        
         return response()->json([
             'message' => 'Book added in cart'
         ], 200);
+      
     }
 
     public function removeItem($id) 
@@ -69,9 +95,9 @@ class CartController extends Controller
     }
 
 
-    public function destroy($id) 
+    public function empty() 
     {
-        $cart = Cart::findOrFail($id);
+        $cart = $this->getCart();
 
         $cart->delete();
 

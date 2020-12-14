@@ -2175,12 +2175,30 @@ var AddToCartBtnComponent = {
       require: true
     }
   },
-  created: function created() {
-    console.log('book id: ', this.id);
+  // created() {
+  //     console.log('book id: ', this.id);
+  // },
+  mounted: function mounted() {
+    this.$bus.$on('cartItems', this.reciveItems);
+  },
+  data: function data() {
+    return {
+      cartItems: []
+    };
   },
   methods: {
+    reciveItems: function reciveItems(data) {
+      this.cartItems = data;
+    },
     addToCart: function addToCart() {
-      console.log("book ".concat(this.id, " added in cart"));
+      var _this = this;
+
+      axios.post("api/carts/".concat(this.id)).then(function (response) {
+        console.log(response.data);
+        console.log("book ".concat(_this.id, " added in cart"));
+      })["catch"](function (error) {
+        console.error(error);
+      });
     }
   }
 };
@@ -2202,14 +2220,11 @@ var CartComponent = {
   created: function created() {
     var _this = this;
 
-    axios.get('/api/cart').then(function (response) {
+    axios.get('/api/carts').then(function (response) {
       if (response.data.items) {
-        _this.items = response.data.items;
+        _this.items = response.data.cart;
+        console.log(_this.items);
       }
-
-      _this.id = response.data.id;
-
-      _this.$bus.$emit("cartId", response.data.id);
     })["catch"](function (error) {
       console.error(error);
     });
@@ -2220,7 +2235,6 @@ var CartComponent = {
   },
   data: function data() {
     return {
-      id: 0,
       items: [],
       showCart: false
     };
@@ -2276,7 +2290,7 @@ var CartComponent = {
       this.showCart = !this.showCart;
     },
     sendItems: function sendItems() {
-      this.$bus.$emit('sentItems', this.items);
+      this.$bus.$emit('cartItems', this.items);
     }
   }
 };
