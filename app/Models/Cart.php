@@ -23,12 +23,28 @@ class Cart extends Model
     }
 
 
-    public static function createNewCart($userId) 
+    public static function createNewCart() 
     {
-        if(Cart::where('session_id', session()->getId())->exists()) {
-            $cart = Cart::where('session_id', session()->getId())->first();
+        
+        $cart = new Cart();
 
-            // $cart->session_id = null;
+        $cart->session_id = session()->getId();
+
+        $cart->save();
+
+        session(['cartId' => $cart->fresh()->id]);
+        
+        return $cart;
+    }
+
+
+    public static function createCartForUser($userId) 
+    {
+        if(Cart::where('id', session('cartId'))->exists()) {
+            $cart = Cart::where('id', session('cartId'))->first();
+
+            $cart->session_id = null;
+
             $cart->user_id = $userId;
         
         }else {
@@ -38,17 +54,26 @@ class Cart extends Model
         }
 
         $cart->save();
+
+        session(['cartId' => $cart->fresh()->id]);
       
+    }
+
+    public static function assignedCart()
+    {
+        $cart = Cart::getCart();
+
+        $cart->user_id = Auth::id();
+        $cart->session_id = null;
+
+        $cart->save();
     }
 
     public static function getCart() 
     {
-        if(Auth::check()) {
-            $cart = Cart::where('user_id', Auth::id()->first());
-        }else {
-            $cart = Cart::where('session_id', session()->getId())->first();
-        }
-        
+ 
+        $cart = Cart::findOrFail(session('cartId'));
+
         return $cart;
     }
 }

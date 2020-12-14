@@ -78,7 +78,7 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
         ]);
 
-        Cart::createNewCart($user->id);   
+        Cart::createCartForUser($user->id);   
              
         return $user;
     }

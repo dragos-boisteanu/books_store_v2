@@ -15,13 +15,12 @@ class CartController extends Controller
     {
 
         if(!Auth::check() && !Cart::where('session_id', session()->getId())->exists()) {
-            $cart = new Cart();
-            $cart->session_id = session()->getId();
-            $cart->save();
+            $cart = Cart::createNewCart();
+            $books = Book::getBooksFromCart($cart->id); 
+        }else{
+            $books = Book::getBooksFromCart(Cart::getCart()->id); 
         }
         
-        $books = Book::getBooksFromCart(Cart::getCart()->id); 
-
         return response()->json([
             'cart'=> $books
         ], 200);
