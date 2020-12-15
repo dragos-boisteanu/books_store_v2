@@ -18,11 +18,11 @@ Auth::routes(['verify' => true]);
 
 Route::get('/', 'HomeController@index')->name('home');
 
-Route::get('books/{id}', 'Web\Client\BookController@show')->name('books-client.show');
+Route::get('books/{id}', 'Web\client\BookController@show')->name('books-client.show');
 
 Route::middleware(['auth'])->group(function() {
     
-    Route::namespace('Web\Client')->group(function () {
+    Route::namespace('Web\client')->group(function () {
 
         Route::middleware(['verified'])->group(function() {
             Route::get('/orders/create', 'OrderController@create')->name('orders-client.create');
@@ -36,12 +36,11 @@ Route::middleware(['auth'])->group(function() {
             Route::prefix('addresses')->group(function () { 
                 Route::get('/', 'AddressController@index')->name('addresses-client.index');
                 Route::get('/create', 'AddressController@show')->name('addresses-client.create');
-    
-                Route::get('/{address}', 'AddressController@show')->name('addresses-client.show');
+
                 Route::get('/{address}/edit', 'AddressController@edit')->name('addresses-client.edit');
     
-                Route::put('/{address}', 'AddressController@update')->name('addresses-clinet.update');
-                Route::delete('/{address}', 'AddressController@destroy')->name('addresses-clinet.delete');
+                Route::put('/{address}', 'AddressController@update')->name('addresses-client.update');
+                Route::delete('/{address}', 'AddressController@destroy')->name('addresses-client.delete');
             });    
 
             Route::prefix('orders')->group(function () {                

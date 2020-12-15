@@ -2302,7 +2302,11 @@ var CartComponent = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-var CountyCityComponent = {
+var _CountyCityComponent;
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var CountyCityComponent = (_CountyCityComponent = {
   template: "\n        <div>\n            <div>\n                <label>Judet</label>\n                <select v-on:change=\"loadCities\" v-model=\"selectedCountyId\">\n                    <option value=\"0\" selected disabled>Alege judetul</option>\n                    <option :value=\"county.id\" v-for=\"(county, index) in countiesList\" :key=\"index\"> {{county.name}}</option>\n                    \n                </select>\n            </div>\n            <div>\n                <label>Oras</label>\n                <select v-on:change=\"cityChanged\" v-model=\"selectedCityId\">\n                    <option value=\"0\" selected disabled> Alege orasul </option>\n                    <option v-for=\"(city, index) in cities\" :value=\"city.id\" :key=\"index\">{{city.name}}</option>\n                </select>           \n            </div>\n        </div>\n    ",
   created: function created() {
     console.log(this.selectedCountyId);
@@ -2314,46 +2318,47 @@ var CountyCityComponent = {
     },
     selectedcounty: {
       type: String,
-      "default": "0"
+      "default": 0
     },
     selectedcity: {
       type: String,
-      "default": "0"
-    }
-  },
-  data: function data() {
-    return {
-      selectedCountyId: this.selectedcounty,
-      selectedCityId: this.selectedcity,
-      cities: [],
-      countiesList: JSON.parse(this.counties)
-    };
-  },
-  computed: {
-    citiesLength: function citiesLength() {
-      return this.cities.length;
-    }
-  },
-  methods: {
-    loadCities: function loadCities() {
-      var _this = this;
-
-      axios.get("api/cities/".concat(this.selectedCountyId)).then(function (response) {
-        _this.cities = response.data;
-
-        _this.countyChanged();
-      })["catch"](function (error) {
-        console.error(error);
-      });
-    },
-    countyChanged: function countyChanged() {
-      this.$emit('county-selected', this.selectedCountyId);
-    },
-    cityChanged: function cityChanged() {
-      this.$emit('city-selected', this.selectedCityId);
+      "default": 0
     }
   }
-};
+}, _defineProperty(_CountyCityComponent, "created", function created() {
+  if (this.selectedcounty > 0 && this.selectedcity > 0) {
+    this.loadCities();
+  }
+}), _defineProperty(_CountyCityComponent, "data", function data() {
+  return {
+    selectedCountyId: this.selectedcounty,
+    selectedCityId: this.selectedcity,
+    cities: [],
+    countiesList: JSON.parse(this.counties)
+  };
+}), _defineProperty(_CountyCityComponent, "computed", {
+  citiesLength: function citiesLength() {
+    return this.cities.length;
+  }
+}), _defineProperty(_CountyCityComponent, "methods", {
+  loadCities: function loadCities() {
+    var _this = this;
+
+    axios.get("api/cities/".concat(this.selectedCountyId)).then(function (response) {
+      _this.cities = response.data;
+
+      _this.countyChanged();
+    })["catch"](function (error) {
+      console.error(error);
+    });
+  },
+  countyChanged: function countyChanged() {
+    this.$emit('county-selected', this.selectedCountyId);
+  },
+  cityChanged: function cityChanged() {
+    this.$emit('city-selected', this.selectedCityId);
+  }
+}), _CountyCityComponent);
 /* harmony default export */ __webpack_exports__["default"] = (CountyCityComponent);
 
 /***/ }),

@@ -88,14 +88,14 @@
                             <input type="text" name="phone_number"/>
                         </div>
 
-                            <county-city-component
-                                counties="{{ $counties }}"
-                                @county-selected="saveCounty"
-                                @city-selected="saveCity"
-                            ></county-city-component>
+                        <county-city-component
+                            counties="{{ $counties }}"
+                            @county-selected="saveCounty"
+                            @city-selected="saveCity"
+                        ></county-city-component>
 
-                            <input type="hidden" name="county" :value="county"/>
-                            <input type="hidden" name="city" :value="city"/>
+                        <input type="hidden" name="county" :value="county"/>
+                        <input type="hidden" name="city" :value="city"/>
 
                         <div>
                             <label>Adresa</label>
@@ -165,7 +165,7 @@
 
                 saveCity(cityId) {
                     this.city = cityId;
-                } , 
+                }, 
 
                 updateItemQuantity() {
                     axios.put(``)

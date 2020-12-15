@@ -27,6 +27,9 @@ class CreateAddressesTable extends Migration
 
             $table->string('address')->nullable(); 
             $table->string('postal_code')->nullable();
+
+            $table->boolean('default_for_shipping')->default(0);
+            $table->boolean('default_for_invoice')->default(0);
             
             // $table->string('company_name')->nullable();
             // $table->string('trade_register_number')->nullable();

@@ -33,12 +33,18 @@ const CountyCityComponent = {
 
         selectedcounty: {
             type: String,
-            default: "0"
+            default: 0
         },
 
         selectedcity: {
             type: String,
-            default: "0"
+            default: 0
+        }
+    },
+
+    created() {
+        if(this.selectedcounty > 0 && this.selectedcity > 0) {
+            this.loadCities();
         }
     },
 

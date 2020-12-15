@@ -146,7 +146,7 @@ class OrderController extends Controller
             return back();
         }
 
-        return $result;
+        return redirect()->route('account/orders');
     }
 
     public function show($id) 
