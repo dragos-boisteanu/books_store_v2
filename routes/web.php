@@ -35,11 +35,13 @@ Route::middleware(['auth'])->group(function() {
 
             Route::prefix('addresses')->group(function () { 
                 Route::get('/', 'AddressController@index')->name('addresses-client.index');
-                Route::get('/create', 'AddressController@show')->name('addresses-client.create');
+                
+                Route::get('/create', 'AddressController@create')->name('addresses-client.create');
+                Route::post('/', 'AddressController@store')->name('addresses-client.store');
 
                 Route::get('/{address}/edit', 'AddressController@edit')->name('addresses-client.edit');
-    
                 Route::put('/{address}', 'AddressController@update')->name('addresses-client.update');
+
                 Route::delete('/{address}', 'AddressController@destroy')->name('addresses-client.delete');
             });    
 
