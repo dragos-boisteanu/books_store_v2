@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div id="view" class="container">
+<div id="view" class="view">
     <div class="carrousel">
       test
     </div>
@@ -10,7 +10,7 @@
         @foreach ($books as $book)
             <li class="book">
                 <div class="book_title">
-                    {{ $book->title }}
+                    <a href="{{ route('books-client.show', ['id'=>$book->id]) }}">{{$book->title}}</a>
                 </div>
                 <ul class="list book_authors">
                     @foreach($book->authors as $author)

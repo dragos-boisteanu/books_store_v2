@@ -17,6 +17,14 @@ use Illuminate\Support\Facades\Auth;
 class OrderController extends Controller
 {
 
+    public function index() 
+    {
+        $orders = Auth::user()->orders;
+    
+        return view('client.orders.index', ['orders'=>$orders]);
+
+    }
+
     public function create() 
     {
         $cart = Cart::getCart();
@@ -69,6 +77,8 @@ class OrderController extends Controller
             $shippingAddress->save();
             $shippingAddress->refresh();
 
+            $order->shipping_address_id = $shippingAddress->id;
+
             $order->user_id = Auth::id();
 
             $order->payment_method_id = $input['paymentMethod'];
@@ -77,8 +87,7 @@ class OrderController extends Controller
 
             $order->operator_id = '2';
 
-            $order->save();
-            $order->refresh();
+           
 
             if(!$input['useAsInvoice']) {
                 $invoiceAddress = new Address();
@@ -97,13 +106,16 @@ class OrderController extends Controller
                 $invoiceAddress->save();    
                 $invoiceAddress->fresh();
                
-                $order->addresses()->attach($shippingAddress->id, ['invoice_id' => $invoiceAddress->id]);
+                $order->invoice_address_id = $invoiceAddress->id;
             }else {
-                $order->addresses()->attach($shippingAddress->id, ['invoice_id' => $shippingAddress->id]);
+                $order->invoice_address_id = $shippingAddress->id;
             }
 
-            
+            $order->save();
+            $order->refresh();
+
             foreach($cart->books as $book) {
+ 
                 if($book->stock->quantity > 0 && $book->stock->quantity >= $book->pivot->quantity) {
                     $order->books()->attach($book->id, ['quantity'=>$book->pivot->quantity, 'price'=>$book->price]);
                     $book->stock->quantity = $book->stock->quantity - $book->pivot->quantity;
@@ -113,6 +125,7 @@ class OrderController extends Controller
                     throw new Exception();
                 }
             }
+
      
             $order->books()->syncWithoutDetaching($cart->books);
            
@@ -136,9 +149,11 @@ class OrderController extends Controller
         return $result;
     }
 
-    public function show() 
+    public function show($id) 
     {
+        $order = Order::findOrFail($id);
 
+        return view('client.orders.show', ['order'=>$order]);
     }
 
     public function update()

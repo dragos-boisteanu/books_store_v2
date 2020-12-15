@@ -17,7 +17,7 @@ class Order extends Model
         'stage_id',
     ];
 
-    protected $with = ['books', 'status', 'paymentMethod', 'addresses'];
+    protected $with = ['books', 'status', 'shipping_method', 'payment_method', 'shipping_address', 'invoice_address'];
 
     protected $appends = ['total_price', 'total_quantity'];
 
@@ -47,19 +47,24 @@ class Order extends Model
         return $this->belongsTo('App\Model\User', 'operator_id');
     }
 
-    public function addresses() 
+    public function shipping_address() 
     {
-        return $this->belongsToMany('App\Models\Address');
-    }
-    
-    public function deliveryMethod() 
-    {
-        return $this->hasOne('App\Models\DeliveryMethod', 'delivery_method_id');
+        return $this->belongsTo('App\Models\Address', 'shipping_address_id');
     }
 
-    public function paymentMethod() 
+    public function invoice_address() 
     {
-        return $this->belongsTo('App\Models\PaymentMethod');
+        return $this->belongsTo('App\Models\Address', 'invoice_address_id');
+    }
+    
+    public function shipping_method() 
+    {
+        return $this->belongsTo('App\Models\ShippingMethod', 'shipping_method_id');
+    }
+
+    public function payment_method() 
+    {
+        return $this->belongsTo('App\Models\PaymentMethod', 'payment_method_id');
     }
 
     public function status() 
