@@ -2,7 +2,7 @@
 
 @section('content')
     <div id="order">
-        <div>
+        <div class="order__producs">
             <h2>Produse</h2>
             <table>
                 <tr>
@@ -51,61 +51,111 @@
         <form method="POST" action="{{ route('orders-client.store')}}"> 
             @csrf          
 
-            <h2>Adrese</h2>
-            <div>
-                @if (!isset($addresses))
-                    <select>
-                        <option name="delivery_address">
-                            Selecteaza adresa de livrare
-                        </option>
-                        @foreach($addresses as $address)
-                            <option value="{{ $address->id }}">
-                                {{ $address->address }}
-
+            <div class="order__addresses">
+                <h2>Addresses</h2>
+                <div class="address">
+                    <h3>Shipping address</h3>
+                    @if (isset($addresses))
+                        <select name="shipping_address">
+                            <option>
+                                Select Shipping address
                             </option>
-
-                        @endforeach
-                    </select>
-                @else
-                    <h3>Adresa de livrare</h3>
-                    <div>
+                            @foreach($addresses as $address)
+                                <option value="{{ $address->id }}" {{ $address->id === $shippingAddress->id ? 'selected' : '' }}>
+                                    {{ $loop->iteration . ' - ' . $address->first_name . ' ' . $address->name . ' ' . $address->address  . ' ' . $address->county->name . ' ' . $address->city->name . ' ' . $address->phone_number }}
+                                </option>
+                            @endforeach
+                        </select>
+                    @else
                         <div>
                             <div>
-                                <label>Prenume</label>
-                                <input type="text" name="first_name"/>
+                                <div>
+                                    <label>Prenume</label>
+                                    <input type="text" name="first_name"/>
+                                </div>
+                                <div>
+                                    <label>Nume</label>
+                                    <input type="text" name="name"/>
+                                </div>
                             </div>
                             <div>
-                                <label>Nume</label>
-                                <input type="text" name="name"/>
+                                <label>Telefon</label>
+                                <input type="text" name="phone_number"/>
+                            </div>
+    
+                            <county-city-component
+                                counties="{{ $counties }}"
+                                @county-selected="saveCounty"
+                                @city-selected="saveCity"
+                            ></county-city-component>
+    
+                            <input type="hidden" name="county_id" :value="county"/>
+                            <input type="hidden" name="city_id" :value="city"/>
+    
+                            <div>
+                                <label>Adresa</label>
+                                <input type="text" name="address"/>
                             </div>
                         </div>
+                    @endif
+                </div>
+                <div class="address" v-if="!showInvoiceAddress">
+                    <h3>Invoice address</h3>
+                    @if (isset($addresses))
+                        <select name="invoice_address">
+                            <option>
+                                Select Shipping address
+                            </option>
+                            @foreach($addresses as $address)
+                                <option value="{{ $address->id }}" {{ $address->id === $invoiceAddress->id ? 'selected' : '' }}>
+                                    {{ $loop->iteration . ' - ' . $address->first_name . ' ' . $address->name . ' ' . $address->address  . ' ' . $address->county->name . ' ' . $address->city->name . ' ' . $address->phone_number }}
+                                </option>
+    
+                            @endforeach
+                        </select>
+                    @else
                         <div>
-                            <label>Telefon</label>
-                            <input type="text" name="phone_number"/>
+                            <div>
+                                <div>
+                                    <label>Prenume</label>
+                                    <input type="text" name="i_first_name"/>
+                                </div>
+                                <div>
+                                    <label>Nume</label>
+                                    <input type="text" name="i_name"/>
+                                </div>
+                            </div>
+                            <div>
+                                <label>Telefon</label>
+                                <input type="text" name="i_phone_number"/>
+                            </div>
+    
+                            <county-city-component
+                                counties="{{ $counties }}"
+                                @county-selected="saveCounty"
+                                @city-selected="saveCity"
+                            ></county-city-component>
+    
+                            <input type="hidden" name="i_county_id" :value="county"/>
+                            <input type="hidden" name="i_city_id" :value="city"/>
+    
+                            <div>
+                                <label>Adresa</label>
+                                <input type="text" name="i_address"/>
+                            </div>
                         </div>
-
-                        <county-city-component
-                            counties="{{ $counties }}"
-                            @county-selected="saveCounty"
-                            @city-selected="saveCity"
-                        ></county-city-component>
-
-                        <input type="hidden" name="county" :value="county"/>
-                        <input type="hidden" name="city" :value="city"/>
-
-                        <div>
-                            <label>Adresa</label>
-                            <input type="text" name="address"/>
-                        </div>
-                    </div>
-                @endif
+                    @endif
+                </div>
+                
             </div>
+
             <div>
-                <input type="checkbox" checked v-on:change="toggleInvoiceAddress" name="useAsInvoice"/>
-                <label>Foloseste adresa pentru facturare</label>
+                <input type="checkbox" id="useAsInvoice" checked v-on:change="toggleInvoiceAddress" name="useAsInvoice"/>
+                <label for="useAsInvoice">Use the shipping address as invoice address</label>
             </div>
+
             <div>
-                <h3>Metoda de livrare</h3>
+                <h3>Shipping method</h3>
                 @foreach ($shippingMethods as $shippingMethod)
                     <div>
                         <input id="{{$shippingMethod->name}}" type="radio" name="shippingMethod" value="{{$shippingMethod->id}}">
@@ -113,8 +163,9 @@
                     </div>
                 @endforeach
             </div>
+
             <div>
-                <h3>Metoda de plata</h3>
+                <h3>Payment method</h3>
                 @foreach ($paymentMethods as $paymentMethod)
                     <div>
                         <input id="{{$paymentMethod->name}}" type="radio" name="paymentMethod" value="{{$paymentMethod->id}}">

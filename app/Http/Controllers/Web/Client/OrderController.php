@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Web\Client;
 
+use Exception;
 use App\Models\Book;
 use App\Models\Cart;
 use App\Models\Order;
@@ -29,6 +30,10 @@ class OrderController extends Controller
     {
         $cart = Cart::getCart();
 
+        if(count($cart->books) === 0) {
+            return back();
+        }
+
         $books = Book::getBooksForOrder(1);
 
         $total = 0.00;
@@ -41,13 +46,18 @@ class OrderController extends Controller
 
         $addresses = Address::where('user_id', Auth::id())->get();
 
+        $shippingAddress = Address::where('default_for_shipping', 1)->where('user_id', Auth::id())->first();
+        $invoiceAddress = Address::where('default_for_invoice', 1)->where('user_id', Auth::id())->first();
+
         $counties = County::all();
 
         $shippingMethods = ShippingMethod::all();
         $paymentMethods = PaymentMethod::all();
 
-        return view('client.orders.create', ['cartId'=>$cart->id, 'books'=>$books, 'addresses' => $addresses, 'counties' => $counties, 'total'=>$total, 'shippingMethods'=>$shippingMethods, 'paymentMethods'=>$paymentMethods]);
-    
+        return view('client.orders.create', ['cartId'=>$cart->id, 'books'=>$books, 'addresses' => $addresses, 
+                                                'shippingAddress'=>$shippingAddress, 'invoiceAddress'=>$invoiceAddress,
+                                                'counties' => $counties, 'total'=>$total, 'shippingMethods'=>$shippingMethods, 
+                                                'paymentMethods'=>$paymentMethods]);
 
     }
     
@@ -55,60 +65,68 @@ class OrderController extends Controller
     {
         $input = $request->all();
 
-        \DB::beginTransaction();
+        $input['user_id'] = Auth::id();
+
+
+        DB::beginTransaction();
+
         try{
 
             $cart = Cart::getCart();
 
+            if(count($cart->books) === 0) {
+                throw new Exception();
+            }
+            
             $order = new Order();
 
-            $shippingAddress = new Address();
-            $shippingAddress->user_id = Auth::id();
-
-            $shippingAddress->first_name = $input['first_name'];
-            $shippingAddress->name = $input['name'];
-
-            $shippingAddress->phone_number = $input['phone_number'];
-            $shippingAddress->county_id = $input['county'];
-            $shippingAddress->city_id = $input['city'];
-            $shippingAddress->address = $input['address'];
-            $shippingAddress->postal_code = '00000';
-
-            $shippingAddress->save();
-            $shippingAddress->refresh();
-
-            $order->shipping_address_id = $shippingAddress->id;
-
-            $order->user_id = Auth::id();
+            $order->user_id = $input['user_id'];
 
             $order->payment_method_id = $input['paymentMethod'];
-            $order->status_id = '1';
             $order->shipping_method_id = $input['shippingMethod'];
 
+            $order->status_id = '1';
             $order->operator_id = '2';
 
-           
+            if($request->has('shipping_address')) {
+                $order->shipping_address_id = $request['shipping_address'];
+            } else {
+                $shippingAddress = Address::crate($input);
+                $shippingAddress->refresh();
+                $order->shipping_address_id = $shippingAddress->id;
+            }
 
-            if(!$input['useAsInvoice']) {
-                $invoiceAddress = new Address();
 
-                $invoiceAddress->user_id = Auth::id();
+            if(!isset($input['useAsInvoice'])) {
+                if($request->has('invoice_address')) {
+                    $order->invoice_address_id = $request['invoice_address'];
+                } else {
+                    dump('new invoice address');
+                    $invoiceAddress = new Address();
 
-                $invoiceAddress->first_name = $input['i_first_name'];
-                $invoiceAddress->name = $input['i_name'];
+                    $invoiceAddress->user_id =  $input['user_id'];
 
-                $invoiceAddress->phone_number = $input['i_phone_number'];
-                $invoiceAddress->county_id = $input['i_county'];
-                $invoiceAddress->city_id = $input['i_city'];
-                $invoiceAddress->address = $input['i_address'];
-                $invoiceAddress->postalcode = 'i_00000';
+                    $invoiceAddress->first_name = $input['i_first_name'];
+                    $invoiceAddress->name = $input['i_name'];
+
+                    $invoiceAddress->phone_number = $input['i_phone_number'];
+                    $invoiceAddress->county_id = $input['i_county_id'];
+                    $invoiceAddress->city_id = $input['i_city_id'];
+                    $invoiceAddress->address = $input['i_address'];
+                    $invoiceAddress->postalcode = 'i_00000';
+                    
+                    $invoiceAddress->save();    
+                    $invoiceAddress->fresh();
                 
-                $invoiceAddress->save();    
-                $invoiceAddress->fresh();
-               
-                $order->invoice_address_id = $invoiceAddress->id;
+                    $order->invoice_address_id = $invoiceAddress->id;
+                }
             }else {
-                $order->invoice_address_id = $shippingAddress->id;
+                if($request->has('shipping_address')) {
+                    $order->invoice_address_id = $request['shipping_address'];
+                } else {
+                    $order->invoice_address_id = $shippingAddress->id;
+                }
+                
             }
 
             $order->save();
@@ -122,31 +140,26 @@ class OrderController extends Controller
                     $book->stock->save();
                     $cart->books()->detach($book->id);
                 }else {
-                    throw new Exception();
+                    throw new Exception('Book ' . $book->title . ' is not in stock. Order placement canceled');
                 }
             }
 
      
             $order->books()->syncWithoutDetaching($cart->books);
-           
-            $result = [
-                'delivery address' => $shippingAddress,
-                'order' => $order,
-                'books' => $cart->books
-                ];
 
-            \DB::commit();
+            DB::commit();
 
-        }catch(\Exception $ex) {
+            return redirect()->route('orders-client.index');
+
+        }catch(Exception $ex) {
 
             dd($ex);
 
-            \DB::rollback();
+            DB::rollback();
 
             return back();
         }
 
-        return redirect()->route('account/orders');
     }
 
     public function show($id) 

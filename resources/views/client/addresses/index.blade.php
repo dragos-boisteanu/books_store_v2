@@ -60,24 +60,24 @@
         <div>
             <h2>More addresses</h2>
             <ul class="list addresses_list">
-                @foreach($addresses as $shippingAddress)
-                    @if($shippingAddress->default_for_shipping !== 1 || $shippingAddress->default_for_invoice !== 1)
+                @foreach($addresses as $address)
+                    @if($address->default_for_shipping !== 1 || $address->default_for_invoice !== 1)
                         <li class="address">
                             <div>
-                                {{ $shippingAddress->first_name . ' ' . $shippingAddress->name }}
+                                {{ $address->first_name . ' ' . $address->name }}
                             </div>
                             <div>
-                                {{ $shippingAddress->address }}
+                                {{ $address->address }}
                             </div>
                             <div>
-                                {{ $shippingAddress->county->name }}, {{ $shippingAddress->city->name}}
+                                {{ $address->county->name }}, {{ $address->city->name}}
                             </div>
                             <div>
-                                {{ $shippingAddress->phone_number }}
+                                {{ $address->phone_number }}
                             </div>
                             <div>
-                                <a href="{{ route('addresses-clinet.edit', ['address'=>$address->id]) }}">Edit address</a>
-                                <form method="POST" acction="{{ route('addresses-clinet.delete', ['address'=>$addres->id]) }}"></form>
+                                {{-- <a href="{{ route('addresses-client.edit', ['address'=>$address->id]) }}">Edit address</a> --}}
+                                <form method="POST" acction="{{ route('addresses-client.delete', ['address'=>$address->id]) }}"></form>
                                     @csrf
                                     @method('DELETE')
 

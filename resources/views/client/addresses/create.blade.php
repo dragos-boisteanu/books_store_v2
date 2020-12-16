@@ -5,9 +5,8 @@
         <h1>
             Create address
         </h1>
-        <form class="address" method="POST" action="{{ route('addresses-clinet.store') }}">
+        <form class="address" method="POST" action="{{ route('addresses-client.store') }}">
             @csrf
-            @method('PATCH');
 
             <div>
                 <div>
@@ -32,14 +31,24 @@
                 @city-selected="saveCity"
             ></county-city-component>
 
-            <input type="hidden" name="county" :value="county"/>
-            <input type="hidden" name="city" :value="city"/>
+            <input type="hidden" name="county_id" :value="county"/>
+            <input type="hidden" name="city_id" :value="city"/>
                 
             <div>
                 <label for="phone-number">Phone Number</label>
                 <input type="text" id="phone-number" name="phone_number"/>
-                {{ $invoiceAddress->phone_number }}
             </div>
+
+            <div>
+                <input id="invoice" type="checkbox" name="default_for_invoice"/>
+                <label for="invoice">Default address for invoice</label>
+            </div>
+
+            <div>
+                <input id="shipping" type="checkbox" name="default_for_shipping"/>
+                <label for="shipping">Default address for shipping</label>
+            </div>
+
             <div>
                 <button type="submit">Save address</button>
             </div>
