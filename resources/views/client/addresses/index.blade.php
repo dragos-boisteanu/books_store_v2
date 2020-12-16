@@ -8,7 +8,7 @@
         </h1>
         <div class="standard__addresses">
             <div class="address">
-                <h2>Invoice standard address</h2>
+                <h2>Invoice default address</h2>
                 @foreach($addresses as $invoiceAddress)
                     @if($invoiceAddress->default_for_invoice == 1)
                         <div>
@@ -33,7 +33,7 @@
                 @endforeach
             </div>
             <div class="address">
-                <h2>Shipping standard address</h2>
+                <h2>Shipping default address</h2>
                 @foreach($addresses as $shippingAddress)
                     @if($shippingAddress->default_for_shipping == 1)
                         <div>
@@ -76,7 +76,7 @@
                                 {{ $address->phone_number }}
                             </div>
                             <div>
-                                {{-- <a href="{{ route('addresses-client.edit', ['address'=>$address->id]) }}">Edit address</a> --}}
+                                <a href="{{ route('addresses-client.edit', ['address'=>$address->id]) }}">Edit address</a>
                                 <form method="POST" acction="{{ route('addresses-client.delete', ['address'=>$address->id]) }}"></form>
                                     @csrf
                                     @method('DELETE')

@@ -7,7 +7,7 @@
         </h1>
         <form class="address" method="POST" action="{{ route('addresses-client.update', ['address'=>$address->id]) }}">
             @csrf
-            @method('PATCH')
+            @method('PUT')
 
             <div>
                 <div>
@@ -41,6 +41,21 @@
                 <label for="phone-number">Phone Number</label>
                 <input type="text" id="phone-number" name="phone_number" value="{{ $address->phone_number }}"/>
             </div>
+
+            @if ($address->id !== $invoiceAddress->id)
+                <div>
+                    <input id="invoice" type="checkbox" name="default_for_invoice" {{ $address->id == $invoiceAddress->id ? 'checked' : '' }} />
+                    <label for="invoice">Default address for invoice</label>
+                </div>
+            @endif
+           
+            @if ($address->id !== $shippingAddress->id)
+                <div>
+                    <input id="shipping" type="checkbox" name="default_for_shipping" {{ $address->id == $shippingAddress->id ? 'checked' : '' }} />
+                    <label for="shipping">Default address for shipping</label>
+                </div>
+            @endif
+
             <div>
                 <button type="submit">Save address</button>
             </div>
