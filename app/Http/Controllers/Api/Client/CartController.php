@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\Client;
 
+use Exception;
 use App\Models\Book;
 use App\Models\Cart;
 use Illuminate\Http\Request;
@@ -31,64 +32,42 @@ class CartController extends Controller
     {
         $cart = Cart::getCart();
 
-        if($request->has('quantity') && $request->qunatity > 0) {
-            foreach($cart->books as $book) {
-                if($book->pivot->book_id === $request->bookId) {
-                    if(Book::findOrFail($book->pivot->book_id)->stock->quantity >= $request->qunatity) {
-
-                        $book->pivot->quantity = $request->quantity;
-
-                        return response()->json([
-                            'message' => 'Quantity updated successfully !' 
-                        ], 200);
-
-                    }else {
-
-                        return response()->json([
-                            'message' => 'Not enough products in stock'
-                        ], 412);
-                    };
-                }
-            }
-        }
+        try {
+            $cart->updateQuantity($request);
+            return response()->json([
+                'message' => 'Quantity updated successfully !' 
+            ], 200);
+        }catch (Exception $ex) {
+            return response()->json([
+                'message' => $ex->getMessage(),
+                'zero' => strpos($ex->getMessage(), '0') > -1 ? true : false
+            ], 412);
+        }                    
+        // }else {
+        //     return response()->json([
+        //         'message' => 'New quantity is 0. Nothing to update !',
+        //         'zero' => true
+        //     ], 200);
+        // }
     }
 
     public function addItem($id) 
     {
         $cart = Cart::getCart();
 
-        if(count($cart->books) > 0) {
-            foreach($cart->books as $book) {
-                if($book->pivot->book_id == $id) {
-                    if(Book::findOrFail($book->pivot->book_id)->stock->quantity >= ( $book->pivot->quantity + 1 )) {
-                       
-                        $newQuantity = $book->pivot->quantity + 1;
-                        $cart->books()->updateExistingPivot($book->pivot->book_id, ['quantity' => $newQuantity]);
-    
-                        break;
-    
-                    }else {
-    
-                        return response()->json([
-                            'message' => 'Not enough products in stock'
-                        ], 412);
-    
-                    };
-                }else {
-                    $cart->books()->attach($id);
-    
-                    break;
-                }
-            }
-        }else {
-            $cart->books()->attach($id);
+        try {
+            $cart->addItem($id);
+
+            return response()->json([
+                'message' => 'Book added in cart'
+            ], 200);
+
+        } catch ( Exception $ex) {
+            return response()->json([
+                'message' => $ex->getMessage()
+            ], 412);
         }
         
-        
-        return response()->json([
-            'message' => 'Book added in cart'
-        ], 200);
-      
     }
 
     public function removeItem(Request $request) 

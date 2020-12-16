@@ -2107,7 +2107,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_DemoComponent__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/DemoComponent */ "./resources/js/components/DemoComponent.js");
 /* harmony import */ var _components_AddToCartBtnComponent__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/AddToCartBtnComponent */ "./resources/js/components/AddToCartBtnComponent.js");
 /* harmony import */ var _components_CountyCityComponent__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/CountyCityComponent */ "./resources/js/components/CountyCityComponent.js");
+/* harmony import */ var _components_UpdateCartQuantityComponent__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/UpdateCartQuantityComponent */ "./resources/js/components/UpdateCartQuantityComponent.js");
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
+
 
 
 
@@ -2117,6 +2119,7 @@ Vue.component('cart-component', _components_CartComponent__WEBPACK_IMPORTED_MODU
 Vue.component('demo-component', _components_DemoComponent__WEBPACK_IMPORTED_MODULE_1__["default"]);
 Vue.component('add-to-cart-btn-component', _components_AddToCartBtnComponent__WEBPACK_IMPORTED_MODULE_2__["default"]);
 Vue.component('county-city-component', _components_CountyCityComponent__WEBPACK_IMPORTED_MODULE_3__["default"]);
+Vue.component('update-cart-quantity-component', _components_UpdateCartQuantityComponent__WEBPACK_IMPORTED_MODULE_4__["default"]);
 Vue.prototype.$bus = new Vue();
 
 /***/ }),
@@ -2376,6 +2379,61 @@ var DemoComponent = {
   template: "\n        <div>\n            test 23\n        </div>\n    "
 };
 /* harmony default export */ __webpack_exports__["default"] = (DemoComponent);
+
+/***/ }),
+
+/***/ "./resources/js/components/UpdateCartQuantityComponent.js":
+/*!****************************************************************!*\
+  !*** ./resources/js/components/UpdateCartQuantityComponent.js ***!
+  \****************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var UpdateCartQuantityComponent = {
+  template: "\n    <div>\n        <input type=\"number\" name=\"quantity\" v-model:value=\"localQunatity\"/>\n        <input type=\"hidden\" name=\"bookId\" :value=\"bookid\"/>\n        \n        <button @click=\"update\">Update quantity</button>\n    </div>\n    \n    ",
+  props: {
+    bookid: {
+      type: Number,
+      required: true
+    },
+    quantity: {
+      type: Number,
+      required: true
+    }
+  },
+  data: function data() {
+    return {
+      localQunatity: this.quantity
+    };
+  },
+  methods: {
+    update: function update() {
+      var _this = this;
+
+      axios.patch('api/carts', {
+        bookId: this.bookid,
+        quantity: this.localQunatity
+      }).then(function (response) {
+        if (response.status === 200) {
+          console.log(response.data);
+        }
+
+        if (response.data.zero) {
+          _this.localQunatity = _this.quantity;
+        }
+      })["catch"](function (error) {
+        if (error.response.data.zero) {
+          _this.localQunatity = _this.quantity;
+        }
+
+        console.error(error);
+      });
+    }
+  }
+};
+/* harmony default export */ __webpack_exports__["default"] = (UpdateCartQuantityComponent);
 
 /***/ }),
 

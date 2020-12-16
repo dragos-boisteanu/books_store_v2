@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Models;
-
+use Exception;
+use App\Models\Book;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -21,7 +22,60 @@ class Cart extends Model
     {
         return $this->belongsTo('App\Models\User');
     }
+    
 
+    public function addItem($id) 
+    {
+        if(count($this->books) > 0) {
+            foreach($this->books as $book) {
+                if($book->pivot->book_id == $id) {
+                    if(Book::findOrFail($book->pivot->book_id)->stock->quantity >= ( $book->pivot->quantity + 1 )) {
+                       
+                        $newQuantity = $book->pivot->quantity + 1;
+                        $this->books()->updateExistingPivot($book->pivot->book_id, ['quantity' => $newQuantity]);
+    
+                        break;
+    
+                    }else {
+    
+                        throw new Exception("Not enough products in stock");
+    
+                    };
+                }else {
+                    $this->books()->attach($id);
+    
+                    break;
+                }
+            }
+        }else {
+            $this->books()->attach($id);
+        }
+    }
+
+    public function updateQuantity($request) 
+    {
+      
+        if($request->has('quantity') && $request->quantity > 0) {
+            foreach($this->books as $book) {
+                if($book->pivot->book_id == $request->bookId) {
+                    if($book->pivot->quantity != $request->quantity) {
+                        if(Book::findOrFail($book->pivot->book_id)->stock->quantity >= $request->quantity) {
+        
+                            $newQuantity = $request->quantity;
+                            $this->books()->updateExistingPivot($book->pivot->book_id, ['quantity' => $newQuantity]);
+                            
+                        }else {
+                            throw new Exception("Not enough products in stock");
+                        };
+                    }else {
+                        throw new Exception("New quantity is equal with the old quantity. Nothing to update");
+                    }                
+                }
+            }
+        }else {
+            throw new Exception("New quantity is 0. Nothing to update !");
+        }
+    }
 
     public static function createNewCart() 
     {

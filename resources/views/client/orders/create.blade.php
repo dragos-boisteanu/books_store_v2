@@ -25,14 +25,10 @@
                             {{ $book->title}}
                         </td>
                         <td>
-                            <form method="POST" action="/api/cart/{{ $cartId }}">
-                                @csrf
-                                @method('PUT')
-
-                                <input type="number" name="quantity" value="{{ $book->quantity }}"/>
-                                <input type="hidden" name="book_id" value="{{ $book->id }}"/>
-                                <button type="submit">Actualizeaza</button>
-                            </form>
+                            <update-cart-quantity-component
+                                bookid={{ $book->id }}
+                                quantity= {{ $book->quantity }}
+                            ></update-cart-quantity-component>   
                         </td>
                         <td>
                             {{ $book->unitPrice }}
