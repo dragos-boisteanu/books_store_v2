@@ -33,6 +33,22 @@ Route::middleware(['auth'])->group(function() {
 
         Route::get('cities/{county}', 'CityController@index')->name('cities-list');
 
-      
+    });
+
+    Route::middleware(['admin'])->group(function() {
+        Route::namespace('Api\Admin')->group(function() {
+
+            Route::prefix('authors')->group(function () {
+                Route::get('/find', 'AuthorController@find')->name('authors.find');
+                Route::get('/check', 'AuthorController@check')->name('authors.check');
+            });
+
+            Route::prefix('tags')->group(function () {
+                Route::post('/', 'TagController@store')->name('tags.store');
+                Route::get('/find', 'TagController@find')->name('tags.find');
+                Route::get('/check', 'TagController@check')->name('tags.check');
+            });
+            
+        });
     });
 });

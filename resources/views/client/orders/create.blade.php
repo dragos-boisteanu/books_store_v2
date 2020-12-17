@@ -22,7 +22,8 @@
                 @foreach($books as $book) 
                     <tr>
                         <td>
-                            {{ $book->title}}
+                            <a href="{{ route('books-client.show', ['id'=>$book->id]) }}">{{ $book->title}}</a>
+                            
                         </td>
                         <td>
                             <update-cart-quantity-component
@@ -55,13 +56,13 @@
                 <h2>Addresses</h2>
                 <div class="address">
                     <h3>Shipping address</h3>
-                    @if (isset($addresses))
+                    @if (!empty($addresses))
                         <select name="shipping_address">
                             <option>
                                 Select Shipping address
                             </option>
                             @foreach($addresses as $address)
-                                <option value="{{ $address->id }}" {{ $address->id === $shippingAddress->id ? 'selected' : '' }}>
+                                <option value="{{ $address->id }}" {{ $address->default_for_shipping ? 'selected' : '' }}>
                                     {{ $loop->iteration . ' - ' . $address->first_name . ' ' . $address->name . ' ' . $address->address  . ' ' . $address->county->name . ' ' . $address->city->name . ' ' . $address->phone_number }}
                                 </option>
                             @endforeach
@@ -101,13 +102,13 @@
                 </div>
                 <div class="address" v-if="!showInvoiceAddress">
                     <h3>Invoice address</h3>
-                    @if (isset($addresses))
+                    @if (count($addresses) > 0)
                         <select name="invoice_address">
                             <option>
                                 Select Shipping address
                             </option>
                             @foreach($addresses as $address)
-                                <option value="{{ $address->id }}" {{ $address->id === $invoiceAddress->id ? 'selected' : '' }}>
+                                <option value="{{ $address->id }}" {{ $address->default_for_invoice ? 'selected' : '' }}>
                                     {{ $loop->iteration . ' - ' . $address->first_name . ' ' . $address->name . ' ' . $address->address  . ' ' . $address->county->name . ' ' . $address->city->name . ' ' . $address->phone_number }}
                                 </option>
     

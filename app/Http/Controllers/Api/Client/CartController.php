@@ -43,12 +43,6 @@ class CartController extends Controller
                 'zero' => strpos($ex->getMessage(), '0') > -1 ? true : false
             ], 412);
         }                    
-        // }else {
-        //     return response()->json([
-        //         'message' => 'New quantity is 0. Nothing to update !',
-        //         'zero' => true
-        //     ], 200);
-        // }
     }
 
     public function addItem($id) 

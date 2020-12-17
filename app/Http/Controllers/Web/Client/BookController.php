@@ -16,7 +16,7 @@ class BookController extends Controller
     public function show($id)
     {
         $book = Book::findOrFail($id);
-
+        
         return view('client.books.show', ['book'=>$book]);
     }
 }

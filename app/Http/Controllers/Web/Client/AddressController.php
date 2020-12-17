@@ -53,12 +53,7 @@ class AddressController extends Controller
         $address = Address::findOrFail($id);
         $counties = County::all();
         
-        $shippingAddress = Address::where('default_for_shipping', 1)->where('user_id', Auth::id())->first();
-        $invoiceAddress = Address::where('default_for_invoice', 1)->where('user_id', Auth::id())->first();
- 
-
-        return view('client.addresses.edit', ['address'=>$address, 'counties'=>$counties, 'invoiceAddress'=>$invoiceAddress, 'shippingAddress'=>$shippingAddress]);
-
+        return view('client.addresses.edit', ['address'=>$address, 'counties'=>$counties]);
     }
 
     public function update(Request $request, $id)
@@ -85,8 +80,10 @@ class AddressController extends Controller
         return redirect()->route('addresses-client.index');
     }
 
-    public function destroy() 
+    public function destroy($id) 
     {
-        
+        $address->findOrFail($id)->delete();
+
+        return redirect()->route('addresses-client.index');
     }
 }

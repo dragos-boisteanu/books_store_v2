@@ -34,7 +34,7 @@ class OrderController extends Controller
             return back();
         }
 
-        $books = Book::getBooksForOrder(1);
+        $books = Book::getBooksForOrder($cart->id);
 
         $total = 0.00;
 
@@ -46,16 +46,12 @@ class OrderController extends Controller
 
         $addresses = Address::where('user_id', Auth::id())->get();
 
-        $shippingAddress = Address::where('default_for_shipping', 1)->where('user_id', Auth::id())->first();
-        $invoiceAddress = Address::where('default_for_invoice', 1)->where('user_id', Auth::id())->first();
-
         $counties = County::all();
 
         $shippingMethods = ShippingMethod::all();
         $paymentMethods = PaymentMethod::all();
 
-        return view('client.orders.create', ['cartId'=>$cart->id, 'books'=>$books, 'addresses' => $addresses, 
-                                                'shippingAddress'=>$shippingAddress, 'invoiceAddress'=>$invoiceAddress,
+        return view('client.orders.create', ['cartId'=>$cart->id, 'books'=>$books, 'addresses'=>$addresses, 
                                                 'counties' => $counties, 'total'=>$total, 'shippingMethods'=>$shippingMethods, 
                                                 'paymentMethods'=>$paymentMethods]);
 
@@ -66,7 +62,6 @@ class OrderController extends Controller
         $input = $request->all();
 
         $input['user_id'] = Auth::id();
-
 
         DB::beginTransaction();
 
@@ -91,7 +86,7 @@ class OrderController extends Controller
             if($request->has('shipping_address')) {
                 $order->shipping_address_id = $request['shipping_address'];
             } else {
-                $shippingAddress = Address::crate($input);
+                $shippingAddress = Address::create($input);
                 $shippingAddress->refresh();
                 $order->shipping_address_id = $shippingAddress->id;
             }
@@ -113,7 +108,7 @@ class OrderController extends Controller
                     $invoiceAddress->county_id = $input['i_county_id'];
                     $invoiceAddress->city_id = $input['i_city_id'];
                     $invoiceAddress->address = $input['i_address'];
-                    $invoiceAddress->postalcode = 'i_00000';
+                    // $invoiceAddress->postal_code = 'i_00000';
                     
                     $invoiceAddress->save();    
                     $invoiceAddress->fresh();

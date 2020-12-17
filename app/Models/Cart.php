@@ -59,17 +59,18 @@ class Cart extends Model
             foreach($this->books as $book) {
                 if($book->pivot->book_id == $request->bookId) {
                     if($book->pivot->quantity != $request->quantity) {
-                        if(Book::findOrFail($book->pivot->book_id)->stock->quantity >= $request->quantity) {
-        
-                            $newQuantity = $request->quantity;
-                            $this->books()->updateExistingPivot($book->pivot->book_id, ['quantity' => $newQuantity]);
+                        if(Book::findOrFail($request->bookId)->stock->quantity >= $request->quantity) {
+                            $this->books()->updateExistingPivot($request->bookId, ['quantity' => $request->quantity]);
                             
+                            return;
                         }else {
                             throw new Exception("Not enough products in stock");
                         };
                     }else {
                         throw new Exception("New quantity is equal with the old quantity. Nothing to update");
                     }                
+                }else {
+                    throw new Exception("No item found with this id");
                 }
             }
         }else {
@@ -143,6 +144,7 @@ class Cart extends Model
         if(Auth::check() && Cart::where('user_id', Auth::id())->exists()) {
             $cart = Cart::where('user_id', Auth::id())->first();
         }else {
+            dd('session cart');
             $cart = Cart::find(session('cartId'));
         }
        

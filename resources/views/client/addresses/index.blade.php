@@ -10,7 +10,7 @@
             <div class="address">
                 <h2>Invoice default address</h2>
                 @foreach($addresses as $invoiceAddress)
-                    @if($invoiceAddress->default_for_invoice == 1)
+                    @if($invoiceAddress->default_for_invoice)
                         <div>
                             <div>
                                 {{ $invoiceAddress->first_name . ' ' . $invoiceAddress->name }}
@@ -35,7 +35,7 @@
             <div class="address">
                 <h2>Shipping default address</h2>
                 @foreach($addresses as $shippingAddress)
-                    @if($shippingAddress->default_for_shipping == 1)
+                    @if($shippingAddress->default_for_shipping)
                         <div>
                             <div>
                                 {{ $shippingAddress->first_name . ' ' . $shippingAddress->name }}
@@ -61,7 +61,7 @@
             <h2>More addresses</h2>
             <ul class="list addresses_list">
                 @foreach($addresses as $address)
-                    @if($address->default_for_shipping !== 1 || $address->default_for_invoice !== 1)
+                    @if(!$address->default_for_shipping && !$address->default_for_invoice)
                         <li class="address">
                             <div>
                                 {{ $address->first_name . ' ' . $address->name }}

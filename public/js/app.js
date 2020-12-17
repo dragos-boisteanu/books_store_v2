@@ -2108,7 +2108,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_AddToCartBtnComponent__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/AddToCartBtnComponent */ "./resources/js/components/AddToCartBtnComponent.js");
 /* harmony import */ var _components_CountyCityComponent__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/CountyCityComponent */ "./resources/js/components/CountyCityComponent.js");
 /* harmony import */ var _components_UpdateCartQuantityComponent__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/UpdateCartQuantityComponent */ "./resources/js/components/UpdateCartQuantityComponent.js");
+/* harmony import */ var _components_DynamicInputComponent__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/DynamicInputComponent */ "./resources/js/components/DynamicInputComponent.js");
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
+
 
 
 
@@ -2120,6 +2122,7 @@ Vue.component('demo-component', _components_DemoComponent__WEBPACK_IMPORTED_MODU
 Vue.component('add-to-cart-btn-component', _components_AddToCartBtnComponent__WEBPACK_IMPORTED_MODULE_2__["default"]);
 Vue.component('county-city-component', _components_CountyCityComponent__WEBPACK_IMPORTED_MODULE_3__["default"]);
 Vue.component('update-cart-quantity-component', _components_UpdateCartQuantityComponent__WEBPACK_IMPORTED_MODULE_4__["default"]);
+Vue.component('dynamic-input-component', _components_DynamicInputComponent__WEBPACK_IMPORTED_MODULE_5__["default"]);
 Vue.prototype.$bus = new Vue();
 
 /***/ }),
@@ -2379,6 +2382,141 @@ var DemoComponent = {
   template: "\n        <div>\n            test 23\n        </div>\n    "
 };
 /* harmony default export */ __webpack_exports__["default"] = (DemoComponent);
+
+/***/ }),
+
+/***/ "./resources/js/components/DynamicInputComponent.js":
+/*!**********************************************************!*\
+  !*** ./resources/js/components/DynamicInputComponent.js ***!
+  \**********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var DynamicInputComponent = {
+  template: "\n        <div>\n            <div>\n                <span>\n                    <span v-for=\"(word, index) in words\" :key=\"index\">\n                        {{word.first_name }} {{ word.name}}\n                        <button @click.prevent=\"remove(word.id)\">X</button>\n                    </span>\n                </span>\n                <input type=\"text\" v-model=\"input\" @keyup=\"find\">\n            </div>\n            <ul v-if=\"!noWords\">\n                <li v-for=\"word in retrievedWords\" :key=\"word.id\" @click=\"add(word)\">\n                    {{ word.first_name }} {{ word.name}}\n                </li>\n            </ul>\n            <div v-if=\"noWords\">\n                <input type=\"text\" v-model=\"word\" placeholder=\"New item...\">\n                <button @click.prevent=\"addNewWord\">+</button>\n            </div>\n        </div>\n    ",
+  props: {
+    wordsprop: {
+      type: String,
+      "default": ''
+    },
+    route: {
+      type: String,
+      "default": ''
+    }
+  },
+  created: function created() {
+    if (this.wordsprop.length > 0) {
+      this.words = JSON.parse(this.wordsprop);
+      this.emitUpdate();
+    }
+  },
+  data: function data() {
+    return {
+      input: '',
+      words: [],
+      retrievedWords: [],
+      word: '',
+      noWords: false
+    };
+  },
+  methods: {
+    add: function add(value) {
+      if (this.words.findIndex(function (word) {
+        return word.id === value.id;
+      }) < 0) {
+        this.words.push(value);
+        this.emitUpdate();
+      }
+
+      this.input = '';
+      this.retrievedWords.splice(0);
+    },
+    remove: function remove(id) {
+      this.words.splice(this.words.findIndex(function (word) {
+        return word.id === id;
+      }), 1);
+      this.emitUpdate();
+    },
+    find: function find() {
+      var _this = this;
+
+      if (this.input.length >= 3) {
+        axios.get("api/".concat(this.route, "/find"), {
+          params: {
+            data: this.input
+          }
+        }).then(function (response) {
+          console.log(response);
+
+          if (response.data.message.length > 0) {
+            _this.retrievedWords = response.data.message;
+            _this.noWords = false;
+            _this.word = '';
+          } else {
+            _this.retrievedWords.splice(0);
+
+            _this.noWords = true;
+          }
+        })["catch"](function (error) {
+          console.error(error);
+        });
+      } else {
+        this.retrievedWords.splice(0);
+        this.noWords = false;
+        this.word = '';
+      }
+    },
+    emitUpdate: function emitUpdate() {
+      this.$emit('updated', this.words);
+    },
+    addNewWord: function addNewWord() {
+      var _this2 = this;
+
+      if (this.word.length > 0) {
+        this.word = this.word.trim();
+        var first_name = this.word.substr(0, this.word.indexOf(' '));
+        var name = this.word.substr(this.word.indexOf(' ') + 1);
+        axios.get("api/".concat(this.route, "/check"), {
+          params: {
+            first_name: first_name,
+            name: name
+          }
+        }).then(function (response) {
+          if (response.data.status === 'ok') {
+            _this2.saveWord({
+              first_name: first_name,
+              name: name
+            });
+          }
+        })["catch"](function (error) {
+          console.log(error);
+        });
+      }
+    },
+    saveWord: function saveWord(data) {
+      var _this3 = this;
+
+      axios.post("api/".concat(this.route), {
+        first_name: data.first_name,
+        name: data.name
+      }).then(function (response) {
+        if (response.status === 200) {
+          _this3.add(response.data.message[0]);
+
+          _this3.noWords = false;
+          _this3.word = '';
+
+          _this3.emitUpdate();
+        }
+      })["catch"](function (error) {
+        console.error(error);
+      });
+    }
+  }
+};
+/* harmony default export */ __webpack_exports__["default"] = (DynamicInputComponent);
 
 /***/ }),
 

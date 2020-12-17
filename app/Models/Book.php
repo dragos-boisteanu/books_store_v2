@@ -30,7 +30,7 @@ class Book extends Model
 
     protected $appends = ['final_price'];
 
-    protected $with = ['authors:id,first_name,name', 'tags:id,name', 'category', 'publisher', 'publisher', 'language', 'images', 'stock'];
+    protected $with = ['authors:id,first_name,name', 'tags:id,name', 'category:id,name', 'publisher:id,name', 'language:id,name', 'images', 'stock'];
   
     public function getFinalPriceAttribute()
     {
@@ -38,6 +38,16 @@ class Book extends Model
         return $this->price - ( $this->price * $this->discount / 100);
     }
 
+    public function addedBy() 
+    {
+        return $this->belongsTo('App\Models\User', 'created_by');
+    }
+
+    public function updatedBy() 
+    {
+        return $this->belongsTo('App\Models\User', 'updated_by');
+    }
+    
     public function stock() 
     {
         return $this->hasOne('App\Models\Stock');

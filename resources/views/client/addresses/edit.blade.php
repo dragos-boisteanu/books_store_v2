@@ -42,16 +42,16 @@
                 <input type="text" id="phone-number" name="phone_number" value="{{ $address->phone_number }}"/>
             </div>
 
-            @if ($address->id !== $invoiceAddress->id)
+            @if (!$address->default_for_invoice)
                 <div>
-                    <input id="invoice" type="checkbox" name="default_for_invoice" {{ $address->id == $invoiceAddress->id ? 'checked' : '' }} />
+                    <input id="invoice" type="checkbox" name="default_for_invoice" {{ $address->default_for_invoice ? 'checked' : '' }} />
                     <label for="invoice">Default address for invoice</label>
                 </div>
             @endif
            
-            @if ($address->id !== $shippingAddress->id)
+            @if (!$address->default_for_shipping)
                 <div>
-                    <input id="shipping" type="checkbox" name="default_for_shipping" {{ $address->id == $shippingAddress->id ? 'checked' : '' }} />
+                    <input id="shipping" type="checkbox" name="default_for_shipping" {{ $address->default_for_shipping ? 'checked' : '' }} />
                     <label for="shipping">Default address for shipping</label>
                 </div>
             @endif
