@@ -87,7 +87,7 @@
         </div>
 
         <div class="action">
-            <a href="{{ route('orders-client.index') }}">Back to orders</a>
+            <a href="{{ route('admin-orders.edit', ['order'=>$order->id]) }}">Edit</a>
         </div>
         
        

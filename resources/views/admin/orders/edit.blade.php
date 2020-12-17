@@ -19,7 +19,7 @@
             <div>
                 Operator: 
     
-                <select name="operators">
+                <select name="operator_id">
                     <option value="0" disabled>Select operator</option>
                     @foreach($operators as $operator)
                         <option value="{{ $operator->id }}" {{ $order->operator->id === $operator->id ? 'selected' : ''}}>
@@ -30,7 +30,7 @@
             </div>
             <div>
                 <h3>Status</h3>
-                <select>
+                <select name="status_id">
                     <option value="0" disabled>Select order status</option>
                     @foreach($statuses as $status)
                         <option value="{{ $status->id }}" {{ $order->status->id === $status->id ? 'selected' : ''}}>{{ $status->name }}</option>
@@ -43,7 +43,7 @@
                         Shipping address
                     </h2>
                     <div>
-                        <select name="shipping_address">
+                        <select name="shipping_address_id">
                             <option value="0" disabled>Select shipping address</option>
                             @foreach($user_addresses as $address)
                                 <option value="{{ $address->id }}" {{ $order->shipping_address->id === $address->id ? 'selected' : ''}}>
@@ -58,7 +58,7 @@
                         Invoice address
                     </h2>
                     <div>
-                        <select name="invoice_address">
+                        <select name="invoice_address_id">
                             <option value="0" disabled>Select invoice address</option>
                             @foreach($user_addresses as $address)
                                 <option value="{{ $address->id }}" {{ $order->invoice_address->id === $address->id ? 'selected' : ''}}>
@@ -73,7 +73,7 @@
                 <div class="method">
                     <h2>Payment method</h2>
                     <div>
-                        <select name="payment_method">
+                        <select name="payment_method_id">
                             <option value="0">Select payment method</option>
                             @foreach($payment_methods as $payment_method)
                                 <option value="{{ $payment_method->id }}" {{ $order->payment_method->id === $payment_method->id ? 'selected' : ''}}>
@@ -86,7 +86,7 @@
                 <div class="method">
                     <h2>Shipping method</h2>
                     <div>
-                        <select name="shipping_method">
+                        <select name="shipping_method_id">
                             <option value="0">Select payment method</option>
                             @foreach($shipping_methods as $shipping_method)
                                 <option value="{{ $shipping_method->id }}" {{ $order->shipping_method->id === $shipping_method->id ? 'selected' : ''}}>

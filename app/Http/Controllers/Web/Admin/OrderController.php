@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Models\PaymentMethod;
 use App\Models\ShippingMethod;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
@@ -95,7 +96,14 @@ class OrderController extends Controller
      */
     public function update(Request $request, $id)
     {
-        dd($request->all());
+        
+        $input = $request->all();
+
+        $input['updated_by'] = Auth::id();
+
+        Order::findOrFail($id)->update($input);
+
+        return redirect()->route('admin-orders.show', ['order'=>$id]);
     }
 
     /**
