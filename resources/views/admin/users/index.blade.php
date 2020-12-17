@@ -4,7 +4,7 @@
     <div class="dashboard">
         <h1>Lista utilizatori</h1>
         <div class="filter">
-            <form method="POST" action="{{ route('users.index')}}">
+            <form method="POST" action="{{ route('admin-users.index')}}">
                 @csrf
     
                 <input type="text" name="first_name" placeholder="Prenume"/>
@@ -82,8 +82,8 @@
                         {{ $user->created_at }}
                     </td>
                     <td>
-                        <a href="{{ route('users.show', ['user'=>$user->id]) }}">Detalii</a>
-                        <form method="POST" action="{{ route('users.destroy', ['user'=>$user->id]) }}">
+                        <a href="{{ route('admin-users.show', ['user'=>$user->id]) }}">Detalii</a>
+                        <form method="POST" action="{{ route('admin-users.destroy', ['user'=>$user->id]) }}">
                             @csrf
                             @method('DELETE')
                             <button type="submit">Delete</button>

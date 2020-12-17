@@ -44,7 +44,7 @@ class Order extends Model
 
     public function operator() 
     {
-        return $this->belongsTo('App\Model\User', 'operator_id');
+        return $this->belongsTo('App\Models\User', 'operator_id');
     }
 
     public function shipping_address() 

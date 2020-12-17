@@ -40,7 +40,10 @@
                             ID
                         </th>
                         <th>
-                            Cantitate produse
+                            Deliver to
+                        </th>
+                        <th>
+                           Shipping Method
                         </th>
                         <th>
                             Payment Method
@@ -49,13 +52,16 @@
                             Status
                         </th>
                         <th>
-                            Valoare totala
+                           Total
                         </th>
                         <th>
-                            Creeata la 
+                            Created at
                         </th>
                         <th>
-                            Ultima modificare la
+                            Last modified at
+                        </th>
+                        <th>
+                            
                         </th>
                     </tr>
                     @foreach( $user->orders as $order)
@@ -64,13 +70,16 @@
                                 {{ $loop->iteration  }}
                             </th>
                             <td>
-                                <a href="{{ route('orders.show', ['order'=>$order->id]) }}"> {{ $order->id }} </span></a>
+                               {{ $order->id }}
                             </td>
                             <td>
-                                {{ $order->total_quantity }} 
+                                {{ $order->shipping_address->first_name . ' ' . $order->shipping_address->name }}
                             </td>
                             <td>
-                                {{ $order->paymentMethod->name }}
+                                {{ $order->shipping_method->name }} 
+                            </td>
+                            <td>
+                                {{ $order->payment_method->name }}
                             </td>
                             <td>
                                 {{ $order->status->name }}
@@ -83,6 +92,9 @@
                             </td>
                             <td>
                                 {{ $order->updated_at }}
+                            </td>
+                            <td>
+                                <a href="{{ route('admin-orders.show', ['order'=>$order->id]) }}" >Details</a>
                             </td>
                         </tr>
                     @endforeach
@@ -120,7 +132,7 @@
                                 {{ $addedBook->id }}
                             </td>
                             <td>
-                                <a href="{{ route('books.show', ['book'=>$addedBook->id]) }}">{{ $addedBook->title }}</span></a>
+                                <a href="{{ route('admin-books.show', ['book'=>$addedBook->id]) }}">{{ $addedBook->title }}</span></a>
                             </td>
                             <td>
                                 {{ $addedBook->created_at }}
@@ -156,7 +168,7 @@
                                 {{ $updatedBook->id }}
                             </td>
                             <td>
-                                <a href="{{ route('books.show', ['book'=>$updatedBook->id]) }}">{{ $updatedBook->title }}</span></a>
+                                <a href="{{ route('admin-books.show', ['book'=>$updatedBook->id]) }}">{{ $updatedBook->title }}</span></a>
                             </td>
                             <td>
                                 {{ $updatedBook->created_at }}

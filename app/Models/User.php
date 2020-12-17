@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -63,6 +64,27 @@ class User extends Authenticatable
     public function orders() 
     {
         return $this->hasMany('App\Models\Order');
+    }
+
+    public function orderOperatator() 
+    {
+        return $this->hasMany('App\Models\Order', 'operator_id');
+    }
+
+    public function addedBooks() 
+    {
+        return $this->hasMany('App\Models\Book', 'created_by');
+    }
+
+    public function updatedBooks() 
+    {
+        return $this->hasMany('App\Models\Book', 'updated_by');
+    }
+
+    public function operatorForOrders() {
+        $orders = DB::select('select * from orders where operator_id = :id', ['id'=>$this->id]);
+
+        return $orders;
     }
 
 }

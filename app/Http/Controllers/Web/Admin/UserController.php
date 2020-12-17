@@ -56,18 +56,25 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
 
+        $data = array();
+
         if($user->role->id === 2 || $user->role->id === 3) {
+
             $user->load(['orders', 'updatedBooks', 'addedBooks']);
+
             $addedBooks = $user->addedBooks()->simplePaginate(15);
             $updatedBooks = $user->updatedBooks()->simplePaginate(15);
 
-            return view('admin.users.show', ['user'=>$user, 'addedBooks'=>$addedBooks, 'updatedBooks'=>$updatedBooks]);
+            $data = ['user'=>$user, 'addedBooks'=>$addedBooks, 'updatedBooks'=>$updatedBooks];
+
         } else {
-            $user->load(['orders']);
+            $user->load('orders');
+
+            $data = ['user'=>$user];
         }
 
-
-        return view('admin.users.show', ['user'=>$user]);
+        // dd($data);
+        return view('admin.users.show', $data);
     }
 
     /**
