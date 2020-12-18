@@ -43,7 +43,7 @@
                         Shipping address
                     </h2>
                     <div>
-                        <x-addresses-dropdown
+                        <x-addresses-select
                             name="shipping_address_id"
                             title="Select shipping address"
                             :id="$order->invoice_address->id"
@@ -56,7 +56,7 @@
                         Invoice address
                     </h2>
                     <div>
-                        <x-addresses-dropdown
+                        <x-addresses-select
                             name="invoice_address_id"
                             title="Select invoice address"
                             :id="$order->invoice_address->id"

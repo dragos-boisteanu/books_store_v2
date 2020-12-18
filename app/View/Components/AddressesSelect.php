@@ -4,7 +4,7 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 
-class AddressesDropdown extends Component
+class AddressesSelect extends Component
 {
 
     public $name;
@@ -33,6 +33,6 @@ class AddressesDropdown extends Component
     public function render()
     {
       
-        return view('components.addresses-dropdown');
+        return view('components.addresses-select');
     }
 }
