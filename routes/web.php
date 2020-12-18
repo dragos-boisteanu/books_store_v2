@@ -21,6 +21,7 @@ Route::get('/', 'HomeController@index')->name('home');
 Route::get('books/{id}', 'Web\client\BookController@show')->name('books.show');
 
 Route::get('/category/{id}', 'Web\CategoryController')->name('category-books.show');
+Route::get('/authors/{id}', 'Web\AuthorsController')->name('authors-books.show');
 
 Route::middleware(['auth'])->group(function() {
     
