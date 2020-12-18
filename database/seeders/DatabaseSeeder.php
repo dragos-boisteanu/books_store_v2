@@ -61,7 +61,9 @@ class DatabaseSeeder extends Seeder
             ); 
         });
 
-        Stock::factory()->count(300)->create();
+        Book::all()->each(function ($book) {
+            $book->stock()->create(['book_id'=>$book->id, 'quantity'=>rand(1,25), 'created_by'=>1, 'updated_by'=>1]);
+        });
 
     }
 }
