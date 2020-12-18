@@ -43,14 +43,12 @@
                         Shipping address
                     </h2>
                     <div>
-                        <select name="shipping_address_id">
-                            <option value="0" disabled>Select shipping address</option>
-                            @foreach($user_addresses as $address)
-                                <option value="{{ $address->id }}" {{ $order->shipping_address->id === $address->id ? 'selected' : ''}}>
-                                    {{ $loop->iteration . ' - ' . $address->first_name . ' ' . $address->name . ' ' . $address->address  . ' ' . $address->county->name . ' ' . $address->city->name . ' ' . $address->phone_number }}                                
-                                </option>
-                            @endforeach
-                        </select>
+                        <x-addresses-dropdown
+                            name="shipping_address_id"
+                            title="Select shipping address"
+                            :id="$order->invoice_address->id"
+                            :addresses="$user_addresses"
+                        />
                     </div>
                 </div>
                 <div class="address">
@@ -58,14 +56,12 @@
                         Invoice address
                     </h2>
                     <div>
-                        <select name="invoice_address_id">
-                            <option value="0" disabled>Select invoice address</option>
-                            @foreach($user_addresses as $address)
-                                <option value="{{ $address->id }}" {{ $order->invoice_address->id === $address->id ? 'selected' : ''}}>
-                                    {{ $loop->iteration . ' - ' . $address->first_name . ' ' . $address->name . ' ' . $address->address  . ' ' . $address->county->name . ' ' . $address->city->name . ' ' . $address->phone_number }}                                
-                                </option>
-                            @endforeach
-                        </select>
+                        <x-addresses-dropdown
+                            name="invoice_address_id"
+                            title="Select invoice address"
+                            :id="$order->invoice_address->id"
+                            :addresses="$user_addresses"
+                        />
                     </div>
                 </div>
             </div>

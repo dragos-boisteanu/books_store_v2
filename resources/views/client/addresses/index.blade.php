@@ -11,22 +11,9 @@
                 <h2>Invoice default address</h2>
                 @foreach($addresses as $invoiceAddress)
                     @if($invoiceAddress->default_for_invoice)
+                        <x-address :address="$invoiceAddress"/>
                         <div>
-                            <div>
-                                {{ $invoiceAddress->first_name . ' ' . $invoiceAddress->name }}
-                            </div>
-                            <div>
-                                {{ $invoiceAddress->address }}
-                            </div>
-                            <div>
-                                {{ $invoiceAddress->county->name }}, {{ $invoiceAddress->city->name}}
-                            </div>
-                            <div>
-                                {{ $invoiceAddress->phone_number }}
-                            </div>
-                            <div>
-                                <a href="{{ route('addresses-client.edit', ['address'=>$invoiceAddress->id]) }}">Edit invoice address</a>
-                            </div>
+                            <a href="{{ route('addresses-client.edit', ['address'=>$invoiceAddress->id]) }}">Edit shipping address</a>
                         </div>
                         @break
                     @endif
@@ -36,22 +23,9 @@
                 <h2>Shipping default address</h2>
                 @foreach($addresses as $shippingAddress)
                     @if($shippingAddress->default_for_shipping)
+                        <x-address :address="$shippingAddress"/>  
                         <div>
-                            <div>
-                                {{ $shippingAddress->first_name . ' ' . $shippingAddress->name }}
-                            </div>
-                            <div>
-                                {{ $shippingAddress->address }}
-                            </div>
-                            <div>
-                                {{ $shippingAddress->county->name }}, {{ $shippingAddress->city->name}}
-                            </div>
-                            <div>
-                                {{ $shippingAddress->phone_number }}
-                            </div>
-                            <div>
-                                <a href="{{ route('addresses-client.edit', ['address'=>$shippingAddress->id]) }}">Edit shipping address</a>
-                            </div>
+                            <a href="{{ route('addresses-client.edit', ['address'=>$shippingAddress->id]) }}">Edit shipping address</a>
                         </div>
                     @endif
                 @endforeach

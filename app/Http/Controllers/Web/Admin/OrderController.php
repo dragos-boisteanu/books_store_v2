@@ -67,7 +67,7 @@ class OrderController extends Controller
      */
     public function edit($id)
     {
-        $order = Order::findOrFail($id);
+        $order = Order::withTrashed()->findOrFail($id);
 
         $shippingMethods = ShippingMethod::all();
         $paymentMethods = PaymentMethod::all();
