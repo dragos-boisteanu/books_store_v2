@@ -70,6 +70,9 @@
                    Total
                 </th>
                 <th>
+                    Disabled
+                </th>
+                <th>
                     Created at
                 </th>
                 <th>
@@ -104,6 +107,17 @@
                 </td>
                 <td>
                     {{ $order->total_price }}
+                </td>
+                <td>
+                    @if($order->deleted_at)
+                        <span>
+                            TRUE
+                        </span>
+                    @else
+                        <span>
+                            FALSE
+                        </span>
+                    @endif
                 </td>
                 <td>
                     {{ $order->created_at }}

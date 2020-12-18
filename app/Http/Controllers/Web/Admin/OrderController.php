@@ -20,7 +20,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::orderBy('created_at', 'desc')->simplePaginate(15);
+        $orders = Order::withTrashed()->orderBy('created_at', 'desc')->simplePaginate(15);
 
         $shippingMethods = ShippingMethod::all();
         $paymentMethods = PaymentMethod::all();
@@ -42,7 +42,7 @@ class OrderController extends Controller
      */
     public function show($id)
     {
-        $order = Order::findOrFail($id);
+        $order = Order::withTrashed()->findOrFail($id);
 
         $shippingMethods = ShippingMethod::all();
         $paymentMethods = PaymentMethod::all();
@@ -114,6 +114,8 @@ class OrderController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Order::findOrFail($id)->delete();
+
+        return view('admin.orders.show', ['book'=>$id]);
     }
 }

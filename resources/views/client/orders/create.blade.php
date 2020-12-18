@@ -56,7 +56,7 @@
                 <h2>Addresses</h2>
                 <div class="address">
                     <h3>Shipping address</h3>
-                    @if (!empty($addresses))
+                    @if (count($addresses) > 0)
                         <select name="shipping_address">
                             <option>
                                 Select Shipping address
