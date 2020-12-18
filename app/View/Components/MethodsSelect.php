@@ -4,27 +4,26 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 
-class AddressesSelect extends Component
+class MethodsSelect extends Component
 {
+
 
     public $name;
     public $title;
     public $id;
-    public $addresses;
-
+    public $methods; 
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($name, $title, $id, $addresses)
+    public function __construct($name, $title, $id, $methods)
     {
         $this->name = $name;
         $this->title =  $title;
         $this->id = $id;
-        $this->addresses = $addresses;
+        $this->methods = $methods;
     }
-
     /**
      * Get the view / contents that represent the component.
      *
@@ -32,6 +31,6 @@ class AddressesSelect extends Component
      */
     public function render()
     {
-        return view('components.addresses-select');
+        return view('components.methods-select');
     }
 }

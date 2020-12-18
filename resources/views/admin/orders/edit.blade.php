@@ -46,7 +46,7 @@
                         <x-addresses-select
                             name="shipping_address_id"
                             title="Select shipping address"
-                            :id="$order->invoice_address->id"
+                            :id="$order->invoice_address_id"
                             :addresses="$user_addresses"
                         />
                     </div>
@@ -59,7 +59,7 @@
                         <x-addresses-select
                             name="invoice_address_id"
                             title="Select invoice address"
-                            :id="$order->invoice_address->id"
+                            :id="$order->invoice_address_id"
                             :addresses="$user_addresses"
                         />
                     </div>
@@ -69,27 +69,23 @@
                 <div class="method">
                     <h2>Payment method</h2>
                     <div>
-                        <select name="payment_method_id">
-                            <option value="0">Select payment method</option>
-                            @foreach($payment_methods as $payment_method)
-                                <option value="{{ $payment_method->id }}" {{ $order->payment_method->id === $payment_method->id ? 'selected' : ''}}>
-                                    {{$payment_method->name }}
-                                </option>
-                            @endforeach
-                        </select>
+                        <x-methods-select
+                            name="payment_method_id"
+                            title="Select payment method"
+                            :id="$order->payment_method_id"
+                            :methods="$payment_methods"
+                        />
                     </div>
                 </div>
                 <div class="method">
                     <h2>Shipping method</h2>
                     <div>
-                        <select name="shipping_method_id">
-                            <option value="0">Select payment method</option>
-                            @foreach($shipping_methods as $shipping_method)
-                                <option value="{{ $shipping_method->id }}" {{ $order->shipping_method->id === $shipping_method->id ? 'selected' : ''}}>
-                                    {{$shipping_method->name }}
-                                </option>
-                            @endforeach
-                        </select>
+                        <x-methods-select
+                            name="shipping_method_id"
+                            title="Select shipping method"
+                            :id="$order->shipping_method_id"
+                            :methods="$shipping_methods"
+                        />
                     </div>
                 </div>
             </div>
