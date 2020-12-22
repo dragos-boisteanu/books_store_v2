@@ -144,7 +144,6 @@ class Cart extends Model
         if(Auth::check() && Cart::where('user_id', Auth::id())->exists()) {
             $cart = Cart::where('user_id', Auth::id())->first();
         }else {
-            dd('session cart');
             $cart = Cart::find(session('cartId'));
         }
        

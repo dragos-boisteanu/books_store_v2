@@ -29,7 +29,7 @@ const AddToCartBtnComponent = {
         addToCart() {
             axios.post(`api/carts/${this.id}`)
             .then( response => {
-                console.log(response.data);
+                // console.log(response.data);
                 console.log(`book ${this.id} added in cart`);
             })
             .catch( error => {
