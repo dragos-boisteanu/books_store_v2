@@ -56,8 +56,14 @@
                 <h2>Addresses</h2>
                 <div class="address">
                     <h3>Shipping address</h3>
-                    @if (!empty($addresses))
-                        <select name="shipping_address">
+                    @if (count($addresses) > 0)
+                        <x-addresses-select
+                            name="shipping_address"
+                            title="Select Shipping address"
+                            :addresses="$addresses"
+                        />
+
+                        {{-- <select name="shipping_address">
                             <option>
                                 Select Shipping address
                             </option>
@@ -66,7 +72,7 @@
                                     {{ $loop->iteration . ' - ' . $address->first_name . ' ' . $address->name . ' ' . $address->address  . ' ' . $address->county->name . ' ' . $address->city->name . ' ' . $address->phone_number }}
                                 </option>
                             @endforeach
-                        </select>
+                        </select> --}}
                     @else
                         <div>
                             <div>
@@ -103,7 +109,12 @@
                 <div class="address" v-if="!showInvoiceAddress">
                     <h3>Invoice address</h3>
                     @if (count($addresses) > 0)
-                        <select name="invoice_address">
+                        <x-addresses-select
+                            name="invoice_address"
+                            title="Select Invoice address"
+                            :addresses="$addresses"
+                        />
+                        {{-- <select name="invoice_address">
                             <option>
                                 Select Shipping address
                             </option>
@@ -113,7 +124,7 @@
                                 </option>
     
                             @endforeach
-                        </select>
+                        </select> --}}
                     @else
                         <div>
                             <div>

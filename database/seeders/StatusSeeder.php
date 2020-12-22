@@ -33,6 +33,12 @@ class StatusSeeder extends Seeder
         ]); 
 
         DB::table('statuses')->insert([ 
+            'name'=> 'Trimisa',
+            'created_by' => 2,
+            'updated_by' => 2
+        ]); 
+
+        DB::table('statuses')->insert([ 
             'name'=> 'Efectuata',
             'created_by' => 2,
             'updated_by' => 2

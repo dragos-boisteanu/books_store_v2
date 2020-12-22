@@ -24,7 +24,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $books = Book::simplePaginate(15);
+        $books = Book::orderBy('created_at', 'desc')->simplePaginate(15);
 
         return view('home', ['books'=>$books]);
     }

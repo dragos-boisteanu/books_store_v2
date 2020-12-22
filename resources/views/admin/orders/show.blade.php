@@ -4,7 +4,7 @@
 
     <div class="view">
         <h1 class="view__header">
-            Order {{ $order->id }} # - {{ $order->status->name }}
+            Order {{ $order->id }} # - {{ $order->status->name }} - @if($order->deleted_at) DISABLED @endif
         </h1>
         <div class="date">
             {{ $order->created_at }}
@@ -88,7 +88,17 @@
 
         <div class="action">
             <a href="{{ route('admin-orders.edit', ['order'=>$order->id]) }}">Edit</a>
+
+            <form method="POST" action="{{ route('admin-orders.destroy', ['order'=>$order->id]) }}">
+                @csrf
+                @method('DELETE')
+                <button type="submit">Delete</button>
+            </form>
         </div>
+
+       
+           
+        
         
        
     </div>
