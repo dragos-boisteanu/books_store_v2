@@ -32,7 +32,7 @@ const AddToCartBtnComponent = {
                 // console.log(response.data);
                 console.log(`book ${this.id} added in cart`);
             })
-            .catch( error => {
+            .catch( error => { 
                 console.error( error );
             });
             
