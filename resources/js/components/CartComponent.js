@@ -24,7 +24,7 @@ const CartComponent = {
                         <a :href="'/books/' + book.id" class="link link-cart title">{{ book.title }}</a>
                         <span class="divider">x</span>
                         <span class="quantity">{{ book.quantity }} buc.</span>
-                        <span class="price">{{ book.price }} RON</span>
+                        <span class="price">{{ book.finalPrice }} RON</span>
                         <button @click="removeFromCart(book.id)" class="btn">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="red" width="18px" height="18px"><path d="M0 0h24v24H0z" fill="none"/>
                                 <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
@@ -51,7 +51,7 @@ const CartComponent = {
     },
 
     mounted() {
-        this.$bus.$on('added',  this.addToCart)
+        this.$bus.$on('added',  this.addedToCart)
     },
 
     data() { 
@@ -90,14 +90,31 @@ const CartComponent = {
             })
         },
 
-        addToCart(data) {
-            if(data.vm) {
-                data.vm.$set(this.items[this.items.findIndex(item => item.id == data.id)], 'quantity', parseInt(this.items[this.items.findIndex(item => item.id == data.id)].quantity) + 1);
+        addedToCart(data) {
 
-                data.vm.$set(this.items[this.items.findIndex(item => item.id == data.id)], 'price', parseFloat(this.items[this.items.findIndex(item => item.id == data.id)].price) + data.price);
-            }else {
-                this.items.push(data);
-            }   
+            const index = this.items.findIndex(item => item.id == data.id);
+
+            if(index > -1 ) {
+                const item = this.items[index];
+
+                data.vm.$set(item, 'quantity', parseInt(item.quantity) + 1);
+                data.vm.$set(item, 'price', parseFloat(item.finalPrice) + parseFloat(item.price));
+
+            } else {
+                this.items.push(data.book); 
+                // this.getItemForCart(data.id);
+            }
+ 
+        },
+
+        getItemForCart(id) {
+            axios.get(`/api/carts/${id}`)
+            .then( response => {
+                 this.items.push(response.data[0]);  
+            })
+            .catch( error => {
+                console.error(error);
+            }) 
         },
 
         toggleCart() {

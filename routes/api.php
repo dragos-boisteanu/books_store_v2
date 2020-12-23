@@ -22,8 +22,11 @@ Route::namespace('Api\Client')->group(function () {
       
         Route::delete('/', 'CartController@empty')->name('carts.empty');
     
+        Route::get('/{id}', 'CartController@getItem')->name('carts.get-item');
         Route::post('/{id}', 'CartController@addItem')->name('carts.add-item');
+        
         Route::delete('/{id}', 'CartController@removeItem')->name('carts.remove-item');
+
     });        
 });
 

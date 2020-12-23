@@ -2184,9 +2184,6 @@ var AddToCartBtnComponent = {
       require: true
     }
   },
-  mounted: function mounted() {
-    this.$bus.$on('cartItems', this.reciveItems);
-  },
   data: function data() {
     return {
       cartItems: []
@@ -2200,8 +2197,18 @@ var AddToCartBtnComponent = {
       var _this = this;
 
       axios.post("api/carts/".concat(this.id)).then(function (response) {
-        console.log(response.data);
-        console.log("book ".concat(_this.id, " added in cart"));
+        if (response.data.book) {
+          _this.$bus.$emit('added', {
+            id: _this.id,
+            book: response.data.book[0],
+            vm: _this
+          });
+        } else {
+          _this.$bus.$emit('added', {
+            id: _this.id,
+            vm: _this
+          });
+        }
       })["catch"](function (error) {
         console.error(error);
       });
@@ -2222,7 +2229,7 @@ var AddToCartBtnComponent = {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 var CartComponent = {
-  template: "\n        <div class=\"cart\">\n            <div class=\"cart__button\" @click=\"toggleCart\">\n                <div>\n                    Cart\n                </div>\n                <div>\n                    {{ count }}\n                </div>\n            </div>\n            <div v-if=\"showCart\">\n                <div class=\"cart__header\">\n                    <div>\n                        Shopping cart \n                    </div>\n                    <div @click=\"toggleCart\">\n                        X\n                    </div>\n                </div>\n                <ul class=\"items__list\">\n                    <li v-for=\"(book,index) in items\" :key=\"index\" class=\"item\">\n                        <a :href=\"'/books/' + book.id\" class=\"link link-cart title\">{{ book.title }}</a>\n                        <span class=\"divider\">x</span>\n                        <span class=\"quantity\">{{ book.quantity }} buc.</span>\n                        <span class=\"price\">{{ book.price }} RON</span>\n                        <button @click=\"removeFromCart(book.id)\" class=\"btn\">\n                            <svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"red\" width=\"18px\" height=\"18px\"><path d=\"M0 0h24v24H0z\" fill=\"none\"/>\n                                <path d=\"M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z\"/>\n                            </svg>\n                        </button>\n                    </li>\n                </ul>\n                <form method=\"GET\" action=\"/orders/create\">\n                    <button type=\"submit\" class=\"btn btn-order\">Place order</button>\n                </form>\n            </div>\n        </div>\n    ",
+  template: "\n        <div class=\"cart\">\n            <div class=\"cart__button\" @click=\"toggleCart\">\n                <div>\n                    Cart\n                </div>\n                <div>\n                    {{ count }}\n                </div>\n            </div>\n            <div v-if=\"showCart\">\n                <div class=\"cart__header\">\n                    <div>\n                        Shopping cart \n                    </div>\n                    <div @click=\"toggleCart\">\n                        X\n                    </div>\n                </div>\n                <ul class=\"items__list\">\n                    <li v-for=\"(book,index) in items\" :key=\"index\" class=\"item\">\n                        <a :href=\"'/books/' + book.id\" class=\"link link-cart title\">{{ book.title }}</a>\n                        <span class=\"divider\">x</span>\n                        <span class=\"quantity\">{{ book.quantity }} buc.</span>\n                        <span class=\"price\">{{ book.finalPrice }} RON</span>\n                        <button @click=\"removeFromCart(book.id)\" class=\"btn\">\n                            <svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"red\" width=\"18px\" height=\"18px\"><path d=\"M0 0h24v24H0z\" fill=\"none\"/>\n                                <path d=\"M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z\"/>\n                            </svg>\n                        </button>\n                    </li>\n                </ul>\n                <form method=\"GET\" action=\"/orders/create\">\n                    <button type=\"submit\" class=\"btn btn-order\">Place order</button>\n                </form>\n            </div>\n        </div>\n    ",
   created: function created() {
     var _this = this;
 
@@ -2235,7 +2242,7 @@ var CartComponent = {
     });
   },
   mounted: function mounted() {
-    this.$bus.$on('added', this.addToCart);
+    this.$bus.$on('added', this.addedToCart);
   },
   data: function data() {
     return {
@@ -2271,21 +2278,27 @@ var CartComponent = {
         console.error(error);
       });
     },
-    addToCart: function addToCart(data) {
-      if (data.vm) {
-        data.vm.$set(this.items[this.items.findIndex(function (item) {
-          return item.id == data.id;
-        })], 'quantity', parseInt(this.items[this.items.findIndex(function (item) {
-          return item.id == data.id;
-        })].quantity) + 1);
-        data.vm.$set(this.items[this.items.findIndex(function (item) {
-          return item.id == data.id;
-        })], 'price', parseFloat(this.items[this.items.findIndex(function (item) {
-          return item.id == data.id;
-        })].price) + data.price);
+    addedToCart: function addedToCart(data) {
+      var index = this.items.findIndex(function (item) {
+        return item.id == data.id;
+      });
+
+      if (index > -1) {
+        var item = this.items[index];
+        data.vm.$set(item, 'quantity', parseInt(item.quantity) + 1);
+        data.vm.$set(item, 'price', parseFloat(item.finalPrice) + parseFloat(item.price));
       } else {
-        this.items.push(data);
+        this.items.push(data.book); // this.getItemForCart(data.id);
       }
+    },
+    getItemForCart: function getItemForCart(id) {
+      var _this3 = this;
+
+      axios.get("/api/carts/".concat(id)).then(function (response) {
+        _this3.items.push(response.data[0]);
+      })["catch"](function (error) {
+        console.error(error);
+      });
     },
     toggleCart: function toggleCart() {
       this.showCart = !this.showCart;

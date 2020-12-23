@@ -123,17 +123,17 @@ class Book extends Model
 
 
 
-
     public static function getBooksFromCart($cartId) 
     {
         $books = DB::select('SELECT books.id, books.title, book_cart.quantity, 
         books.discount as discount,
-        FORMAT(books.price - (books.price * books.discount / 100), 2) * book_cart.quantity AS final_price,
+        FORMAT(books.price - (books.price * books.discount / 100), 2) * book_cart.quantity AS finalPrice,
         price as price
         FROM book_cart
         JOIN books ON book_cart.book_id = books.id
         JOIN carts on carts.id = book_cart.cart_id
-        WHERE carts.id = :cart_id', ['cart_id' => $cartId]);
+        WHERE carts.id = :cart_id
+        ORDER BY book_cart.created_at desc', ['cart_id' => $cartId]);
 
         return $books;
     }
@@ -146,7 +146,8 @@ class Book extends Model
         FROM book_cart
         JOIN books ON book_cart.book_id = books.id
         JOIN carts on carts.id = book_cart.cart_id
-        WHERE carts.id = :cart_id AND books.id = :book_id', ['cart_id' => $cartId, 'book_id'=>$bookId]);
+        WHERE carts.id = :cart_id AND books.id = :book_id
+        LIMIT 1', ['cart_id' => $cartId, 'book_id'=>$bookId]);
 
         return $book;
     }
@@ -158,6 +159,7 @@ class Book extends Model
         TRUNCATE(books.price - (books.price * books.discount / 100), 2) AS price
         FROM books
         JOIN stocks on stocks.book_id = books.id
+        ORDER BY books.created_at desc
         LIMIT :limit OFFSET :offset', ['limit' => $limit, 'offset'=>$offset]
       );
 
@@ -174,7 +176,8 @@ class Book extends Model
         FROM book_cart
         JOIN books ON book_cart.book_id = books.id
         JOIN carts on carts.id = book_cart.cart_id
-        WHERE carts.id = :cart_id', ['cart_id' => $cartId]);
+        WHERE carts.id = :cart_id
+        ORDER BY book_cart.created_at desc', ['cart_id' => $cartId]);
 
         return $books;
     }

@@ -15,7 +15,7 @@ class Cart extends Model
 
     public function books()
     {
-        return $this->belongsToMany('App\Models\Book')->withPivot('cart_id', 'book_id', 'quantity');
+        return $this->belongsToMany('App\Models\Book')->withPivot('cart_id', 'book_id', 'quantity')->withTimestamps();
     }
 
     public function users() 
@@ -30,7 +30,6 @@ class Cart extends Model
             foreach($this->books as $book) {
                 if($book->pivot->book_id == $id) {
                     if(Book::findOrFail($book->pivot->book_id)->stock->quantity >= ( $book->pivot->quantity + 1 )) {
-                       
                         $newQuantity = $book->pivot->quantity + 1;
                         $this->books()->updateExistingPivot($book->pivot->book_id, ['quantity' => $newQuantity]);
     
@@ -43,12 +42,14 @@ class Cart extends Model
                     };
                 }else {
                     $this->books()->attach($id);
-    
-                    break;
+                    return Book::getBookFromCart($book->pivot->cart_id, $id);
                 }
             }
         }else {
             $this->books()->attach($id);
+
+            return Book::getBookFromCart($this->id, $id);
+             
         }
     }
 

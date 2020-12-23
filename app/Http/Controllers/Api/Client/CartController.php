@@ -50,7 +50,15 @@ class CartController extends Controller
         $cart = Cart::getCart();
 
         try {
-            $cart->addItem($id);
+            $book = $cart->addItem($id);
+
+            if(isset($book))
+            {
+                return response()->json([
+                    'message' => 'Book added in cart',
+                    'book'=>$book
+                ], 200);
+            }
 
             return response()->json([
                 'message' => 'Book added in cart'
@@ -62,6 +70,16 @@ class CartController extends Controller
             ], 412);
         }
         
+    }
+
+    public function getItem($id) 
+    {
+        $cart = Cart::getCart();
+
+        $book = Book::getBookFromCart($cart->id, $id);
+
+        return response()->json($book, 200);
+        // return response()->json(null, 404);
     }
 
     public function removeItem(Request $request) 
