@@ -22,7 +22,7 @@
                 @foreach($books as $book) 
                     <tr>
                         <td>
-                            <a href="{{ route('books-client.show', ['id'=>$book->id]) }}">{{ $book->title}}</a>
+                            <a href="{{ route('books.show', ['id'=>$book->id]) }}">{{ $book->title}}</a>
                             
                         </td>
                         <td>

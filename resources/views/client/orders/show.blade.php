@@ -15,7 +15,9 @@
                     Shipping address
                 </h2>
                 <div>
-                    {{ $order->shipping_address->id }}
+                    <x-address
+                        :address="$order->shipping_address"
+                    />
                 </div>
             </div>
             <div class="address">
@@ -23,7 +25,9 @@
                     Invoice address
                 </h2>
                 <div>
-                    {{ $order->invoice_address->id }}
+                    <x-address
+                        :address="$order->invoice_address"
+                    />
                 </div>
             </div>
         </div>
@@ -80,6 +84,32 @@
                         </td>
                     </tr>
                 @endforeach
+                <tr>
+                    <td colspan="2">
+                        Shipping tax
+                    </td>
+                    <td>
+                        {{ $order->shipping_method->price }}
+                    </td>
+                    <td>
+                        1
+                    </td>
+                    <td>
+                        {{ $order->shipping_method->price }}
+                    </td>
+                   
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        Total
+                    </td>
+                    <td>
+                        {{ $order->totalQuantity }}
+                    </td>
+                    <td>
+                        {{ $order->totalPrice }}
+                    </td>
+                </tr>
             </table>
         </div>
 

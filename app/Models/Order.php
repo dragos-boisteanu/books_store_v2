@@ -24,9 +24,12 @@ class Order extends Model
     public function getTotalPriceAttribute()
     {   
         $total = 0;
+        
         foreach($this->books as $book) {
             $total += $book->pivot->price;
         }
+
+        $total += $this->shipping_method->price;
 
         return $total;
     }
@@ -37,6 +40,8 @@ class Order extends Model
         foreach($this->books as $book) {
             $total += $book->pivot->quantity;
         }
+
+       $total++;
 
         return $total;
     }

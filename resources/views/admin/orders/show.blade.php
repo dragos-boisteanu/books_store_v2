@@ -18,7 +18,9 @@
                     Shipping address
                 </h2>
                 <div>
-                    {{ $order->shipping_address->id }}
+                    <x-address
+                        :address="$order->shipping_address"
+                    />
                 </div>
             </div>
             <div class="address">
@@ -26,7 +28,9 @@
                     Invoice address
                 </h2>
                 <div>
-                    {{ $order->invoice_address->id }}
+                    <x-address
+                        :address="$order->invoice_address"
+                    />
                 </div>
             </div>
         </div>

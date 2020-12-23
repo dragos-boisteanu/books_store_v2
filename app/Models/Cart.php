@@ -70,12 +70,10 @@ class Cart extends Model
                     }else {
                         throw new Exception("New quantity is equal with the old quantity. Nothing to update");
                     }                
-                }else {
-                    throw new Exception("No item found with this id");
                 }
             }
         }else {
-            throw new Exception("New quantity is 0. Nothing to update !");
+            throw new Exception("Nothing to update !");
         }
     }
 
