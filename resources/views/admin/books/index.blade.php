@@ -106,10 +106,10 @@
                         @endif
                     </td>
                     <td>
-                        <a href="">{{ $book->addedBy->first_name . ' ' . $book->addedBy->name }}</a>
+                        <a href="{{ route('admin-users.show', ['user'=>$book->addedBy->id]) }}">{{ $book->addedBy->first_name . ' ' . $book->addedBy->name }}</a>
                     </td>
                     <td>
-                        <a href="">{{ $book->updatedBy->first_name . ' ' . $book->updatedBy->name }}</a>
+                        <a href="{{ route('admin-users.show', ['user'=>$book->updatedBy->id]) }}">{{ $book->updatedBy->first_name . ' ' . $book->updatedBy->name }}</a>
                     </td>
                     <td>
                         {{ $book->created_at }}
