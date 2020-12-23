@@ -103,7 +103,7 @@ class OrderController extends Controller
 
         Order::findOrFail($id)->update($input);
 
-        return redirect()->route('admin-orders.show', ['order'=>$id]);
+        return redirect()->route('admin-orders.edit', ['order'=>$id]);
     }
 
     /**

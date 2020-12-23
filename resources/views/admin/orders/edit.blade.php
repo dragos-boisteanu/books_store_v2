@@ -128,6 +128,32 @@
                             </td>
                         </tr>
                     @endforeach
+                    <tr>
+                        <td colspan="2">
+                            Shipping tax
+                        </td>
+                        <td>
+                            {{ $order->shipping_method->price }}
+                        </td>
+                        <td>
+                            1
+                        </td>
+                        <td>
+                            {{ $order->shipping_method->price }}
+                        </td>
+                       
+                    </tr>
+                    <tr>
+                        <td colspan="3">
+                            Total
+                        </td>
+                        <td>
+                            {{ $order->totalQuantity }}
+                        </td>
+                        <td>
+                            {{ $order->totalPrice }}
+                        </td>
+                    </tr>
                 </table>
             </div>
             <div>
