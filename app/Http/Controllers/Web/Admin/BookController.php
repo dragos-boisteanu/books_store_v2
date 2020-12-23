@@ -100,7 +100,7 @@ class BookController extends Controller
     public function show($id)
     {
         $book = Book::findOrFail($id);
-        
+
         return view('admin.books.show', ['book'=>$book]);
     }
 
@@ -113,7 +113,7 @@ class BookController extends Controller
     public function edit($id)
     {
         $book = Book::findOrFail($id);
-        
+
         $categories = Category::all();
         $covers = Cover::all();
         $languages = Language::all();

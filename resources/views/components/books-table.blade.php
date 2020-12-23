@@ -53,7 +53,7 @@
                     {{ $book->price }}
                 </td>
                 <td>
-                    {{-- {{ $book->stock->quantity }} --}}
+                    {{ $book->stock->quantity }}
                 </td>
                 <td>
                     {{ $book->discount }}

@@ -11,7 +11,17 @@ class Stock extends Model
 
     public function book() 
     {
-        return $this->hasOne('App\Models\Book');
+        return $this->belongsTo('App\Models\Book', 'book_id');
+    }
+
+    public function created_by()
+    {
+        return $this->hasOne('App\Models\User', 'created_by');
+    }
+
+    public function updated_by()
+    {
+        return $this->hasOne('App\Models\User', 'updated_by');
     }
 }
 

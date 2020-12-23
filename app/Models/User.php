@@ -47,6 +47,11 @@ class User extends Authenticatable
 
     protected $with = ['role'];
 
+    public function stock() 
+    {
+        $this->belongsTo('App\Models\Stock');
+    }
+
     public function cart() {
         return $this->hasOne('App\Models\Cart');
     }
