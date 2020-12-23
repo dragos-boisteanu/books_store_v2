@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Web\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Models\Author;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class AuthorController extends Controller
 {
@@ -14,7 +15,7 @@ class AuthorController extends Controller
      */
     public function index()
     {
-        $authors = Author::all();
+        $authors = Author::orderBy('created_at', 'desc')->simplePaginate(15);
 
         return view('admin.authors.index', ['authors'=>$authors]);
     }
@@ -26,7 +27,7 @@ class AuthorController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.authors.create');
     }
 
     /**
@@ -48,7 +49,11 @@ class AuthorController extends Controller
      */
     public function show($id)
     {
-        //
+        $author = Author::findOrFail($id);
+       
+        $books = $author->books()->orderBy('created_at', 'desc')->simplePaginate(15);
+// dd($books);
+        return view('admin.authors.show', ['author'=>$author, 'books'=>$books]);
     }
 
     /**
@@ -59,7 +64,9 @@ class AuthorController extends Controller
      */
     public function edit($id)
     {
-        //
+        $author = Author::findOrFail($id);
+
+        return view('admin.authors.edit', ['author'=>$author]);
     }
 
     /**

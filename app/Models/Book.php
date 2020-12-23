@@ -30,7 +30,7 @@ class Book extends Model
 
     protected $appends = ['final_price'];
 
-    protected $with = ['authors:id,first_name,name', 'tags:id,name', 'category:id,name', 'publisher:id,name', 'language:id,name', 'images', 'stock'];
+    protected $with = ['authors:id,first_name,name', 'tags:id,name', 'category:id,name', 'publisher:id,name', 'language:id,name', 'images', 'stock:id,quantity'];
   
     public function getFinalPriceAttribute()
     {
@@ -50,7 +50,7 @@ class Book extends Model
     
     public function stock() 
     {
-        return $this->hasOne('App\Models\Stock');
+        return $this->belongsTo('App\Models\Stock');
     }
 
     public function cart() 

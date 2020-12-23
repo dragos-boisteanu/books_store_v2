@@ -11,7 +11,7 @@ class Stock extends Model
 
     public function book() 
     {
-        return $this->belongsTo('App\Models\Book');
+        return $this->hasOne('App\Models\Book');
     }
 }
 

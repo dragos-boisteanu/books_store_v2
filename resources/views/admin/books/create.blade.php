@@ -2,8 +2,8 @@
 
 @section('content')
     <div id="form" class="dashboard">
-        <h1>Adauga produs</h1>
-        <form method="POST" novalidate  action="{{ route('admin-books.store') }}">
+        <h1>Add a book</h1>
+        <form method="POST" novalidate action="{{ route('admin-books.store') }}">
             @csrf
             <div>
                 <label>Titlu</label>
@@ -15,74 +15,73 @@
 
             </div>
             <div>
-                <label>ISBN</label>
+                <label for="isbn">ISBN</label>
                 <div v-if="showErrors">
                     @{{ getError('isbn')}}
 
                 </div>
-                <input type="number" name="isbn" v-model.trim="book.isbn"/>
+                <input type="number" id="isbn" name="isbn" v-model.trim="book.isbn" value="{{ old('isbn') }}"/>
             </div>
             <div>
-                <label>Nr. Pagini</label>
-                <input type="number" name="pages"/>
+                <label for="pages">Pages count</label>
+                <input type="number" id="pages" name="pages" value="{{ old('pages') }}"/>
             </div>
             <div>
-                <label>Pret</label>
-                <input type="nmber" name="price"/>
+                <label for="quantity">Quantity</label>
+                <input type="number" id="quantity" name="quantity" value="{{ old('quantity') }}"/>
             </div>
             <div>
-                <label>Reducere</label>
-                <input type="number" name="discount"/>
+                <label for="price">Price</label>
+                <input type="nmber" id="price" name="price" value="{{ old('price') }}" />
             </div>
             <div>
-                <label>Autor/i</label>
+                <label for="discount">Discount</label>
+                <input type="number" id="discount" name="discount" value="{{ old('discount') }}"/>
+            </div>
+            <div>
+                <label>Authors</label>
                 <dynamic-input-component route="authors" v-on:updated="updateAuthors"></dynamic-input-component>
                 <input type="hidden" name="authors" v-model="book.authors"/>
             </div>
             <div>
-                <label>Data publicarii</label>
-                <input type="date" name="published_at"/>
+                <label for="published-at">Data publicarii</label>
+                <input type="date" id="published-at" name="published_at" value="{{ old('published_at') }}"/>
             </div>
             <div>
-                <label>Editura</label>
+                <label>Publisher</label>
                 <select name="publisher_id">
                     @foreach($publishers as $publisher)
-                        <option value="{{ $publisher->id }}">{{$publisher->name}}</option>
+                        <option value="{{ $publisher->id }}" {{ $publisher->id === old('publisher_id')) ? 'selected' : '' }} >{{$publisher->name}}</option>
                     @endforeach
-                </select>
-                
+                </select>    
             </div>
             <div>
-                <label>Limba</label>
+                <label>Language</label>
                 <select name="language_id">
                     @foreach($languages as $language)
-                        <option value="{{ $language->id }}">{{$language->name}}</option>
+                        <option value="{{ $language->id }}" {{ $language->id === old('language_id')) ? 'selected' : '' }}>{{$language->name}}</option>
                     @endforeach
                 </select>
             </div>
             <div>
-                <label>Categorie</label>
+                <label>Category</label>
                 <select name="category_id">
                     @foreach($categories as $category)
-                        <option value="{{ $category->id }}">{{$category->name}}</option>
+                        <option value="{{ $category->id }}" {{ $category->id === old('category_id')) ? 'selected' : '' }}>{{$category->name}}</option>
                     @endforeach
                 </select>
             </div>
             <div>
-                <label>Tipul copertii</label>
+                <label>Cover type</label>
                 <select name="cover_id">
                     @foreach($covers as $cover)
-                        <option value="{{ $cover->id }}">{{$cover->name}}</option>
+                        <option value="{{ $cover->id }}" {{ $cover->id === old('cover_id')) ? 'selected' : '' }}>{{$category->name}} >{{$cover->name}}</option>
                     @endforeach
                 </select>
             </div>
             <div>
                 <label>Descriere</label>
-                <textarea name="description" placeholder="Descriere"></textarea>
-            </div>
-            <div>
-                <label>Cantitate</label>
-                <input type="number" name="quantity"/>
+                <textarea name="description" placeholder="Book description" value="{{ old('description') }}"></textarea>
             </div>
             <div>
                 <label>Tags</label>
@@ -90,7 +89,7 @@
                 <input type="hidden" name="tags" v-model="book.tags"/>
             </div>
             <div>
-                <button v-on:click="checkForm">Adauga</button>
+                <button v-on:click="checkForm">Add</button>
             </div>
         </form>
     </div>
