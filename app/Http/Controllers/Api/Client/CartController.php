@@ -65,6 +65,7 @@ class CartController extends Controller
             ], 200);
 
         } catch ( Exception $ex) {
+            dd($ex);
             return response()->json([
                 'message' => $ex->getMessage()
             ], 412);

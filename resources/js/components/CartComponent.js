@@ -24,7 +24,8 @@ const CartComponent = {
                         <a :href="'/books/' + book.id" class="link link-cart title">{{ book.title }}</a>
                         <span class="divider">x</span>
                         <span class="quantity">{{ book.quantity }} buc.</span>
-                        <span class="price">{{ book.finalPrice }} RON</span>
+                        <span class="price" v-if="book.finalPrice">{{ book.finalPrice }} RON</span>
+                        <span class="price" v-else>{{ book.price }} RON</span>
                         <button @click="removeFromCart(book.id)" class="btn">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="red" width="18px" height="18px"><path d="M0 0h24v24H0z" fill="none"/>
                                 <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
@@ -39,15 +40,7 @@ const CartComponent = {
         </div>
     `,
     created() {
-        axios.get('/api/carts')
-        .then( response => {
-            if(response.data.cart) {
-                this.items = response.data.cart;
-            }
-        })
-        .catch( error => {
-            console.error ( error );
-        })          
+       this.getItems();
     },
 
     mounted() {
@@ -57,7 +50,7 @@ const CartComponent = {
     data() { 
         return {
             items: [],
-            showCart: true,
+            showCart: false,
         }
     },
 
@@ -77,6 +70,7 @@ const CartComponent = {
 
     methods: {
         removeFromCart(id) {
+
             axios.delete(`/api/carts/${this.id}`, {
                 data: {
                     id,
@@ -92,33 +86,44 @@ const CartComponent = {
 
         addedToCart(data) {
 
-            const index = this.items.findIndex(item => item.id == data.id);
+            if(data.book) {
 
-            if(index > -1 ) {
-                const item = this.items[index];
-
-                data.vm.$set(item, 'quantity', parseInt(item.quantity) + 1);
-                data.vm.$set(item, 'price', parseFloat(item.finalPrice) + parseFloat(item.price));
-
-            } else {
                 this.items.push(data.book); 
-                // this.getItemForCart(data.id);
+                
+            }else {
+
+                const index = this.items.findIndex(item => item.id == data.id);
+
+                if(index > -1 ) {
+                    const item = this.items[index];
+    
+                    data.vm.$set(item, 'quantity', parseInt(item.quantity) + 1);
+                    data.vm.$set(item, 'finalPrice', parseFloat(item.price) + parseFloat(item.price));
+    
+                }
+               
             }
  
         },
 
-        getItemForCart(id) {
-            axios.get(`/api/carts/${id}`)
+        getItems() {
+            axios.get('/api/carts')
             .then( response => {
-                 this.items.push(response.data[0]);  
+                if(response.data.cart) {
+                    this.items = response.data.cart;
+                }
             })
             .catch( error => {
-                console.error(error);
-            }) 
+                console.error ( error );
+            })          
         },
 
         toggleCart() {
             this.showCart = !this.showCart;
+
+            if(this.showCart) {
+                this.getItems();
+            }
         },
 
         sendItems() {

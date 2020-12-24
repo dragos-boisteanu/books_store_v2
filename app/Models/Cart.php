@@ -28,6 +28,7 @@ class Cart extends Model
     {
         if(count($this->books) > 0) {
             foreach($this->books as $book) {
+                
                 if($book->pivot->book_id == $id) {
                     if(Book::findOrFail($book->pivot->book_id)->stock->quantity >= ( $book->pivot->quantity + 1 )) {
                         $newQuantity = $book->pivot->quantity + 1;
@@ -40,17 +41,16 @@ class Cart extends Model
                         throw new Exception("Not enough products in stock");
     
                     };
-                }else {
-                    $this->books()->attach($id);
-                    return Book::getBookFromCart($book->pivot->cart_id, $id);
                 }
+                // dump($book->pivot->book_id . ' ' . $id);
             }
-        }else {
-            $this->books()->attach($id);
-
-            return Book::getBookFromCart($this->id, $id);
-             
+            // dd();
         }
+
+        $this->books()->attach($id);
+        return Book::getBookFromCart($this->id, $id);
+             
+        
     }
 
     public function updateQuantity($request) 

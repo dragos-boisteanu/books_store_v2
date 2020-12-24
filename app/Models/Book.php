@@ -122,8 +122,6 @@ class Book extends Model
 
     }
 
-
-
     public static function getBooksFromCart($cartId) 
     {
         $books = DB::select('SELECT books.id, books.title, book_cart.quantity, 
@@ -134,7 +132,7 @@ class Book extends Model
         JOIN books ON book_cart.book_id = books.id
         JOIN carts on carts.id = book_cart.cart_id
         WHERE carts.id = :cart_id
-        ORDER BY book_cart.created_at desc', ['cart_id' => $cartId]);
+        ORDER BY book_cart.created_at asc', ['cart_id' => $cartId]);
 
         return $books;
     }
