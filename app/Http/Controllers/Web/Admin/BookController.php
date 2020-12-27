@@ -20,11 +20,69 @@ class BookController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $books = Book::orderBy('created_at', 'desc')->simplePaginate(15);
+        
+        // $books = Book::join('author_book', 'books.id', '=',  'author_book.book_id')
+        //             ->join('authors', 'author_book.author_id', '=', 'authors.id')
+                    
+        //             ->where( function($query) use ($request) {
 
+        //                 if( ($title = $request->title) ) {
+        //                     $query->where('title', 'like', '%'. $title .'%');
+        //                 }
+
+        //                 if( ($authorFirstName = $request->author_first_name) ) {
+        //                     $query->where('authors.first_name', $authorFirstName);
+        //                 } else if ( ($authorName = $request->author_name) ) {
+        //                     $query->where('authors.name', $authorName);
+        //                 }else if( ($authorFirstName = $request->author_first_name) || ($authorName = $request->author_name) ){
+        //                     $query->where('authors.first_name', $authorFirstName)
+        //                     ->orWhere('authors.name', $authorName);
+        //                 }
+        //             })->orderBy('books.created_at', 'desc')->simplePaginate(15)->withQueryString();
+
+        // $books =  Book::where( function($query) use ($request) {
+
+        //                 if( ($title = $request->title) ) {
+        //                     $query->where('title', 'like', '%'. $title .'%');
+        //                 }
+
+        //             })->simplePaginate(15)->withQueryString();
+                
+        $books =  Book::where( function($query) use ($request) {
+
+            if( ($title = $request->title) ) {
+                $query->where('title', 'like', '%'. $title .'%');
+            }
+
+            if( ($authorFirstName = $request->author_first_name) ) {
+               $query->whereHas('authors', function($query) use ($authorFirstName){
+                    $query->where('first_name', 'like', '%' . $authorFirstName . '%');
+               });
+            } else if ( ($authorName = $request->author_name) ) {
+                $query->whereHas('authors', function($query) use ($authorName){
+                    $query->where('name', 'like', '%' . $authorName . '%');
+               });
+            }else if( ($authorFirstName = $request->author_first_name) || ($authorName = $request->author_name) ){
+                $query->whereHas('authors', function($query) use ($authorName, $authorFirstName){
+                    $query->where('first_name', 'like', '%' . $authorFirstName . '%')
+                        ->where('name', 'like', '%' . $authorName . '%');
+               });
+            }
+
+            if( ($categoryId = $request->category) ) {
+                $query->whereHas('category', function($query) use ($categoryId) {
+                    $query->where('id', $categoryId);
+                });
+            };
+
+            // add filters for added dates and updated dates
+        })->orderBy('books.created_at', 'desc')->simplePaginate(15)->withQueryString();
+ 
         $categories = Category::all();
+
+        $request->flash();
 
         return view('admin.books.index', ['books'=>$books, 'categories'=>$categories]);
     }

@@ -4,12 +4,12 @@
     <div class="dashboard">
         <h1>Lista produse</h1>
         <div class="filter">
-            <form method="POST" action="{{ route('admin-books.index')}}">
-                @csrf
+            <form method="GET" action="{{ route('admin-books.index')}}">
 
-                <input type="text" name="title" placeholder="Book title"/>
-                <input type="text" name="author" placeholder="Author name"/>
-                
+                <input type="text" name="title" placeholder="Book title" value="{{ old('title')}}"/>
+                <input type="text" name="author_first_name" placeholder="Author first name" value="{{ old('author_first_name')}}" />
+                <input type="text" name="author_name" placeholder="Author name" value="{{ old('author_name')}}"/>
+
                 <select name="stock">
                     <option value="0" disabled selected>Alege stocul</option>
                     <option value="1">Disponibil</option>
@@ -33,6 +33,10 @@
 
                 <button type="submit">Aplica filtrul</button>
 
+            </form>
+
+            <form method="GET" action="{{ route('admin-books.index')}}">
+                <button>Clear</button>
             </form>
         </div>
 

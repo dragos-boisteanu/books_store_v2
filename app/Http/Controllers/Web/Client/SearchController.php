@@ -14,7 +14,7 @@ class SearchController extends Controller
             if( ($q = $request->q) ) {
                 $query->where('title', 'like', '%'. $q . '%');
             }
-        })->simplePaginate(15);
+        })->orderBy('created_at', 'desc')->simplePaginate(15)->withQueryString();
 
         return view('client.books.search', ['books'=>$books, 'query'=>$request->q]);
     }
