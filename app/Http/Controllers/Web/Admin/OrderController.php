@@ -18,15 +18,36 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $orders = Order::withTrashed()->orderBy('created_at', 'desc')->simplePaginate(15);
+
+
+        $orders = Order::where( function ($query) use ($request) {
+            if( ($id = $request->id) ) {
+                $query->where('id', $id);
+            }
+
+            if( ($client = $request->client) ) {
+                $query->whereHas('user', function($query) use ($client) {
+                    $query->where('id', $client);
+                });
+            }
+
+            if( ($status = $request->status) ) {
+                $query->whereHas('status', function($query) use ($status) {
+                    $query->where('id', $status);
+                });
+            }
+        })->withTrashed()->orderBy('created_at', 'desc')->simplePaginate(15);;
+
+
 
         $shippingMethods = ShippingMethod::all();
         $paymentMethods = PaymentMethod::all();
-
         $statuses = Status::all();
 
+        $request->flash();
+            
         return view('admin.orders.index', ['orders'=>$orders,                       
                                             'shipping_methods'=>$shippingMethods, 
                                             'payment_methods'=>$paymentMethods,
@@ -116,6 +137,6 @@ class OrderController extends Controller
     {
         Order::findOrFail($id)->delete();
 
-        return view('admin.orders.show', ['book'=>$id]);
+        return view('admin.orders.index');
     }
 }

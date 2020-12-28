@@ -4,44 +4,59 @@
     <div class="dashboard">
         <h1>Orders list</h1>
         <div class="filter">
-            <form method="POST" action="{{ route('admin-orders.index')}}">
-                @csrf
+            <form method="GET" action="{{ route('admin-orders.index')}}">
 
-                <input type="text" name="id" placeholder="id"/>
-                <input type="text" name="deliver_to" placeholder="deliver to"/>
+                <input type="number" name="id" placeholder="Order ID" value="{{ old('id') }}"/>
+                <input type="number" name="client" placeholder="Deliver to ID" value="{{ old('client') }}"/>
                 
                 <select name="status">
                     <option value="0" disabled selected>Status</option>
-                    @foreach($statuses as $statuse)
-                        <option value=" {{ $statuse->id }}">{{ $statuse->name}}</option>
+                    @foreach($statuses as $status)
+                        <option value=" {{ $status->id }}" {{ old('status') == $status->id ? 'selected' : '' }}>{{ $status->name}}</option>
                     @endforeach
+                </select>
+
+                <select name="soft_deleted">
+                    <option value="0" selected disabled>Avaiable</option>
+                    <option value="1" {{ old('soft_deleted') == 1 ? 'selected' : ''}}>True</option>
+                    <option value="2" {{ old('soft_deleted') == 2 ? 'selected' : ''}}>False</option>
                 </select>
 
                 <select name="shipping_method">
                     <option value="0" disabled selected>Shipping method</option>
                     @foreach($shipping_methods as $shipping_method)
-                        <option value=" {{ $shipping_method->id }}">{{ $shipping_method->name}}</option>
+                        <option value="{{ $shipping_method->id }}" {{ old('shipping_method') == $shipping_method->id ? 'select' : ''}}>{{ $shipping_method->name}}</option>
                     @endforeach
                 </select>
 
                 <select name="payment_method">
                     <option value="0" disabled selected>Payment method</option>
                     @foreach($payment_methods as $payment_method)
-                        <option value=" {{ $payment_method->id }}">{{ $payment_method->name}}</option>
+                        <option value="{{ $payment_method->id }}" {{ old('payment_method') == $payment_method->id ? 'select' : ''}}>{{ $payment_method->name}}</option>
                     @endforeach
                 </select>
 
-                <label>Created between</label>
-                <input type="date" name="created_at_start">
-                <input type="date" name="created_at_end">
+                <label for="created-at-after">Added after</label>
+                <input type="date" id="created-at-after" name="created_at_start" value="{{ old('created_at_start') }}">
 
-                <label for="updated_at">Last modifed between</label>
-                <input type="date" name="updated_at_start">
-                <input type="date" name="updated_at_end">
+                <label for="created-at-before">Added before</label>
+                <input type="date" id="created-at-before" name="created_at_end" value="{{ old('created_at_end') }}">
+
+                <label for="updated-at-after">Updated after</label>
+                <input type="date" id="updated-at-after" name="updated_at_start" value="{{ old('updated_at_start') }}">
+
+                <label for="updated-at-before">Updated before</label>
+                <input type="date" id="updated-at-before" name="updated_at_end" value="{{ old('updated_at_end') }}">
 
                 <button type="submit">Filter</button>
 
             </form>
+
+            
+            <form method="GET" action="{{ route('admin-orders.index')}}">
+                <button>Clear</button>
+            </form>
+
         </div>
         <table>
             <tr>
@@ -52,7 +67,7 @@
                     ID
                 </th>
                 <th>
-                    Deliver to
+                    Client ID
                 </th>
                 <th>
                    Shipping Method
@@ -91,7 +106,7 @@
                    {{ $order->id }}
                 </td>
                 <td>
-                    {{ $order->shipping_address->first_name . ' ' . $order->shipping_address->name }}
+                    {{ $order->user->id }}
                 </td>
                 <td>
                     {{ $order->shipping_method->name }} 

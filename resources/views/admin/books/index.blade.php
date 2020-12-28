@@ -23,21 +23,21 @@
                 <select name="category">
                     <option value="0" disabled selected>Category</option>
                     @foreach($categories as $category)
-                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                        <option value="{{ $category->id }}" {{ old('category') == $category->id ? 'selected' : ''}}>{{ $category->name }}</option>
                     @endforeach
                 </select>
 
                 <label for="created-at-after">Added after</label>
-                <input type="date" id="created-at-after" name="created_at_start">
+                <input type="date" id="created-at-after" name="created_at_start" value="{{ old('created_at_start') }}">
 
                 <label for="created-at-before">Added before</label>
-                <input type="date" id="created-at-before" name="created_at_end">
+                <input type="date" id="created-at-before" name="created_at_end" value="{{ old('created_at_end') }}">
 
                 <label for="updated-at-after">Updated after</label>
-                <input type="date" id="updated-at-after" name="updated_at_start">
+                <input type="date" id="updated-at-after" name="updated_at_start" value="{{ old('updated_at_start') }}">
 
                 <label for="updated-at-before">Updated before</label>
-                <input type="date" id="updated-at-before" name="updated_at_end">
+                <input type="date" id="updated-at-before" name="updated_at_end" value="{{ old('updated_at_end') }}">
 
                 <button type="submit">Filter</button>
 

@@ -23,8 +23,6 @@ class BookController extends Controller
     public function index(Request $request)
     {
         
-               
-      
         $books =  Book::where( function($query) use ($request) {
 
             if( ($title = $request->title) ) {

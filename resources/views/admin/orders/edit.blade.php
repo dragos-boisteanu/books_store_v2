@@ -160,6 +160,13 @@
                 <button type="submit">Save</button>
             </div>
         </form>        
+        <form method="POST" action="{{ route('admin-orders.destroy', ['order'=>$order->id]) }}">
+            @csrf
+            @method('DELETE')
+
+            <button type="submit">Delete</button>
+
+        </form>
        
     </div>
 
