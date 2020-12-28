@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web\Admin;
 use App\Models\Author;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class AuthorController extends Controller
 {
@@ -13,9 +14,41 @@ class AuthorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $authors = Author::orderBy('created_at', 'desc')->simplePaginate(15);
+        $authors = Author::where( function($query) use ($request) {
+
+            if( ($id = $request->id) ) {
+                $query->where('id', $id);
+            }
+
+            if( ($firstName = $request->first_name )) {
+                $query->where('first_name', 'like', '%'.$firstName.'%');
+            } 
+
+            if ( ($name = $request->name) ) {
+                $query->where('name', 'like', '%'.$name.'%');
+            }
+
+            if( ($createdAtStart = $request->created_at_start) ) {
+                $query->whereDate('created_at', '>', $createdAtStart);
+            } 
+            
+            if ( ($createdAtEnd = $request->created_at_end) ) {
+                $query->whereDate('created_at', '<', $createdAtEnd);
+            }
+
+            if( ($updatedAtStart = $request->updated_at_start) ) {
+                $query->whereDate('updated_at', '>', $updatedAtStart);
+            } 
+            
+            if ( ($updatedAtEnd = $request->updated_at_end) ) {
+                $query->whereDate('updated_at', '<', $updatedAtEnd);
+            }
+
+        })->orderBy('authors.first_name', 'desc')->orderBy('authors.name', 'desc')->simplePaginate(15)->withQueryString();;
+
+        $request->flash();
 
         return view('admin.authors.index', ['authors'=>$authors]);
     }
@@ -78,7 +111,14 @@ class AuthorController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $author = Author::findOrFail($id);
+
+        $input = $request->all();
+        $input['updated_by'] = Auth::id();
+
+        $author->update($input);
+
+        return back();
     }
 
     /**

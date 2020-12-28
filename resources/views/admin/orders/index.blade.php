@@ -57,8 +57,9 @@
             <form method="GET" action="{{ route('admin-orders.index')}}">
                 <button>Clear</button>
             </form>
-
         </div>
+
+        
         <table>
             <tr>
                 <th>
