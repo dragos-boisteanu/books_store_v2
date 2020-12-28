@@ -10,28 +10,36 @@
                 <input type="text" name="author_first_name" placeholder="Author first name" value="{{ old('author_first_name')}}" />
                 <input type="text" name="author_name" placeholder="Author name" value="{{ old('author_name')}}"/>
 
+                <input type="number" name="created_by" placeholder="User id" value="{{ old('created_by')}}"/>
+
+                <input type="number" name="updated_by" placeholder="User id" value="{{ old('updated_by')}}"/>
+
                 <select name="stock">
-                    <option value="0" disabled selected>Alege stocul</option>
-                    <option value="1">Disponibil</option>
-                    <option value="2">Indisponibil</option>
+                    <option value="0" disabled selected>Stock</option>
+                    <option value="1">Unavailable</option>
+                    <option value="2">Available</option>
                 </select>
 
                 <select name="category">
-                    <option value="0" disabled selected>Alege categoria</option>
+                    <option value="0" disabled selected>Category</option>
                     @foreach($categories as $category)
                         <option value="{{ $category->id }}">{{ $category->name }}</option>
                     @endforeach
                 </select>
 
-                <label for="created_at">Adaugat intre</label>
-                <input type="date" id="created_at" name="created_at_start">
-                <input type="date" name="created_at_end">
+                <label for="created-at-after">Added after</label>
+                <input type="date" id="created-at-after" name="created_at_start">
 
-                <label for="updated_at">Modificat intre</label>
-                <input type="date" id="updated_at" name="updated_at_start">
-                <input type="date" name="updated_at_end">
+                <label for="created-at-before">Added before</label>
+                <input type="date" id="created-at-before" name="created_at_end">
 
-                <button type="submit">Aplica filtrul</button>
+                <label for="updated-at-after">Updated after</label>
+                <input type="date" id="updated-at-after" name="updated_at_start">
+
+                <label for="updated-at-before">Updated before</label>
+                <input type="date" id="updated-at-before" name="updated_at_end">
+
+                <button type="submit">Filter</button>
 
             </form>
 
