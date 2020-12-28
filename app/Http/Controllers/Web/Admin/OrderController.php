@@ -21,7 +21,6 @@ class OrderController extends Controller
     public function index(Request $request)
     {
 
-
         $orders = Order::where( function ($query) use ($request) {
             if( ($id = $request->id) ) {
                 $query->where('id', $id);
@@ -38,6 +37,23 @@ class OrderController extends Controller
                     $query->where('id', $status);
                 });
             }
+
+            if ( ($avaiable = $request->avaiable) ) {
+                if($avaiable == 2) {
+                    $query->whereNull('deleted_at');
+                } else {
+                    $query->whereNotNull('deleted_at');
+                }
+            }
+
+            if ( ($shippingMethod = $request->shipping_method) ) {
+                $query->where('shipping_method_id', $shippingMethod);
+            }
+
+            if( ( $paymentMethod = $request->payment_method) ) {
+                $query->where('payment_method_id', $paymentMethod);
+            }
+
         })->withTrashed()->orderBy('created_at', 'desc')->simplePaginate(15);;
 
 
@@ -137,6 +153,6 @@ class OrderController extends Controller
     {
         Order::findOrFail($id)->delete();
 
-        return view('admin.orders.index');
+        return redirect()->route('admin-orders.index');
     }
 }

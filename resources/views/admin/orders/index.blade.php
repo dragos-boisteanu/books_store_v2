@@ -16,23 +16,23 @@
                     @endforeach
                 </select>
 
-                <select name="soft_deleted">
+                <select name="avaiable">
                     <option value="0" selected disabled>Avaiable</option>
-                    <option value="1" {{ old('soft_deleted') == 1 ? 'selected' : ''}}>True</option>
-                    <option value="2" {{ old('soft_deleted') == 2 ? 'selected' : ''}}>False</option>
+                    <option value="1" {{ old('avaiable') == 1 ? 'selected' : ''}}>True</option>
+                    <option value="2" {{ old('avaiable') == 2 ? 'selected' : ''}}>False</option>
                 </select>
 
                 <select name="shipping_method">
                     <option value="0" disabled selected>Shipping method</option>
                     @foreach($shipping_methods as $shipping_method)
-                        <option value="{{ $shipping_method->id }}" {{ old('shipping_method') == $shipping_method->id ? 'select' : ''}}>{{ $shipping_method->name}}</option>
+                        <option value="{{ $shipping_method->id }}" {{ old('shipping_method') == $shipping_method->id ? 'selected' : ''}}>{{ $shipping_method->name}}</option>
                     @endforeach
                 </select>
 
                 <select name="payment_method">
                     <option value="0" disabled selected>Payment method</option>
                     @foreach($payment_methods as $payment_method)
-                        <option value="{{ $payment_method->id }}" {{ old('payment_method') == $payment_method->id ? 'select' : ''}}>{{ $payment_method->name}}</option>
+                        <option value="{{ $payment_method->id }}" {{ old('payment_method') == $payment_method->id ? 'selected' : ''}}>{{ $payment_method->name}}</option>
                     @endforeach
                 </select>
 
