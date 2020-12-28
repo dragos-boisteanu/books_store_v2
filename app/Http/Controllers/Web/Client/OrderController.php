@@ -18,10 +18,19 @@ use Illuminate\Support\Facades\Auth;
 class OrderController extends Controller
 {
 
-    public function index() 
+    public function index(Request $request) 
     {
-        $orders = Auth::user()->orders;
+        $orders = Order::where( function($query) use ($request) {
+
+            if( ($id = $request->id) ) {
+                $query->where('id', $id);
+            }
+
+            $query->where('user_id', Auth::id());
+        })->orderBy('created_at', 'desc')->simplePaginate(15)->withQueryString();
     
+        $request->flash();
+        
         return view('client.orders.index', ['orders'=>$orders]);
 
     }

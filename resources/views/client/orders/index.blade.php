@@ -6,6 +6,18 @@
         <h1 class="view__header">
             My Orders
         </h1>
+        <div>
+            <form method="GET" action="{{ route('client-orders.index') }}">
+                <div>
+                    <label for="id">Search order by id</label>
+                    <input type="number" id="id" name="id" value="{{ old('id') }}"/>
+                </div>
+                <button type="submit">Search</button>
+            </form>
+            <form method="GET" action="{{ route('client-orders.index') }}">
+                <button type="submit">Reset</button>
+            </form>
+        </div>
         <table>
             <tr>
                 <th>
@@ -43,7 +55,7 @@
                         {{ $order->status->name}}
                     </td>
                     <td>
-                        <a href="{{ route('orders-client.show', ['order'=>$order->id]) }}">View order</a>
+                        <a href="{{ route('client-orders.show', ['order'=>$order->id]) }}">View order</a>
                     </td>
                 </tr>
             @endforeach

@@ -6,7 +6,7 @@
         <div class="view__header">
             My Account
         </div>
-        <form class="account_details" method="POST" action="{{ route('user-client.update') }}">
+        <form class="account_details" method="POST" action="{{ route('client-user.update') }}">
             @METHOD('PATCH')
             @csrf
 

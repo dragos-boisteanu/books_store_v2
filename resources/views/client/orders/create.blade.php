@@ -49,7 +49,7 @@
                 </tr>
             </table>
         </div>
-        <form method="POST" action="{{ route('orders-client.store')}}"> 
+        <form method="POST" action="{{ route('client-orders.store')}}"> 
             @csrf          
 
             <div class="order__addresses">
@@ -62,17 +62,6 @@
                             title="Select Shipping address"
                             :addresses="$addresses"
                         />
-
-                        {{-- <select name="shipping_address">
-                            <option>
-                                Select Shipping address
-                            </option>
-                            @foreach($addresses as $address)
-                                <option value="{{ $address->id }}" {{ $address->default_for_shipping ? 'selected' : '' }}>
-                                    {{ $loop->iteration . ' - ' . $address->first_name . ' ' . $address->name . ' ' . $address->address  . ' ' . $address->county->name . ' ' . $address->city->name . ' ' . $address->phone_number }}
-                                </option>
-                            @endforeach
-                        </select> --}}
                     @else
                         <div>
                             <div>
@@ -114,17 +103,6 @@
                             title="Select Invoice address"
                             :addresses="$addresses"
                         />
-                        {{-- <select name="invoice_address">
-                            <option>
-                                Select Shipping address
-                            </option>
-                            @foreach($addresses as $address)
-                                <option value="{{ $address->id }}" {{ $address->default_for_invoice ? 'selected' : '' }}>
-                                    {{ $loop->iteration . ' - ' . $address->first_name . ' ' . $address->name . ' ' . $address->address  . ' ' . $address->county->name . ' ' . $address->city->name . ' ' . $address->phone_number }}
-                                </option>
-    
-                            @endforeach
-                        </select> --}}
                     @else
                         <div>
                             <div>
@@ -188,8 +166,6 @@
             
             <button type="submit">Place order</button>
             
-
-
         </form>
     </div>
 @endsection

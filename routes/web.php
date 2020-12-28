@@ -30,29 +30,29 @@ Route::middleware(['auth'])->group(function() {
     Route::namespace('Web\Client')->group(function () {
 
         Route::middleware(['verified'])->group(function() {
-            Route::get('/orders/create', 'OrderController@create')->name('orders-client.create');
-            Route::post('/orders', 'OrderController@store')->name('orders-client.store');
+            Route::get('/orders/create', 'OrderController@create')->name('client-orders.create');
+            Route::post('/orders', 'OrderController@store')->name('client-orders.store');
         });
 
         Route::prefix('account')->group(function () { 
-            Route::get('/', 'UserController@show')->name('user-client.show');
-            Route::patch('/', 'UserController@update')->name('user-client.update');
+            Route::get('/', 'UserController@show')->name('client-user.show');
+            Route::patch('/', 'UserController@update')->name('client-user.update');
 
             Route::prefix('addresses')->group(function () { 
-                Route::get('/', 'AddressController@index')->name('addresses-client.index');
+                Route::get('/', 'AddressController@index')->name('client-addresses.index');
                 
-                Route::get('/create', 'AddressController@create')->name('addresses-client.create');
-                Route::post('/', 'AddressController@store')->name('addresses-client.store');
+                Route::get('/create', 'AddressController@create')->name('client-addresses.create');
+                Route::post('/', 'AddressController@store')->name('client-addresses.store');
 
-                Route::get('/{address}/edit', 'AddressController@edit')->name('addresses-client.edit');
-                Route::put('/{address}', 'AddressController@update')->name('addresses-client.update');
+                Route::get('/{address}/edit', 'AddressController@edit')->name('client-addresses.edit');
+                Route::put('/{address}', 'AddressController@update')->name('client-addresses.update');
 
-                Route::delete('/{address}', 'AddressController@destroy')->name('addresses-client.delete');
+                Route::delete('/{address}', 'AddressController@destroy')->name('client-addresses.delete');
             });    
 
             Route::prefix('orders')->group(function () {                
-                Route::get('/', 'OrderController@index')->name('orders-client.index');
-                Route::get('/{order}', 'OrderController@show')->name('orders-client.show');
+                Route::get('/', 'OrderController@index')->name('client-orders.index');
+                Route::get('/{order}', 'OrderController@show')->name('client-orders.show');
             });
         });
     });
