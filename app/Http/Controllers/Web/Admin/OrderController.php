@@ -32,6 +32,10 @@ class OrderController extends Controller
                 });
             }
 
+            if( ($operator = $request->operator) ) {
+                $query->where('operator_id', $operator);
+            }
+
             if( ($status = $request->status) ) {
                 $query->whereHas('status', function($query) use ($status) {
                     $query->where('id', $status);
@@ -52,6 +56,31 @@ class OrderController extends Controller
 
             if( ( $paymentMethod = $request->payment_method) ) {
                 $query->where('payment_method_id', $paymentMethod);
+            }
+
+            if( ($createdAtStart = $request->created_at_start) ) {
+                
+                $query->whereDate('created_at', '>', $createdAtStart);
+
+            } else if ( ($createdAtEnd = $request->created_at_end) ) {
+                $query->whereDate('created_at', '<', $createdAtEnd);
+                
+
+            }else if ( ($createdAtStart = $request->created_at_start) && ($createdAtEnd = $request->created_at_end) ) {
+                $query->whereDate('created_at', '>', $createdAtStart)
+                    ->whereDate('created_at', '<', $createdAtEnd);
+            }
+
+
+            if( ($updatedAtStart = $request->updated_at_start) ) {
+                $query->whereDate('updated_at', '>', $updatedAtStart);
+                
+            } else if ( ($updatedAtEnd = $request->updated_at_end) ) {
+                $query->whereDate('updated_at', '<', $updatedAtEnd);
+          
+            }else if ( ($updatedAtStart = $request->updated_at_start) && ($updatedAtEnd = $request->updated_at_end) ) {
+                $query->whereDate('updated_at', '>', $updatedAtStart)
+                    ->whereDate('updated_at', '<', $updatedAtEnd);
             }
 
         })->withTrashed()->orderBy('created_at', 'desc')->simplePaginate(15);;

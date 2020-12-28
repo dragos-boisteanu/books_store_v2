@@ -8,7 +8,8 @@
 
                 <input type="number" name="id" placeholder="Order ID" value="{{ old('id') }}"/>
                 <input type="number" name="client" placeholder="Deliver to ID" value="{{ old('client') }}"/>
-                
+                <input type="number" name="operator" placeholder="Operator ID" value="{{ old('operator') }}" />
+
                 <select name="status">
                     <option value="0" disabled selected>Status</option>
                     @foreach($statuses as $status)
