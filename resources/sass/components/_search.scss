@@ -1,0 +1,28 @@
+.search-bar {
+    width: 500px;
+    justify-self: center;
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+
+    .search-bar__input {
+        flex: 1 0 auto;
+
+        border: none;
+        border-radius: $border-radius-value;
+        border-bottom-right-radius: 0;
+        border-top-right-radius: 0;
+
+        padding: 5px 10px;
+
+    }
+
+    .search-bar__button {
+        flex: 0 0 50px;
+
+        height: 26px;
+
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+    }    
+}

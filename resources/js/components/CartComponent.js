@@ -1,41 +1,42 @@
 const CartComponent = {
     template: 
     `
-        <div class="cart">
-            <div class="cart__button" @click="toggleCart">
-                <div>
-                    Cart
-                </div>
-                <div>
-                    {{ count }}
-                </div>
-            </div>
-            <div v-if="showCart">
+        <div class="cart" :class="{'cart--active' : showCart}">
+            <div v-if="showCart" class="cart__content">
                 <div class="cart__header">
                     <div>
                         Shopping cart 
                     </div>
-                    <div @click="toggleCart">
-                        X
-                    </div>
+                    <button @click="toggleCart" class="button">
+                        <img src="storage/icons/close.svg"/>
+                    </button>
                 </div>
                 <ul class="items__list">
                     <li v-for="(book,index) in items" :key="index" class="item">
-                        <a :href="'/books/' + book.id" class="link link-cart title">{{ book.title }}</a>
-                        <span class="divider">x</span>
-                        <span class="quantity">{{ book.quantity }} buc.</span>
-                        <span class="price" v-if="book.finalPrice">{{ book.finalPrice }} RON</span>
-                        <span class="price" v-else>{{ book.price }} RON</span>
-                        <button @click="removeFromCart(book.id)" class="btn">
+                        <a :href="'/books/' + book.id" class="link title">{{ book.title }}</a>
+                        <div class="quantity">
+                            <span class="divider">x</span>
+                            <span class="value">{{ book.quantity }} buc.</span>
+                        </div>
+                        <div class="price">{{ book.finalPrice }} RON</div>
+                        <button @click="removeFromCart(book.id)" class="button">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="red" width="18px" height="18px"><path d="M0 0h24v24H0z" fill="none"/>
                                 <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
                             </svg>
                         </button>
                     </li>
                 </ul>
-                <form method="GET" action="/orders/create">
-                    <button type="submit" class="btn btn-order">Place order</button>
+                <form method="GET" action="/orders/create" class="order-form">
+                    <button type="submit" class="button button-primary cart__button-order">Place order</button>
                 </form>
+            </div>
+            <div class="button cart__button" @click="toggleCart" v-else>
+                <div class="button__icon">
+                    <img src="storage/icons/cart.svg"/>
+                </div>
+                <div class="button__count">
+                    {{ count }}
+                </div>
             </div>
         </div>
     `,
@@ -78,6 +79,9 @@ const CartComponent = {
             })
             .then( response => {
                 this.items.splice(this.items.findIndex(item => item.id == id), 1);
+                if(this.count === 0 ) {
+                    this.showCart = false;
+                }
             })
             .catch ( error => {
                 console.error( error );
@@ -119,7 +123,9 @@ const CartComponent = {
         },
 
         toggleCart() {
-            this.showCart = !this.showCart;
+            if(this.count > 0) {
+                this.showCart = !this.showCart;
+            }
 
             if(this.showCart) {
                 this.getItems();

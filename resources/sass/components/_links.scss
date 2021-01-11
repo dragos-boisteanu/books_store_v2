@@ -1,0 +1,21 @@
+.link {
+    color: $dark-electric-blue;
+    text-decoration: none;
+}
+
+.link:hover {
+    cursor: pointer;
+    text-decoration: underline;
+    color: $charcoal;
+}
+
+.link--logo {
+    padding: 10px;
+    color: $ghost-white;
+}
+
+.link--logo:hover {
+    text-decoration: none;
+    color: $powder-blue;
+}
+

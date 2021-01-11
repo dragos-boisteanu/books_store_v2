@@ -2229,7 +2229,7 @@ var AddToCartBtnComponent = {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 var CartComponent = {
-  template: "\n        <div class=\"cart\">\n            <div class=\"cart__button\" @click=\"toggleCart\">\n                <div>\n                    Cart\n                </div>\n                <div>\n                    {{ count }}\n                </div>\n            </div>\n            <div v-if=\"showCart\">\n                <div class=\"cart__header\">\n                    <div>\n                        Shopping cart \n                    </div>\n                    <div @click=\"toggleCart\">\n                        X\n                    </div>\n                </div>\n                <ul class=\"items__list\">\n                    <li v-for=\"(book,index) in items\" :key=\"index\" class=\"item\">\n                        <a :href=\"'/books/' + book.id\" class=\"link link-cart title\">{{ book.title }}</a>\n                        <span class=\"divider\">x</span>\n                        <span class=\"quantity\">{{ book.quantity }} buc.</span>\n                        <span class=\"price\" v-if=\"book.finalPrice\">{{ book.finalPrice }} RON</span>\n                        <span class=\"price\" v-else>{{ book.price }} RON</span>\n                        <button @click=\"removeFromCart(book.id)\" class=\"btn\">\n                            <svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"red\" width=\"18px\" height=\"18px\"><path d=\"M0 0h24v24H0z\" fill=\"none\"/>\n                                <path d=\"M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z\"/>\n                            </svg>\n                        </button>\n                    </li>\n                </ul>\n                <form method=\"GET\" action=\"/orders/create\">\n                    <button type=\"submit\" class=\"btn btn-order\">Place order</button>\n                </form>\n            </div>\n        </div>\n    ",
+  template: "\n        <div class=\"cart\" :class=\"{'cart--active' : showCart}\">\n            <div v-if=\"showCart\" class=\"cart__content\">\n                <div class=\"cart__header\">\n                    <div>\n                        Shopping cart \n                    </div>\n                    <button @click=\"toggleCart\" class=\"button\">\n                        <img src=\"storage/icons/close.svg\"/>\n                    </button>\n                </div>\n                <ul class=\"items__list\">\n                    <li v-for=\"(book,index) in items\" :key=\"index\" class=\"item\">\n                        <a :href=\"'/books/' + book.id\" class=\"link title\">{{ book.title }}</a>\n                        <div class=\"quantity\">\n                            <span class=\"divider\">x</span>\n                            <span class=\"value\">{{ book.quantity }} buc.</span>\n                        </div>\n                        <div class=\"price\">{{ book.finalPrice }} RON</div>\n                        <button @click=\"removeFromCart(book.id)\" class=\"button\">\n                            <svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"red\" width=\"18px\" height=\"18px\"><path d=\"M0 0h24v24H0z\" fill=\"none\"/>\n                                <path d=\"M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z\"/>\n                            </svg>\n                        </button>\n                    </li>\n                </ul>\n                <form method=\"GET\" action=\"/orders/create\" class=\"order-form\">\n                    <button type=\"submit\" class=\"button button-primary cart__button-order\">Place order</button>\n                </form>\n            </div>\n            <div class=\"button cart__button\" @click=\"toggleCart\" v-else>\n                <div class=\"button__icon\">\n                    <img src=\"storage/icons/cart.svg\"/>\n                </div>\n                <div class=\"button__count\">\n                    {{ count }}\n                </div>\n            </div>\n        </div>\n    ",
   created: function created() {
     this.getItems();
   },
@@ -2266,6 +2266,10 @@ var CartComponent = {
         _this.items.splice(_this.items.findIndex(function (item) {
           return item.id == id;
         }), 1);
+
+        if (_this.count === 0) {
+          _this.showCart = false;
+        }
       })["catch"](function (error) {
         console.error(error);
       });
@@ -2297,7 +2301,9 @@ var CartComponent = {
       });
     },
     toggleCart: function toggleCart() {
-      this.showCart = !this.showCart;
+      if (this.count > 0) {
+        this.showCart = !this.showCart;
+      }
 
       if (this.showCart) {
         this.getItems();

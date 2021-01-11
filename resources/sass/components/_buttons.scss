@@ -1,0 +1,31 @@
+.button {
+    background-color: transparent;
+    border: none;
+    border-radius: $border-radius-value;
+
+    padding: 5px 10px;
+
+    outline: none;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.button:hover {
+    cursor: pointer;
+}
+
+.button:active {
+    box-shadow: inset 0 1px 2px rgba(0,0,0,.5);
+}
+
+.button-primary {
+    background: $charcoal;
+    color: $ghost-white;
+}
+
+.button--disabled {
+    pointer-events: none;
+    background: $disabled-color;
+}
