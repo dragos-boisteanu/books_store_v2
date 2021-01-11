@@ -1,28 +1,114 @@
 .search-bar {
     width: 500px;
-    justify-self: center;
-    display: flex;
-    justify-content: center;
-    align-items: stretch;
+    position: relative;
 
-    .search-bar__input {
-        flex: 1 0 auto;
+    .search-bar__form {
+        width: 100%;
+        display: flex;
+        justify-content: center; 
+        align-items: stretch;
 
-        border: none;
-        border-radius: $border-radius-value;
-        border-bottom-right-radius: 0;
-        border-top-right-radius: 0;
+        .search-bar__input {
+            flex: 1 0 auto;
+    
+            border: none;
+            border-radius: $border-radius-value;
+            border-bottom-right-radius: 0;
+            border-top-right-radius: 0;
+    
+            padding: 5px 10px;
+    
+            box-shadow: inset 0 1px 2px rgba(0,0,0,.5);
 
-        padding: 5px 10px;
+            &.search-bar--results {
+                border-bottom-left-radius: 0;
+            } 
+        }
+    
+        .search-bar__button {
+            flex: 0 0 50px;
+    
+            height: 26px;
+    
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+        }  
+        
+       
+    }
+    
+    .search-bar__results {
+        position: absolute;
+        left: 0;
+        top: 26px;
 
+        width: 430px;
+        padding: 10px;
+        background-color: $ghost-white;
+
+
+        box-shadow: 0 1px 1px rgba(0,0,0,0.15), 
+              0 2px 2px rgba(0,0,0,0.15), 
+              0 4px 4px rgba(0,0,0,0.15), 
+              0 8px 8px rgba(0,0,0,0.15);
+
+        .result {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            padding: 10px 0;
+
+            border-bottom: 1px solid #d6d6d6;
+
+            &:last-of-type {
+                border-bottom: 0;
+            }
+
+            font-size: 14px;
+
+            .result__title {
+                text-decoration: none;
+            }
+
+            .result__author {
+                max-width: 60%;
+                flex-wrap: wrap;
+
+                margin-right: 3px;
+
+                &:last-of-type {
+                    margin-right: 0;
+                }
+
+                &::after {
+                    content: ',';
+                }
+
+                &:last-of-type::after {
+                    content: '';
+                }
+
+                .link {
+                    text-decoration: none;
+
+                    color: $charcoal;
+                    font-size: 11px;
+
+                    &:hover {
+                        color: $black;
+                    }
+                }
+                              
+
+            }
+
+            .result__price {
+                font-weight: 600;
+                font-size: 13px;
+            }
+        }
     }
 
-    .search-bar__button {
-        flex: 0 0 50px;
-
-        height: 26px;
-
-        border-top-left-radius: 0;
-        border-bottom-left-radius: 0;
-    }    
 }
+
