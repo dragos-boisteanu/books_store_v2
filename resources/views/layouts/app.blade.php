@@ -23,7 +23,7 @@
 </head>
 <body class="wrapper">
     @include('includes.header')
-    {{-- @include('includes.main-nav') --}}
+    @include('includes.main-nav')
    
     @yield('content')
     

@@ -10,8 +10,7 @@
 
         <input type="text" id="search" name="q" placeholder="Search"/>
 
-        <button type="submit">Search</button>
-            
+        <button type="submit">Search</button>            
     </form>
 
     <x-books :books="$books"></x-books>

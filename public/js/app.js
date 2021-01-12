@@ -2109,7 +2109,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_CountyCityComponent__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/CountyCityComponent */ "./resources/js/components/CountyCityComponent.js");
 /* harmony import */ var _components_UpdateCartQuantityComponent__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/UpdateCartQuantityComponent */ "./resources/js/components/UpdateCartQuantityComponent.js");
 /* harmony import */ var _components_DynamicInputComponent__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/DynamicInputComponent */ "./resources/js/components/DynamicInputComponent.js");
+/* harmony import */ var _components_UserDropdowComponent__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/UserDropdowComponent */ "./resources/js/components/UserDropdowComponent.js");
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
+
 
 
 
@@ -2123,6 +2125,7 @@ Vue.component('add-to-cart-btn-component', _components_AddToCartBtnComponent__WE
 Vue.component('county-city-component', _components_CountyCityComponent__WEBPACK_IMPORTED_MODULE_3__["default"]);
 Vue.component('update-cart-quantity-component', _components_UpdateCartQuantityComponent__WEBPACK_IMPORTED_MODULE_4__["default"]);
 Vue.component('dynamic-input-component', _components_DynamicInputComponent__WEBPACK_IMPORTED_MODULE_5__["default"]);
+Vue.component('user-dropdown-component', _components_UserDropdowComponent__WEBPACK_IMPORTED_MODULE_6__["default"]);
 Vue.prototype.$bus = new Vue();
 Vue.directive('click-outside', {
   bind: function bind(el, binding, vnode) {
@@ -2610,6 +2613,40 @@ var UpdateCartQuantityComponent = {
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = (UpdateCartQuantityComponent);
+
+/***/ }),
+
+/***/ "./resources/js/components/UserDropdowComponent.js":
+/*!*********************************************************!*\
+  !*** ./resources/js/components/UserDropdowComponent.js ***!
+  \*********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var UserDropdownComponent = {
+  template: "\n        <div class=\"dropdown user-dropdown\">\n            <ul class=\"list dropdown__content\" v-if=\"displayContent\">\n                <li class=\"content__item\">\n                    <a class=\"link content__link\" href=\"/account\">Account</a>\n                </li>\n                <li class=\"content__item\">\n                    <a class=\"link content__link\" href=\"/account/addresses\">Addresses</a>\n                </li>\n                <li class=\"content__item\">\n                    <a class=\"link content__link\" href=\"/account/orders\">Orders</a>\n                </li>\n                <li class=\"content__item\">\n                    <form method=\"POST\" action=\"/logout\">\n                        @csrf\n\n                        <button type=\"submit\">Logout</button>\n                    </form>\n                </li>\n            </ul>\n            <div class=\"dropdown__header\">\n                <div>\n                    <div v-if=\"text\">\n                        {{ text }}\n                    </div>\n                    <a href=\"/login\" v-else>Login</a>\n                </div>\n                <div @click=\"toggleContent\">\n                    <img src=\"/storage/icons/downArrow.svg\" v-if=\"displayDownArrow\" />\n                    <img src=\"/storage/icons/downArrow.svg\" v-else />\n                </div>\n            </div>\n        </div>\n     \n    ",
+  props: {
+    text: {
+      type: String,
+      "default": null
+    }
+  },
+  data: function data() {
+    return {
+      displayContent: false,
+      displayDownArrow: true
+    };
+  },
+  methods: {
+    toggleContent: function toggleContent() {
+      this.displayContent = !this.displayContent;
+      this.displayDownArrow = !this.displayDownArrow;
+    }
+  }
+};
+/* harmony default export */ __webpack_exports__["default"] = (UserDropdownComponent);
 
 /***/ }),
 
