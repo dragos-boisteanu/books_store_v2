@@ -67,7 +67,7 @@ const UserDropdownComponent = {
 
         closeDropdown() {
             this.displayContent = false;
-            this.displayDownArrow = false;
+            this.displayDownArrow = true;
         }
     }
 }

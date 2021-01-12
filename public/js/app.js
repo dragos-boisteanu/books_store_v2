@@ -2110,7 +2110,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_UpdateCartQuantityComponent__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/UpdateCartQuantityComponent */ "./resources/js/components/UpdateCartQuantityComponent.js");
 /* harmony import */ var _components_DynamicInputComponent__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/DynamicInputComponent */ "./resources/js/components/DynamicInputComponent.js");
 /* harmony import */ var _components_UserDropdowComponent__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/UserDropdowComponent */ "./resources/js/components/UserDropdowComponent.js");
+/* harmony import */ var _components_CategoriesDropdown__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/CategoriesDropdown */ "./resources/js/components/CategoriesDropdown.js");
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
+
 
 
 
@@ -2126,6 +2128,7 @@ Vue.component('county-city-component', _components_CountyCityComponent__WEBPACK_
 Vue.component('update-cart-quantity-component', _components_UpdateCartQuantityComponent__WEBPACK_IMPORTED_MODULE_4__["default"]);
 Vue.component('dynamic-input-component', _components_DynamicInputComponent__WEBPACK_IMPORTED_MODULE_5__["default"]);
 Vue.component('user-dropdown-component', _components_UserDropdowComponent__WEBPACK_IMPORTED_MODULE_6__["default"]);
+Vue.component('categories-dropdown-component', _components_CategoriesDropdown__WEBPACK_IMPORTED_MODULE_7__["default"]);
 Vue.prototype.$bus = new Vue();
 Vue.directive('click-outside', {
   bind: function bind(el, binding, vnode) {
@@ -2337,6 +2340,52 @@ var CartComponent = {
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = (CartComponent);
+
+/***/ }),
+
+/***/ "./resources/js/components/CategoriesDropdown.js":
+/*!*******************************************************!*\
+  !*** ./resources/js/components/CategoriesDropdown.js ***!
+  \*******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var CategoriesDropdown = {
+  template: "\n        <a class=\"dropdown categories-dropdown main-nav-link\" v-click-outside=\"closeDropdown\">\n            <ul class=\"list dropdown__content categories__list\" v-if=\"displayContent\">\n                <li class=\"content__item\" v-for=\"category in categories\">\n                    <a class=\"link content__link\" :href=\"'/category/' + category.id\">{{category.name}}</a>\n                </li>\n            </ul>\n            <div class=\"dropdown__header\">\n                <div>                  \n                    Categories\n                </div>\n                <div @click=\"toggleContent\">\n                    <img src=\"/storage/icons/downArrowWhite.svg\" v-if=\"displayDownArrow\" />\n                    <img src=\"/storage/icons/upArrowWhite.svg\" v-else />\n                </div>\n            </div>\n        </a>\n     \n    ",
+  data: function data() {
+    return {
+      categories: [],
+      displayContent: false,
+      displayDownArrow: true
+    };
+  },
+  created: function created() {
+    this.getCategories();
+  },
+  methods: {
+    toggleContent: function toggleContent() {
+      this.displayContent = !this.displayContent;
+      this.displayDownArrow = !this.displayDownArrow;
+    },
+    closeDropdown: function closeDropdown() {
+      this.displayContent = false;
+      this.displayDownArrow = true;
+    },
+    getCategories: function getCategories() {
+      var _this = this;
+
+      axios.get('/api/categories').then(function (response) {
+        console.log(response.data);
+        _this.categories = response.data;
+      })["catch"](function (error) {
+        console.error(error);
+      });
+    }
+  }
+};
+/* harmony default export */ __webpack_exports__["default"] = (CategoriesDropdown);
 
 /***/ }),
 
@@ -2650,7 +2699,7 @@ var UserDropdownComponent = {
     },
     closeDropdown: function closeDropdown() {
       this.displayContent = false;
-      this.displayDownArrow = false;
+      this.displayDownArrow = true;
     }
   }
 };

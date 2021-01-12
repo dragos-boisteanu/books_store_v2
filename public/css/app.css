@@ -283,7 +283,7 @@ h6 {
   border-bottom: 3px solid #b8dbd9ff;
 }
 
-.main-nav .main-nav__list .main-nav__item a {
+.main-nav .main-nav__list .main-nav__item .main-nav-link {
   font-size: 17px;
   display: flex;
   align-items: center;
@@ -474,21 +474,11 @@ h6 {
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15), 0 2px 2px rgba(0, 0, 0, 0.15), 0 4px 4px rgba(0, 0, 0, 0.15), 0 8px 8px rgba(0, 0, 0, 0.15);
 }
 
-.dropdown {
-  position: absolute;
-  background-color: #f4f4f9ff;
-  border-bottom-right-radius: 3px;
-  border-bottom-left-radius: 3px;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.25), 0 2px 2px rgba(0, 0, 0, 0.2), 0 4px 4px rgba(0, 0, 0, 0.15), 0 8px 8px rgba(0, 0, 0, 0.1), 0 16px 16px rgba(0, 0, 0, 0.05);
-}
-
 .dropdown .dropdown__header {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  padding: 10px 0;
   width: 150px;
-  height: 45px;
 }
 
 .dropdown .dropdown__header a {
@@ -515,8 +505,44 @@ h6 {
 }
 
 .dropdown.user-dropdown {
+  position: absolute;
   right: 120px;
   top: 84px;
+  background-color: #f4f4f9ff;
+  border-bottom-right-radius: 3px;
+  border-bottom-left-radius: 3px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.25), 0 2px 2px rgba(0, 0, 0, 0.2), 0 4px 4px rgba(0, 0, 0, 0.15), 0 8px 8px rgba(0, 0, 0, 0.1), 0 16px 16px rgba(0, 0, 0, 0.05);
+}
+
+.dropdown.user-dropdown .dropdown__header {
+  height: 45px;
+  padding: 10px 0;
+}
+
+.dropdown.categories-dropdown {
+  position: relative;
+}
+
+.dropdown.categories-dropdown .dropdown__header img {
+  display: flex;
+  align-items: center;
+  height: 17px;
+  width: 17px;
+}
+
+.dropdown.categories-dropdown .dropdown__content {
+  position: absolute;
+  top: 37px;
+  left: 0;
+  right: 0;
+  max-height: 250px;
+  overflow-y: auto;
+  background-color: #f4f4f9ff;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.25), 0 2px 2px rgba(0, 0, 0, 0.2), 0 4px 4px rgba(0, 0, 0, 0.15), 0 8px 8px rgba(0, 0, 0, 0.1), 0 16px 16px rgba(0, 0, 0, 0.05);
+}
+
+.dropdown.categories-dropdown .dropdown__content.categories__list .content__link {
+  padding: 0;
 }
 
 header {

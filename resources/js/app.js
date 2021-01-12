@@ -7,7 +7,7 @@ import CountyCityComponent from './components/CountyCityComponent';
 import UpdateCartQuantityComponent from './components/UpdateCartQuantityComponent';
 import DynamicInputComponent from './components/DynamicInputComponent';
 import UserDropdownComponent from './components/UserDropdowComponent';
-
+import CategoriesDropdown from './components/CategoriesDropdown';
 
 Vue.component('cart-component', CartComponent);
 Vue.component('demo-component', DemoComponent);
@@ -16,6 +16,7 @@ Vue.component('county-city-component', CountyCityComponent)
 Vue.component('update-cart-quantity-component', UpdateCartQuantityComponent);
 Vue.component('dynamic-input-component', DynamicInputComponent);
 Vue.component('user-dropdown-component', UserDropdownComponent);
+Vue.component('categories-dropdown-component', CategoriesDropdown);
 
 Vue.prototype.$bus = new Vue();
 

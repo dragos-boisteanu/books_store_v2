@@ -1,27 +1,11 @@
-.dropdown {
-    position: absolute;
+.dropdown {    
     
-    background-color: $ghost-white;
- 
-    border-bottom-right-radius: $border-radius-value;
-    border-bottom-left-radius: $border-radius-value;
-
-    box-shadow: 0 1px 1px rgba(0,0,0,0.25), 
-              0 2px 2px rgba(0,0,0,0.20), 
-              0 4px 4px rgba(0,0,0,0.15), 
-              0 8px 8px rgba(0,0,0,0.10),
-              0 16px 16px rgba(0,0,0,0.05);
-
-
     .dropdown__header {
         display: flex;
         justify-content: space-around;
         align-items: center;
 
-        padding: 10px 0;
-
         width: 150px;
-        height: 45px;
 
         a {
             font-size: 14px;
@@ -49,10 +33,71 @@
         }
     }
 
+
     &.user-dropdown {
+
+        position: absolute;
         right: 120px;
         top: 84px;
+    
+        background-color: $ghost-white;
+ 
+        border-bottom-right-radius: $border-radius-value;
+        border-bottom-left-radius: $border-radius-value;
+
+        box-shadow: 0 1px 1px rgba(0,0,0,0.25), 
+                0 2px 2px rgba(0,0,0,0.20), 
+                0 4px 4px rgba(0,0,0,0.15), 
+                0 8px 8px rgba(0,0,0,0.10),
+                0 16px 16px rgba(0,0,0,0.05);
+
+        .dropdown__header {     
+            height: 45px;
+            padding: 10px 0;
+        }
     }
+
+    &.categories-dropdown {
+        position: relative;
+
+        .dropdown__header {
+            img {
+                display: flex;
+                align-items: center;
+                height: 17px;
+                width: 17px;
+            }
+        }
+
+        .dropdown__content {
+            position: absolute;
+            top: 37px;
+            left: 0;
+            right: 0;
+
+            max-height: 250px;
+            overflow-y: auto;
+
+            background-color: $ghost-white;
+            box-shadow: 0 1px 1px rgba(0,0,0,0.25), 
+            0 2px 2px rgba(0,0,0,0.20), 
+            0 4px 4px rgba(0,0,0,0.15), 
+            0 8px 8px rgba(0,0,0,0.10),
+            0 16px 16px rgba(0,0,0,0.05);
+
+
+            &.categories__list {
+               
+                .content__link {
+                    padding: 0;
+                }
+            }
+
+        }
+        
+
+    }
+    
 }
 
 
