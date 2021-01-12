@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div id="book">
+    <div id="book" class="view">
         <div class="title">
             <h1>{{ $book->title }}</h1>
         </div>  

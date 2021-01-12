@@ -21,12 +21,13 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
-<body>
+<body class="wrapper">
     @include('includes.header')
-
-    <main class="wrapper">
-        @yield('content')
-    </main>
+    {{-- @include('includes.main-nav') --}}
+   
+    @yield('content')
+    
+    @include('includes.footer')
     
     <script src="{{ asset('js/app.js') }}" ></script>
     @stack('vue-scripts')

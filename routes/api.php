@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::namespace('Api\Client')->group(function () {
 
     Route::get('/search', 'SearchController@index')->name('search');
+    Route::get('/categories', 'CategoryController@index')->name('categories');
 
     Route::prefix('carts')->group(function() {
 

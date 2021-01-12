@@ -1,0 +1,37 @@
+.main-nav {
+    width: 100%;
+    background-color: $dark-electric-blue;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    .main-nav__list {
+        width: 75%;
+        background-color: transparent;
+        justify-content: center;
+
+        .main-nav__item {
+            
+            height: 100%;
+
+            &:hover {
+                cursor: pointer;
+                background-color: $charcoal;
+            }
+
+            a {
+                display: flex;
+                align-items: center;
+    
+                height: 100%;
+                width: 100%;
+
+                padding: 10px;
+
+                // padding: 10px 20px;
+                color: $ghost-white;
+                text-decoration: none;
+            }           
+        }
+    }
+}

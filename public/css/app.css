@@ -141,12 +141,56 @@ table {
 }
 
 html {
+  height: 100vh;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
   font-family: "Roboto", sans-serif;
 }
 
 header .link--logo {
   font-family: "Courgette", cursive;
   font-size: 24px;
+}
+
+h1 {
+  font-size: 26px;
+  margin: 16px 0;
+  padding-left: 16px;
+}
+
+h2 {
+  font-size: 24px;
+  margin: 8px 0;
+  padding-left: 16px;
+}
+
+h3 {
+  font-size: 22px;
+  margin: 8px 0;
+  padding-left: 16px;
+}
+
+h4 {
+  font-size: 20px;
+  margin: 8px 0;
+  padding-left: 16px;
+}
+
+h5 {
+  font-size: 18px;
+  margin: 8px 0;
+  padding-left: 16px;
+}
+
+h6 {
+  font-size: 16px;
+  margin: 8px 0;
+  padding-left: 16px;
 }
 
 .button {
@@ -210,6 +254,39 @@ header .link--logo {
   align-items: center;
 }
 
+.main-nav {
+  width: 100%;
+  background-color: #586f7cff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.main-nav .main-nav__list {
+  width: 75%;
+  background-color: transparent;
+  justify-content: center;
+}
+
+.main-nav .main-nav__list .main-nav__item {
+  height: 100%;
+}
+
+.main-nav .main-nav__list .main-nav__item:hover {
+  cursor: pointer;
+  background-color: #2f4550ff;
+}
+
+.main-nav .main-nav__list .main-nav__item a {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  padding: 10px;
+  color: #f4f4f9ff;
+  text-decoration: none;
+}
+
 .search-bar {
   width: 500px;
   position: relative;
@@ -247,7 +324,7 @@ header .link--logo {
   position: absolute;
   left: 0;
   top: 26px;
-  width: 430px;
+  width: 450px;
   padding: 10px;
   background-color: #f4f4f9ff;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15), 0 2px 2px rgba(0, 0, 0, 0.15), 0 4px 4px rgba(0, 0, 0, 0.15), 0 8px 8px rgba(0, 0, 0, 0.15);
@@ -391,6 +468,7 @@ header .link--logo {
 }
 
 header {
+  flex: 0;
   position: relative;
   width: 100%;
   display: flex;
@@ -402,5 +480,111 @@ header {
 
 header a {
   flex: 2;
+}
+
+footer {
+  flex: 0;
+  width: 100%;
+  padding: 20px;
+  background-color: #1f1f1f;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: flex-start;
+}
+
+footer .footer__list .list__header {
+  color: #f4f4f9ff;
+  padding: 0;
+}
+
+footer .footer__list .list__content .item {
+  margin: 5px 0;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+}
+
+footer .footer__list .list__content .item svg {
+  margin-right: 10px;
+}
+
+footer .footer__list .list__content .item .link:hover {
+  text-decoration: none;
+}
+
+footer .footer__list .list__content .contact__item {
+  margin: 15px 0;
+}
+
+footer .footer__list .list__content .contact__item .item__header {
+  color: #b8dbd9ff;
+  padding: 0;
+}
+
+footer .footer__list .list__content .contact__item .item__content {
+  font-size: 14px;
+  color: #f4f4f9ff;
+  padding-left: 10px;
+}
+
+footer .footer__list .list__content .contact__item .phones__list {
+  padding-left: 10px;
+}
+
+footer .footer__list .list__content .contact__item .phones__list .phone__item {
+  display: flex;
+  align-items: center;
+  margin: 5px 0;
+  font-size: 14px;
+}
+
+footer .footer__list .list__content .contact__item .phones__list .phone__item .provider {
+  width: 100px;
+}
+
+footer .footer__list .list__content .contact__item .phones__list .phone__item .provider.orange {
+  color: #ffa500;
+}
+
+footer .footer__list .list__content .contact__item .phones__list .phone__item .provider.vodafone {
+  color: #ff0000;
+}
+
+footer .footer__list .list__content .contact__item .phones__list .phone__item .provider.digi {
+  color: #0577c4;
+}
+
+footer .footer__list .list__content .contact__item .phones__list .phone__item .number {
+  color: #f4f4f9ff;
+}
+
+footer .map {
+  height: 300px;
+  width: 400px;
+}
+
+footer .map a:hover img {
+  box-shadow: 0 2px 1px rgba(0, 0, 0, 0.09), 0 4px 2px rgba(0, 0, 0, 0.09), 0 8px 4px rgba(0, 0, 0, 0.09), 0 16px 8px rgba(0, 0, 0, 0.09), 0 32px 16px rgba(0, 0, 0, 0.09);
+}
+
+footer .map a img {
+  height: 100%;
+  width: 100%;
+  border-radius: 3px;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  height: 100%;
+}
+
+.view {
+  width: 65%;
+  border: 1px solid red;
+  padding: 25px;
+  flex: 1 0 0;
 }
 
