@@ -6,21 +6,25 @@
     align-items: center;
     
     .main-nav__list {
-        width: 75%;
+        width: 25%;
         background-color: transparent;
-        justify-content: center;
+        justify-content: space-between;
 
         .main-nav__item {
             
             height: 100%;
 
+            border-bottom: 3px solid transparent;
+
             &:hover {
                 cursor: pointer;
                 background-color: $charcoal;
+                border-bottom: 3px solid $powder-blue;
             }
 
             a {
-                display: flex;
+                font-size: 17px;
+                display: flex; 
                 align-items: center;
     
                 height: 100%;

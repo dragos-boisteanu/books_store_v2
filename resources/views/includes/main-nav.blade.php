@@ -25,19 +25,6 @@
 
 @push('vue-scripts')
     <script>
-        const categoriesList = document.getElementsByClassName('categories-dropdown__content')[0];
-        
-        axios.get('/api/categories')
-        .then( response => {
-            response.data.forEach(category => {
-                const li = document.createElement("li"); 
-                li.innerHTML = `<a href="/category/${category.id}">${category.name}</a>`;
-                li.classList.add('category');
-                categoriesList.appendChild(li);
-            });
-        })
-        .catch( error => {
-            console.error(error)
-        })
+       
     </script>
 @endpush

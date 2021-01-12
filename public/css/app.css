@@ -148,6 +148,10 @@ html {
   box-sizing: border-box;
 }
 
+input {
+  outline: none;
+}
+
 html {
   font-family: "Roboto", sans-serif;
 }
@@ -263,21 +267,24 @@ h6 {
 }
 
 .main-nav .main-nav__list {
-  width: 75%;
+  width: 25%;
   background-color: transparent;
-  justify-content: center;
+  justify-content: space-between;
 }
 
 .main-nav .main-nav__list .main-nav__item {
   height: 100%;
+  border-bottom: 3px solid transparent;
 }
 
 .main-nav .main-nav__list .main-nav__item:hover {
   cursor: pointer;
   background-color: #2f4550ff;
+  border-bottom: 3px solid #b8dbd9ff;
 }
 
 .main-nav .main-nav__list .main-nav__item a {
+  font-size: 17px;
   display: flex;
   align-items: center;
   height: 100%;
@@ -481,6 +488,7 @@ h6 {
   align-items: center;
   padding: 10px 0;
   width: 150px;
+  height: 45px;
 }
 
 .dropdown .dropdown__header a {
@@ -543,7 +551,7 @@ footer .footer__list .list__header {
 
 footer .footer__list .list__content .item {
   margin: 5px 0;
-  padding: 10px;
+  padding: 5px;
   display: flex;
   align-items: center;
 }

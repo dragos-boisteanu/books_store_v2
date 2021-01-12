@@ -31,11 +31,12 @@
     @auth
         <user-dropdown-component
             text="{{ Auth::user()->first_name }}"
+            :auth="true"
         ></user-dropdown-component>
     @endauth
     
     @guest
-    <user-dropdown-component></user-dropdown-component>
+        <user-dropdown-component></user-dropdown-component>
     @endguest
     <cart-component></cart-component>
 </header>
