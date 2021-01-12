@@ -2124,6 +2124,22 @@ Vue.component('county-city-component', _components_CountyCityComponent__WEBPACK_
 Vue.component('update-cart-quantity-component', _components_UpdateCartQuantityComponent__WEBPACK_IMPORTED_MODULE_4__["default"]);
 Vue.component('dynamic-input-component', _components_DynamicInputComponent__WEBPACK_IMPORTED_MODULE_5__["default"]);
 Vue.prototype.$bus = new Vue();
+Vue.directive('click-outside', {
+  bind: function bind(el, binding, vnode) {
+    el.clickOutsideEvent = function (event) {
+      // here I check that click was outside the el and his children
+      if (!(el == event.target || el.contains(event.target))) {
+        // and if it did, call method provided in attribute value
+        vnode.context[binding.expression](event);
+      }
+    };
+
+    document.body.addEventListener('click', el.clickOutsideEvent);
+  },
+  unbind: function unbind(el) {
+    document.body.removeEventListener('click', el.clickOutsideEvent);
+  }
+});
 
 /***/ }),
 
@@ -2229,7 +2245,7 @@ var AddToCartBtnComponent = {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 var CartComponent = {
-  template: "\n        <div class=\"cart\" :class=\"{'cart--active' : showCart}\">\n            <div v-if=\"showCart\" class=\"cart__content\">\n                <div class=\"cart__header\">\n                    <div>\n                        Shopping cart \n                    </div>\n                    <button @click=\"toggleCart\" class=\"button\">\n                        <img src=\"storage/icons/close.svg\"/>\n                    </button>\n                </div>\n                <ul class=\"items__list\">\n                    <li v-for=\"(book,index) in items\" :key=\"index\" class=\"item\">\n                        <a :href=\"'/books/' + book.id\" class=\"link title\">{{ book.title }}</a>\n                        <div class=\"quantity\">\n                            <span class=\"divider\">x</span>\n                            <span class=\"value\">{{ book.quantity }} buc.</span>\n                        </div>\n                        <div class=\"price\">{{ book.finalPrice }} RON</div>\n                        <button @click=\"removeFromCart(book.id)\" class=\"button\">\n                            <svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"red\" width=\"18px\" height=\"18px\"><path d=\"M0 0h24v24H0z\" fill=\"none\"/>\n                                <path d=\"M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z\"/>\n                            </svg>\n                        </button>\n                    </li>\n                </ul>\n                <form method=\"GET\" action=\"/orders/create\" class=\"order-form\">\n                    <button type=\"submit\" class=\"button button-primary cart__button-order\">Place order</button>\n                </form>\n            </div>\n            <div class=\"button cart__button\" @click=\"toggleCart\" v-else>\n                <div class=\"button__icon\">\n                    <img src=\"storage/icons/cart.svg\"/>\n                </div>\n                <div class=\"button__count\">\n                    {{ count }}\n                </div>\n            </div>\n        </div>\n    ",
+  template: "\n        <div class=\"cart\" :class=\"{'cart--active' : showCart}\" v-click-outside=\"closeCart\">\n            <div v-if=\"showCart\" class=\"cart__content\">\n                <div class=\"cart__header\">\n                    <div>\n                        Shopping cart \n                    </div>\n                    <button @click=\"toggleCart\" class=\"button\">\n                        <img src=\"storage/icons/close.svg\"/>\n                    </button>\n                </div>\n                <ul class=\"items__list\">\n                    <li v-for=\"(book,index) in items\" :key=\"index\" class=\"item\">\n                        <a :href=\"'/books/' + book.id\" class=\"link title\">{{ book.title }}</a>\n                        <div class=\"quantity\">\n                            <span class=\"divider\">x</span>\n                            <span class=\"value\">{{ book.quantity }} buc.</span>\n                        </div>\n                        <div class=\"price\">{{ book.finalPrice }} RON</div>\n                        <button @click=\"removeFromCart(book.id)\" class=\"button\">\n                            <svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"red\" width=\"18px\" height=\"18px\"><path d=\"M0 0h24v24H0z\" fill=\"none\"/>\n                                <path d=\"M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z\"/>\n                            </svg>\n                        </button>\n                    </li>\n                </ul>\n                <form method=\"GET\" action=\"/orders/create\" class=\"order-form\">\n                    <button type=\"submit\" class=\"button button-primary cart__button-order\">Place order</button>\n                </form>\n            </div>\n            <div class=\"button cart__button\" @click=\"toggleCart\" v-else>\n                <div class=\"button__icon\">\n                    <img src=\"storage/icons/cart.svg\"/>\n                </div>\n                <div class=\"button__count\">\n                    {{ count }}\n                </div>\n            </div>\n        </div>\n    ",
   created: function created() {
     this.getItems();
   },
@@ -2308,6 +2324,9 @@ var CartComponent = {
       if (this.showCart) {
         this.getItems();
       }
+    },
+    closeCart: function closeCart() {
+      this.showCart = false;
     },
     sendItems: function sendItems() {
       this.$bus.$emit('cartItems', this.items);

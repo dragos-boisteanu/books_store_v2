@@ -1,7 +1,7 @@
 const CartComponent = {
     template: 
     `
-        <div class="cart" :class="{'cart--active' : showCart}">
+        <div class="cart" :class="{'cart--active' : showCart}" v-click-outside="closeCart">
             <div v-if="showCart" class="cart__content">
                 <div class="cart__header">
                     <div>
@@ -130,6 +130,10 @@ const CartComponent = {
             if(this.showCart) {
                 this.getItems();
             }
+        },
+
+        closeCart() {
+            this.showCart = false;
         },
 
         sendItems() {

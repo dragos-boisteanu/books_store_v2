@@ -10,13 +10,13 @@
                 <img class="button__image" src="storage/icons/search.svg"/>
             </button>
         </form>
-        <ul class="list search-bar__results" v-if="showResults"> 
+        <ul class="list search-bar__results" v-if="showResults" v-click-outside="closeResults"> 
             <li v-for="(result, index) in searchResults" :key="index" class="result">
                 <div class="title__authors">
-                    <a class="link result__title" href="/">@{{ result.title }}</a>
+                    <a class="link result__title" :href="`/books/` + result.id">@{{ result.title }}</a>
                     <ul class="list list-horizontal">
                         <li class="result__author" v-for="(author, index) in result.authors" :key="index">
-                           <a class="link" href="">@{{author.name}}</a>
+                           <a class="link" :href="'/authors/' + author.id">@{{author.name}}</a>
                         </li>
                     </ul>
                 </div>
@@ -68,7 +68,10 @@
                             console.error( error )
                         })
                     }
-                    
+                },
+
+                closeResults() {
+                    this.searchResults.splice(0)
                 }
             }
             
