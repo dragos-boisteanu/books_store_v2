@@ -16,9 +16,8 @@ const UserDropdownComponent = {
                 </li>
                 <li class="content__item">
                     <form method="POST" action="/logout">
-                        @csrf
-
-                        <button type="submit">Logout</button>
+                        <input type="hidden" name="_token" :value="csrf">
+                        <button type="submit" class="button link content__link">Logout</button>
                     </form>
                 </li>
             </ul>
@@ -54,7 +53,8 @@ const UserDropdownComponent = {
     data() {
         return {
             displayContent: false,
-            displayDownArrow: true
+            displayDownArrow: true,
+            csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
             
         }
     },

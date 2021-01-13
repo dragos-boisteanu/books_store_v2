@@ -28,6 +28,7 @@
             .content__link {
                 display: block;
                 height: 100%;
+                width: 100%;
                 padding: 10px 0;
             }
         }
@@ -55,6 +56,13 @@
             height: 45px;
             padding: 10px 0;
         }
+
+        .dropdown__content {
+            .button {
+                width: 100%;
+                font-size: 14px;
+            }
+        }
     }
 
     &.categories-dropdown {
@@ -71,7 +79,7 @@
 
         .dropdown__content {
             position: absolute;
-            top: 37px;
+            top: 40px;
             left: 0;
             right: 0;
 

@@ -2353,7 +2353,7 @@ var CartComponent = {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 var CategoriesDropdown = {
-  template: "\n        <a class=\"dropdown categories-dropdown main-nav-link\" v-click-outside=\"closeDropdown\">\n            <ul class=\"list dropdown__content categories__list\" v-if=\"displayContent\">\n                <li class=\"content__item\" v-for=\"category in categories\">\n                    <a class=\"link content__link\" :href=\"'/category/' + category.id\">{{category.name}}</a>\n                </li>\n            </ul>\n            <div class=\"dropdown__header\">\n                <div>                  \n                    Categories\n                </div>\n                <div @click=\"toggleContent\">\n                    <img src=\"/storage/icons/downArrowWhite.svg\" v-if=\"displayDownArrow\" />\n                    <img src=\"/storage/icons/upArrowWhite.svg\" v-else />\n                </div>\n            </div>\n        </a>\n     \n    ",
+  template: "\n        <a class=\"dropdown categories-dropdown main-nav-link\" v-click-outside=\"closeDropdown\" @click=\"toggleContent\">\n            <ul class=\"list dropdown__content categories__list\" v-if=\"displayContent\">\n                <li class=\"content__item\" v-for=\"category in categories\">\n                    <a class=\"link content__link\" :href=\"'/category/' + category.id\">{{category.name}}</a>\n                </li>\n            </ul>\n            <div class=\"dropdown__header\">\n                <div>                  \n                    Categories\n                </div>\n                <div>\n                    <img src=\"/storage/icons/downArrowWhite.svg\" v-if=\"displayDownArrow\" />\n                    <img src=\"/storage/icons/upArrowWhite.svg\" v-else />\n                </div>\n            </div>\n        </a>\n     \n    ",
   data: function data() {
     return {
       categories: [],
@@ -2675,7 +2675,7 @@ var UpdateCartQuantityComponent = {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 var UserDropdownComponent = {
-  template: "\n        <div class=\"dropdown user-dropdown\" v-click-outside=\"closeDropdown\">\n            <ul class=\"list dropdown__content\" v-if=\"displayContent && auth\">\n                <li class=\"content__item\">\n                    <a class=\"link content__link\" href=\"/account\">Account</a>\n                </li>\n                <li class=\"content__item\">\n                    <a class=\"link content__link\" href=\"/account/addresses\">Addresses</a>\n                </li>\n                <li class=\"content__item\">\n                    <a class=\"link content__link\" href=\"/account/orders\">Orders</a>\n                </li>\n                <li class=\"content__item\">\n                    <form method=\"POST\" action=\"/logout\">\n                        @csrf\n\n                        <button type=\"submit\">Logout</button>\n                    </form>\n                </li>\n            </ul>\n            <div class=\"dropdown__header\">\n                <div>\n                    <div v-if=\"text\">\n                        {{ text }}\n                    </div>\n                    <a href=\"/login\" v-else>Login</a>\n                </div>\n                <div @click=\"toggleContent\" v-if=\"auth\">\n                    <img src=\"/storage/icons/downArrow.svg\" v-if=\"displayDownArrow\" />\n                    <img src=\"/storage/icons/upArrow.svg\" v-else />\n                </div>\n            </div>\n        </div>\n     \n    ",
+  template: "\n        <div class=\"dropdown user-dropdown\" v-click-outside=\"closeDropdown\">\n            <ul class=\"list dropdown__content\" v-if=\"displayContent && auth\">\n                <li class=\"content__item\">\n                    <a class=\"link content__link\" href=\"/account\">Account</a>\n                </li>\n                <li class=\"content__item\">\n                    <a class=\"link content__link\" href=\"/account/addresses\">Addresses</a>\n                </li>\n                <li class=\"content__item\">\n                    <a class=\"link content__link\" href=\"/account/orders\">Orders</a>\n                </li>\n                <li class=\"content__item\">\n                    <form method=\"POST\" action=\"/logout\">\n                        <input type=\"hidden\" name=\"_token\" :value=\"csrf\">\n                        <button type=\"submit\" class=\"button link content__link\">Logout</button>\n                    </form>\n                </li>\n            </ul>\n            <div class=\"dropdown__header\">\n                <div>\n                    <div v-if=\"text\">\n                        {{ text }}\n                    </div>\n                    <a href=\"/login\" v-else>Login</a>\n                </div>\n                <div @click=\"toggleContent\" v-if=\"auth\">\n                    <img src=\"/storage/icons/downArrow.svg\" v-if=\"displayDownArrow\" />\n                    <img src=\"/storage/icons/upArrow.svg\" v-else />\n                </div>\n            </div>\n        </div>\n     \n    ",
   props: {
     text: {
       type: String,
@@ -2689,7 +2689,8 @@ var UserDropdownComponent = {
   data: function data() {
     return {
       displayContent: false,
-      displayDownArrow: true
+      displayDownArrow: true,
+      csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content')
     };
   },
   methods: {

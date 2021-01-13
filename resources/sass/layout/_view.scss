@@ -1,9 +1,14 @@
 .view {
     width: 65%;
+    // border: 1px solid red;
+    
+    flex: 1 0 600px;
 
-    border: 1px solid red;
+    display: flex;
+    justify-content: stretch;
+    align-items: flex-start;
 
-    padding: 25px;
-
-    flex: 1 0 0;
+    .view__content {
+        padding: 25px;
+    }
 }

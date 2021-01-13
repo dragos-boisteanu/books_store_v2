@@ -3,7 +3,7 @@ const CategoriesDropdown = {
     template:
 
     `
-        <a class="dropdown categories-dropdown main-nav-link" v-click-outside="closeDropdown">
+        <a class="dropdown categories-dropdown main-nav-link" v-click-outside="closeDropdown" @click="toggleContent">
             <ul class="list dropdown__content categories__list" v-if="displayContent">
                 <li class="content__item" v-for="category in categories">
                     <a class="link content__link" :href="'/category/' + category.id">{{category.name}}</a>
@@ -13,7 +13,7 @@ const CategoriesDropdown = {
                 <div>                  
                     Categories
                 </div>
-                <div @click="toggleContent">
+                <div>
                     <img src="/storage/icons/downArrowWhite.svg" v-if="displayDownArrow" />
                     <img src="/storage/icons/upArrowWhite.svg" v-else />
                 </div>

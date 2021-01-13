@@ -77,13 +77,13 @@ class AddressController extends Controller
 
         $address->update($input);
 
-        return redirect()->route('addresses-client.index');
+        return redirect()->route('client-addresses.index');
     }
 
     public function destroy($id) 
     {
         $address->findOrFail($id)->delete();
 
-        return redirect()->route('addresses-client.index');
+        return redirect()->route('client-addresses.index');
     }
 }

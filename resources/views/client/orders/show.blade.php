@@ -1,9 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
-
-    <div class="view">
-        <h1 class="view__header">
+<div class="view">
+    @include('includes.user-account-nav')
+    <div class="view__content">
+        <h1>
             Order {{ $order->id }} # - {{ $order->status->name }}
         </h1>
         <div class="date">
@@ -97,7 +98,7 @@
                     <td>
                         {{ $order->shipping_method->price }}
                     </td>
-                   
+                    
                 </tr>
                 <tr>
                     <td colspan="3">
@@ -116,8 +117,7 @@
         <div class="action">
             <a href="{{ route('client-orders.index') }}">Back to orders</a>
         </div>
-        
-       
     </div>
+</div>
 
 @endsection

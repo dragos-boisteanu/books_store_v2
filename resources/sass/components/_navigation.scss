@@ -39,3 +39,32 @@
         }
     }
 }
+
+
+.side-nav {
+    width: 200px;
+    height: 100%;
+
+    background-color: $charcoal;
+
+    border-left: 1px solid $black;
+    
+    .side-nav__list {
+
+        .item__link {
+            display: block;
+            width: 100%;
+            padding: 20px 0 20px 10px;     
+            text-decoration: none;
+
+            color: $ghost-white;
+
+            &:hover,
+            &.item__link--selected {
+                color: $charcoal;
+                background-color: $ghost-white;
+            }
+        }
+    }
+
+}

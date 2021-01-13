@@ -294,6 +294,27 @@ h6 {
   text-decoration: none;
 }
 
+.side-nav {
+  width: 200px;
+  height: 100%;
+  background-color: #2f4550ff;
+  border-left: 1px solid #1f1f1f;
+}
+
+.side-nav .side-nav__list .item__link {
+  display: block;
+  width: 100%;
+  padding: 20px 0 20px 10px;
+  text-decoration: none;
+  color: #f4f4f9ff;
+}
+
+.side-nav .side-nav__list .item__link:hover,
+.side-nav .side-nav__list .item__link.item__link--selected {
+  color: #2f4550ff;
+  background-color: #f4f4f9ff;
+}
+
 .search-bar {
   width: 500px;
   position: relative;
@@ -501,6 +522,7 @@ h6 {
 .dropdown .dropdown__content .content__item .content__link {
   display: block;
   height: 100%;
+  width: 100%;
   padding: 10px 0;
 }
 
@@ -519,6 +541,11 @@ h6 {
   padding: 10px 0;
 }
 
+.dropdown.user-dropdown .dropdown__content .button {
+  width: 100%;
+  font-size: 14px;
+}
+
 .dropdown.categories-dropdown {
   position: relative;
 }
@@ -532,7 +559,7 @@ h6 {
 
 .dropdown.categories-dropdown .dropdown__content {
   position: absolute;
-  top: 37px;
+  top: 40px;
   left: 0;
   right: 0;
   max-height: 250px;
@@ -661,8 +688,13 @@ footer .map a img {
 
 .view {
   width: 65%;
-  border: 1px solid red;
+  flex: 1 0 600px;
+  display: flex;
+  justify-content: stretch;
+  align-items: flex-start;
+}
+
+.view .view__content {
   padding: 25px;
-  flex: 1 0 0;
 }
 

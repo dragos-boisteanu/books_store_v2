@@ -2,64 +2,68 @@
 
 @section('content')
     <div id="view" class="view">
-        <h1>
-            Edit address
-        </h1>
-        <form class="address" method="POST" action="{{ route('addresses-client.update', ['address'=>$address->id]) }}">
-            @csrf
-            @method('PUT')
-
-            <div>
+        @include('includes.user-account-nav')
+        <div class="view__content">
+            <h1>
+                Edit address
+            </h1>
+            <form class="address" method="POST" action="{{ route('client-addresses.update', ['address'=>$address->id]) }}">
+                @csrf
+                @method('PUT')
+    
                 <div>
-                    <label for="first-name">First name</label>
-                    <input type="text" id="first-name" name="first_name" value="{{ $address->first_name }}"/>
-                   
+                    <div>
+                        <label for="first-name">First name</label>
+                        <input type="text" id="first-name" name="first_name" value="{{ $address->first_name }}"/>
+                       
+                    </div>
+                    <div>
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" value="{{ $address->name }}"/>
+                    </div>
                 </div>
-                <div>
-                    <label for="name">Name</label>
-                    <input type="text" id="name" name="name" value="{{ $address->name }}"/>
-                </div>
-            </div>
-            
-            <div>
-                <label for="address">Address</label>
-                <input type="text" id="address" name="address" value="{{ $address->address }}"/>
-            </div>
-
-            <county-city-component
-                counties="{{ $counties }}"
-                selectedcounty="{{ $address->county->id }}"
-                selectedcity="{{ $address->city->id }}"
-                @county-selected="saveCounty"
-                @city-selected="saveCity"
-            ></county-city-component>
-
-            <input type="hidden" name="county" :value="county"/>
-            <input type="hidden" name="city" :value="city"/>
                 
-            <div>
-                <label for="phone-number">Phone Number</label>
-                <input type="text" id="phone-number" name="phone_number" value="{{ $address->phone_number }}"/>
-            </div>
-
-            @if (!$address->default_for_invoice)
                 <div>
-                    <input id="invoice" type="checkbox" name="default_for_invoice" {{ $address->default_for_invoice ? 'checked' : '' }} />
-                    <label for="invoice">Default address for invoice</label>
+                    <label for="address">Address</label>
+                    <input type="text" id="address" name="address" value="{{ $address->address }}"/>
                 </div>
-            @endif
-           
-            @if (!$address->default_for_shipping)
+    
+                <county-city-component
+                    counties="{{ $counties }}"
+                    selectedcounty="{{ $address->county->id }}"
+                    selectedcity="{{ $address->city->id }}"
+                    @county-selected="saveCounty"
+                    @city-selected="saveCity"
+                ></county-city-component>
+    
+                <input type="hidden" name="county" :value="county"/>
+                <input type="hidden" name="city" :value="city"/>
+                    
                 <div>
-                    <input id="shipping" type="checkbox" name="default_for_shipping" {{ $address->default_for_shipping ? 'checked' : '' }} />
-                    <label for="shipping">Default address for shipping</label>
+                    <label for="phone-number">Phone Number</label>
+                    <input type="text" id="phone-number" name="phone_number" value="{{ $address->phone_number }}"/>
                 </div>
-            @endif
-
-            <div>
-                <button type="submit">Save address</button>
-            </div>
-        </form>
+    
+                @if (!$address->default_for_invoice)
+                    <div>
+                        <input id="invoice" type="checkbox" name="default_for_invoice" {{ $address->default_for_invoice ? 'checked' : '' }} />
+                        <label for="invoice">Default address for invoice</label>
+                    </div>
+                @endif
+               
+                @if (!$address->default_for_shipping)
+                    <div>
+                        <input id="shipping" type="checkbox" name="default_for_shipping" {{ $address->default_for_shipping ? 'checked' : '' }} />
+                        <label for="shipping">Default address for shipping</label>
+                    </div>
+                @endif
+    
+                <div>
+                    <button type="submit">Save address</button>
+                </div>
+            </form>
+        </div>
+        
     </div>
 @endsection
 
