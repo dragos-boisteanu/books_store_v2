@@ -68,12 +68,11 @@
                             <td>
                                 <a href="{{ route('client-orders.show', ['order'=>$order->id]) }}" class="link">View order</a>
                             </td>
-                            
                         </tr>
                     @endforeach
                 </tbody>
-                
             </table>
+            {{ $orders->links()}}
         </div>
     </div>
 

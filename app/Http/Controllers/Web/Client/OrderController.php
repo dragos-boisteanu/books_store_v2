@@ -27,7 +27,7 @@ class OrderController extends Controller
             }
 
             $query->where('user_id', Auth::id());
-        })->orderBy('created_at', 'desc')->simplePaginate(15)->withQueryString();
+        })->orderBy('created_at', 'desc')->paginate(1)->withQueryString();
     
         $request->flash();
         
