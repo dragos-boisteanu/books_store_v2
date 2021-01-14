@@ -12,14 +12,18 @@
                 </li>
             @endif
 
+
+                <li>
+                    {{ $paginator->currentPage() }}
+                </li>
+                <li>
+                    /
+                </li>
+                <li>
+                    {{$paginator->lastPage()}}
+                </li>
          
-            <div>
-                {{ $paginator->currentPage() }}
-            </div>
-            /
-            <div>
-                {{$paginator->lastPage()}}
-            </div>
+           
 
             {{-- Next Page Link --}}
             @if ($paginator->hasMorePages())

@@ -733,6 +733,14 @@ table tr.total-row {
   font-weight: 600;
 }
 
+.pagination {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 10px;
+  background-color: #b8dbd9ff;
+}
+
 header {
   flex: 0;
   position: relative;
