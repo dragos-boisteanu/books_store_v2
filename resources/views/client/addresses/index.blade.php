@@ -35,7 +35,7 @@
             </div>
             <div class="addresses">
                 <h4>More addresses</h4>
-                <ul class="list addresses_list">
+                <ul class="list addresses__list">
                     @foreach($addresses as $address)
                         @if(!$address->default_for_shipping && !$address->default_for_invoice)
                             <li class="address">
@@ -56,7 +56,7 @@
                         @endif
                     @endforeach
                 </ul>
-                <div class="addresses__action">
+                <div class="view__action">
                     <a href="{{ route('client-addresses.create') }}" class="link">Add new address</a>
                 </div>
             </div>

@@ -32,6 +32,7 @@
         <user-dropdown-component
             text="{{ Auth::user()->first_name }}"
             :auth="true"
+            :admin={{ Auth::user()->role_id == 1 || Auth::user()->role_id == 2 ? true : false }}
         ></user-dropdown-component>
     @endauth
     

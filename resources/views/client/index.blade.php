@@ -35,17 +35,17 @@
                 </div>
                     <div class="form-group">
                         <label for="current-password" class="form-label">Current password</label>
-                        <input type="text" id="current-password" class="form-input" name="current_password"/>
+                        <input type="password" id="current-password" class="form-input" name="current_password"/>
                     </div>
                 <div class="form-section">
                     <div class="form-group">
                         <label for="password"
                         class="form-label">Password</label>
-                        <input type="text" id="password" name="password" class="form-input"/>
+                        <input type="password" id="password" name="password" class="form-input"/>
                     </div>
                     <div class="form-group">
                         <label for="password-confirm" class="form-label">Confirm Password</label>
-                        <input type="text" id="password-confirm" name="password_confirmation" class="form-input"/>
+                        <input type="password" id="password-confirm" name="password_confirmation" class="form-input"/>
                     </div>
                 </div>
                 <div class="form-section">

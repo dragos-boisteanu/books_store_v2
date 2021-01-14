@@ -2675,13 +2675,17 @@ var UpdateCartQuantityComponent = {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 var UserDropdownComponent = {
-  template: "\n        <div class=\"dropdown user-dropdown\" v-click-outside=\"closeDropdown\">\n            <ul class=\"list dropdown__content\" v-if=\"displayContent && auth\">\n                <li class=\"content__item\">\n                    <a class=\"link content__link\" href=\"/account\">Account</a>\n                </li>\n                <li class=\"content__item\">\n                    <a class=\"link content__link\" href=\"/account/addresses\">Addresses</a>\n                </li>\n                <li class=\"content__item\">\n                    <a class=\"link content__link\" href=\"/account/orders\">Orders</a>\n                </li>\n                <li class=\"content__item\">\n                    <form method=\"POST\" action=\"/logout\" class=\"menu-form\">\n                        <input type=\"hidden\" name=\"_token\" :value=\"csrf\">\n                        <button type=\"submit\" class=\"button link content__link\">Logout</button>\n                    </form>\n                </li>\n            </ul>\n            <div class=\"dropdown__header\" @click=\"toggleContent\">\n                <div>\n                    <div v-if=\"text\">\n                        {{ text }}\n                    </div>\n                    <a href=\"/login\" v-else>Login</a>\n                </div>\n                <div v-if=\"auth\">\n                    <img src=\"/storage/icons/downArrow.svg\" v-if=\"displayDownArrow\" />\n                    <img src=\"/storage/icons/upArrow.svg\" v-else />\n                </div>\n            </div>\n        </div>\n     \n    ",
+  template: "\n        <div class=\"dropdown user-dropdown\" v-click-outside=\"closeDropdown\">\n            <ul class=\"list dropdown__content\" v-if=\"displayContent && auth\">\n                <li class=\"content__item\" v-if=\"admin\">\n                    <a class=\"link content__link dashboard-link\" href=\"/dashboard\">Dashboard</a>\n                </li>\n                <li class=\"content__item\">\n                    <a class=\"link content__link\" href=\"/account\">Account</a>\n                </li>\n                <li class=\"content__item\">\n                    <a class=\"link content__link\" href=\"/account/addresses\">Addresses</a>\n                </li>\n                <li class=\"content__item\">\n                    <a class=\"link content__link\" href=\"/account/orders\">Orders</a>\n                </li>\n                <li class=\"content__item\">\n                    <form method=\"POST\" action=\"/logout\" class=\"menu-form\">\n                        <input type=\"hidden\" name=\"_token\" :value=\"csrf\">\n                        <button type=\"submit\" class=\"button link content__link\">Logout</button>\n                    </form>\n                </li>\n            </ul>\n            <div class=\"dropdown__header\" @click=\"toggleContent\">\n                <div>\n                    <div v-if=\"text\">\n                        {{ text }}\n                    </div>\n                    <a href=\"/login\" v-else>Login</a>\n                </div>\n                <div v-if=\"auth\">\n                    <img src=\"/storage/icons/downArrow.svg\" v-if=\"displayDownArrow\" />\n                    <img src=\"/storage/icons/upArrow.svg\" v-else />\n                </div>\n            </div>\n        </div>\n     \n    ",
   props: {
     text: {
       type: String,
       "default": null
     },
     auth: {
+      type: Boolean,
+      "default": false
+    },
+    admin: {
       type: Boolean,
       "default": false
     }

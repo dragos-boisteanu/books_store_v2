@@ -5,6 +5,9 @@ const UserDropdownComponent = {
     `
         <div class="dropdown user-dropdown" v-click-outside="closeDropdown">
             <ul class="list dropdown__content" v-if="displayContent && auth">
+                <li class="content__item" v-if="admin">
+                    <a class="link content__link dashboard-link" href="/dashboard">Dashboard</a>
+                </li>
                 <li class="content__item">
                     <a class="link content__link" href="/account">Account</a>
                 </li>
@@ -44,6 +47,11 @@ const UserDropdownComponent = {
         },
 
         auth: {
+            type: Boolean,
+            default: false
+        },
+
+        admin: {
             type: Boolean,
             default: false
         }

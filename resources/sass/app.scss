@@ -11,12 +11,15 @@
 @import 'components/search';
 @import 'components/cart';
 @import 'components/dropdown';
+@import 'components/filter';
 @import 'components/forms';
+@import 'components/table';
 
 @import 'layout/haeder';
 @import 'layout/footer';
 @import 'layout/wrapper';
 @import 'layout/view';
-@import 'layout/addresses-index.scss';
+@import 'layout/addresses.scss';
 @import 'layout/auth';
 @import 'layout/book';
+@import 'layout/orders';

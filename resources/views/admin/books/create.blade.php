@@ -51,7 +51,7 @@
                 <label>Publisher</label>
                 <select name="publisher_id">
                     @foreach($publishers as $publisher)
-                        <option value="{{ $publisher->id }}" {{ $publisher->id === old('publisher_id')) ? 'selected' : '' }} >{{$publisher->name}}</option>
+                        <option value="{{ $publisher->id }}" {{ $publisher->id === old('publisher_id') ? 'selected' : '' }} >{{$publisher->name}}</option>
                     @endforeach
                 </select>    
             </div>
@@ -59,7 +59,7 @@
                 <label>Language</label>
                 <select name="language_id">
                     @foreach($languages as $language)
-                        <option value="{{ $language->id }}" {{ $language->id === old('language_id')) ? 'selected' : '' }}>{{$language->name}}</option>
+                        <option value="{{ $language->id }}" {{ $language->id === old('language_id') ? 'selected' : '' }}>{{$language->name}}</option>
                     @endforeach
                 </select>
             </div>
@@ -67,7 +67,7 @@
                 <label>Category</label>
                 <select name="category_id">
                     @foreach($categories as $category)
-                        <option value="{{ $category->id }}" {{ $category->id === old('category_id')) ? 'selected' : '' }}>{{$category->name}}</option>
+                        <option value="{{ $category->id }}" {{ $category->id === old('category_id') ? 'selected' : '' }}>{{$category->name}}</option>
                     @endforeach
                 </select>
             </div>
@@ -75,7 +75,7 @@
                 <label>Cover type</label>
                 <select name="cover_id">
                     @foreach($covers as $cover)
-                        <option value="{{ $cover->id }}" {{ $cover->id === old('cover_id')) ? 'selected' : '' }}>{{$category->name}} >{{$cover->name}}</option>
+                        <option value="{{ $cover->id }}" {{ $cover->id === old('cover_id') ? 'selected' : '' }}>{{$category->name}} >{{$cover->name}}</option>
                     @endforeach
                 </select>
             </div>

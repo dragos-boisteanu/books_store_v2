@@ -58,15 +58,21 @@
         }
 
         .dropdown__content {
+
             .button {
                 width: 100%;
                 font-size: 14px;
+            }
+
+            .content__item {
+                margin: 5px 0;
             }
         }
     }
 
     &.categories-dropdown {
         position: relative;
+        
 
         .dropdown__header {
             img {
@@ -82,7 +88,7 @@
             top: 40px;
             left: 0;
             right: 0;
-
+            
             max-height: 250px;
             overflow-y: auto;
 
@@ -98,6 +104,8 @@
                
                 .content__link {
                     padding: 0;
+                    padding-left: 10px;
+                    text-align: left;
                 }
             }
 

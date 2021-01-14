@@ -153,7 +153,7 @@ class OrderController extends Controller
 
             DB::commit();
 
-            return redirect()->route('orders-client.index');
+            return redirect()->route('client-orders.index');
 
         }catch(Exception $ex) {
 

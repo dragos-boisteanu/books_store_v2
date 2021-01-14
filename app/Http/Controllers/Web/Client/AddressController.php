@@ -45,7 +45,7 @@ class AddressController extends Controller
         
         Address::create($input);
 
-        return redirect()->route('addresses-client.index');
+        return redirect()->route('client-addresses.index');
     }
 
     public function edit($id)

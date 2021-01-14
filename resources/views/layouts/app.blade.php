@@ -30,6 +30,7 @@
     @include('includes.footer')
     
     <script src="{{ asset(mix('js/app.js')) }}"></script>
+    @stack('js-scripts')
     @stack('vue-scripts')
 </body>
 </html>

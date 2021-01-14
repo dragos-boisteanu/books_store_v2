@@ -19,3 +19,14 @@
     color: $powder-blue;
 }
 
+
+.dashboard-link {
+    background-color: #ff4500;
+    color: $ghost-white;
+
+    &:hover {
+        text-decoration: none;
+        color: $black;
+        
+    }
+}
