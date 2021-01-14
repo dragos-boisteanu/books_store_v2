@@ -1,7 +1,6 @@
 // Variables
 @import 'variables';
 
-
 @import 'base/reset';
 @import 'base/typography';
 
@@ -12,10 +11,12 @@
 @import 'components/search';
 @import 'components/cart';
 @import 'components/dropdown';
+@import 'components/forms';
 
 @import 'layout/haeder';
 @import 'layout/footer';
 @import 'layout/wrapper';
 @import 'layout/view';
+@import 'layout/addresses-index.scss';
 @import 'layout/auth';
 @import 'layout/book';

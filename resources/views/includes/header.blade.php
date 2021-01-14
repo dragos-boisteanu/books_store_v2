@@ -7,7 +7,7 @@
         <form method="GET" action="{{ route('search') }}" class="search-bar__form">
             <input type="text" id="search" class="search-bar__input" :class="{'search-bar--results' : showResults}" placeholder="Search books" name="q" v-model.tirm="searchInput" @keyup="search">
             <button for="search" class="button button-primary search-bar__button">
-                <img class="button__image" src="storage/icons/search.svg"/>
+                <img class="button__image" src="/storage/icons/search.svg"/>
             </button>
         </form>
         <ul class="list search-bar__results" v-if="showResults" v-click-outside="closeResults"> 

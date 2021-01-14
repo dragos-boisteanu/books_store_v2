@@ -19,7 +19,7 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset(mix('css/app.css')) }}" rel="stylesheet">
 </head>
 <body class="wrapper">
     @include('includes.header')
@@ -29,7 +29,7 @@
     
     @include('includes.footer')
     
-    <script src="{{ asset('js/app.js') }}" ></script>
+    <script src="{{ asset(mix('js/app.js')) }}"></script>
     @stack('vue-scripts')
 </body>
 </html>

@@ -1,14 +1,14 @@
 const CartComponent = {
     template: 
     `
-        <div class="cart" :class="{'cart--active' : showCart}" v-click-outside="closeCart">
+        <div class="cart" :class="{'cart--active': showCart, 'cart--disabled': !showCartButton}" v-click-outside="closeCart">
             <div v-if="showCart" class="cart__content">
                 <div class="cart__header">
                     <div>
                         Shopping cart 
                     </div>
                     <button @click="toggleCart" class="button">
-                        <img src="storage/icons/close.svg"/>
+                        <img src="/storage/icons/close.svg"/>
                     </button>
                 </div>
                 <ul class="items__list">
@@ -30,9 +30,9 @@ const CartComponent = {
                     <button type="submit" class="button button-primary cart__button-order">Place order</button>
                 </form>
             </div>
-            <div class="button cart__button" @click="toggleCart" v-else>
+            <div class="button button--small cart__button"  @click="toggleCart" v-else>
                 <div class="button__icon">
-                    <img src="storage/icons/cart.svg"/>
+                    <img src="/storage/icons/cart.svg"/>
                 </div>
                 <div class="button__count">
                     {{ count }}

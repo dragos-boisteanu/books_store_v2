@@ -7,25 +7,25 @@
             <h1>
                 Edit address
             </h1>
-            <form class="address" method="POST" action="{{ route('client-addresses.update', ['address'=>$address->id]) }}">
+            <form method="POST" action="{{ route('client-addresses.update', ['address'=>$address->id]) }}">
                 @csrf
                 @method('PUT')
     
-                <div>
-                    <div>
-                        <label for="first-name">First name</label>
-                        <input type="text" id="first-name" name="first_name" value="{{ $address->first_name }}"/>
+                <div class="form-section">
+                    <div class="form-group">
+                        <label for="first-name" class="form-label">First name</label>
+                        <input type="text" id="first-name" name="first_name" class="form-input" value="{{ $address->first_name }}"/>
                        
                     </div>
-                    <div>
-                        <label for="name">Name</label>
-                        <input type="text" id="name" name="name" value="{{ $address->name }}"/>
+                    <div class="form-group">
+                        <label for="name" class="form-label">Name</label>
+                        <input type="text" id="name" name="name" class="form-input" value="{{ $address->name }}"/>
                     </div>
                 </div>
                 
-                <div>
-                    <label for="address">Address</label>
-                    <input type="text" id="address" name="address" value="{{ $address->address }}"/>
+                <div class="form-group">
+                    <label for="address" class="form-label">Address</label>
+                    <input type="text" id="address" name="address" class="form-input" value="{{ $address->address }}"/>
                 </div>
     
                 <county-city-component
@@ -39,9 +39,9 @@
                 <input type="hidden" name="county" :value="county"/>
                 <input type="hidden" name="city" :value="city"/>
                     
-                <div>
-                    <label for="phone-number">Phone Number</label>
-                    <input type="text" id="phone-number" name="phone_number" value="{{ $address->phone_number }}"/>
+                <div class="form-group">
+                    <label for="phone-number" class="form-label">Phone Number</label>
+                    <input type="text" id="phone-number" name="phone_number" class="form-input" value="{{ $address->phone_number }}"/>
                 </div>
     
                 @if (!$address->default_for_invoice)
@@ -58,8 +58,8 @@
                     </div>
                 @endif
     
-                <div>
-                    <button type="submit">Save address</button>
+                <div class="form-action">
+                    <button type="submit" class="button button-primary">Save address</button>
                 </div>
             </form>
         </div>

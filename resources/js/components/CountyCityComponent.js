@@ -1,18 +1,18 @@
 const CountyCityComponent = {
     template:
     `
-        <div>
-            <div>
-                <label>Judet</label>
-                <select v-on:change="loadCities" v-model="selectedCountyId">
+        <div class="form-section">
+            <div class="form-group">
+                <label for="county" class="form-label">Judet</label>
+                <select id="county" class="form-input" v-on:change="loadCities" v-model="selectedCountyId">
                     <option value="0" selected disabled>Alege judetul</option>
                     <option :value="county.id" v-for="(county, index) in countiesList" :key="index"> {{county.name}}</option>
                     
                 </select>
             </div>
-            <div>
-                <label>Oras</label>
-                <select v-on:change="cityChanged" v-model="selectedCityId">
+            <div class="form-group">
+                <label for="city" class="form-label">Oras</label>
+                <select id="city" class="form-input" v-on:change="cityChanged" v-model="selectedCityId">
                     <option value="0" selected disabled> Alege orasul </option>
                     <option v-for="(city, index) in cities" :value="city.id" :key="index">{{city.name}}</option>
                 </select>           

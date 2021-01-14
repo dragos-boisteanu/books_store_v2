@@ -47,7 +47,7 @@ Route::middleware(['auth'])->group(function() {
                 Route::get('/{address}/edit', 'AddressController@edit')->name('client-addresses.edit');
                 Route::put('/{address}', 'AddressController@update')->name('client-addresses.update');
 
-                Route::delete('/{address}', 'AddressController@destroy')->name('client-addresses.delete');
+                Route::delete('/{address}/delete', 'AddressController@destroy')->name('client-addresses.delete');
             });    
 
             Route::prefix('orders')->group(function () {                

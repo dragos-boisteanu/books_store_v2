@@ -7,24 +7,24 @@
             <h1>
                 Create address
             </h1>
-            <form class="address" method="POST" action="{{ route('client-addresses.store') }}">
+            <form method="POST" action="{{ route('client-addresses.store') }}">
                 @csrf
     
-                <div>
-                    <div>
-                        <label for="first-name">First name</label>
-                        <input type="text" id="first-name" name="first_name"/>
+                <div class="form-section">
+                    <div class="form-group">
+                        <label for="first-name" class="form-label">First name</label>
+                        <input type="text" id="first-name" name="first_name" class="form-input"/>
                        
                     </div>
-                    <div>
-                        <label for="name">Name</label>
-                        <input type="text" id="name" name="name"/>
+                    <div class="form-group">
+                        <label for="name" class="form-label">Name</label>
+                        <input type="text" id="name" name="name" class="form-input"/>
                     </div>
                 </div>
                 
-                <div>
-                    <label for="address">Address</label>
-                    <input type="text" id="address" name="address"/>
+                <div class="form-group">
+                    <label for="address" class="form-label">Address</label>
+                    <input type="text" id="address" name="address" class="form-input"/>
                 </div>
     
                 <county-city-component
@@ -36,9 +36,9 @@
                 <input type="hidden" name="county_id" :value="county"/>
                 <input type="hidden" name="city_id" :value="city"/>
                     
-                <div>
-                    <label for="phone-number">Phone Number</label>
-                    <input type="text" id="phone-number" name="phone_number"/>
+                <div class="form-group">
+                    <label for="phone-number" class="form-label">Phone Number</label>
+                    <input type="text" id="phone-number" name="phone_number" class="form-input"/>
                 </div>
     
                 <div>
@@ -51,8 +51,8 @@
                     <label for="shipping">Default address for shipping</label>
                 </div>
     
-                <div>
-                    <button type="submit">Save address</button>
+                <div class="form-action">
+                    <button type="submit" class="button button-primary">Save address</button>
                 </div>
             </form>
         </div>

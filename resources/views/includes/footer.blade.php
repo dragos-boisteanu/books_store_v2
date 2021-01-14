@@ -108,7 +108,7 @@
     
     <div class="map">
         <a href="https://www.google.ro/maps/place/Gala%C8%9Bi/@45.4301755,28.0436697,17.86z/data=!4m5!3m4!1s0x40b6dee589f2c4b5:0x53d7342f252d702b!8m2!3d45.4353208!4d28.0079945?hl=ro">
-            <img src="storage/images/map.png"/>
+            <img src="/storage/images/map.png"/>
         </a>
         
     </div>
