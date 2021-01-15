@@ -24,8 +24,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $books = Book::orderBy('created_at', 'desc')->simplePaginate(15);
+        // $books = Book::orderBy('created_at', 'desc')->simplePaginate(15);
+        $newBooks = Book::orderBy('created_at', 'desc')->limit(5)->get();
 
-        return view('home', ['books'=>$books]);
+        return view('home', compact('newBooks'));
     }
 }

@@ -1,4 +1,4 @@
-<ul class="list books">
+<ul class="list books-list">
     @foreach ($books as $book)
         <li class="book">
             <div class="book_title">
@@ -34,4 +34,3 @@
         </li>
     @endforeach
 </ul>
-{{ $books->links() }}

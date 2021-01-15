@@ -2,18 +2,22 @@
 
 @section('content')
 <div id="view" class="view">
-    <div class="carrousel">
-        test
+    <div class="view__content home">
+        <div class="carrousel">
+            test
+        </div>
+        
+        <div class="newest">
+            <x-books :books="$newBooks"></x-books>
+        </div>
+        {{-- <div class="most-sold">
+            <x-books :books="$mostSoldBooks"></x-books>
+        </div> --}}
+        {{-- <div class="most-viewd">
+            <x-books :books="$mostViewdbooks"></x-books>
+        </div> --}}
+       
     </div>
-
-    <form method="GET" action="{{ route('search') }}">
-
-        <input type="text" id="search" name="q" placeholder="Search"/>
-
-        <button type="submit">Search</button>            
-    </form>
-
-    <x-books :books="$books"></x-books>
 </div>
 @endsection
 
