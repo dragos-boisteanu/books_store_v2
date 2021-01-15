@@ -57,7 +57,7 @@
                                 Publisher:
                             </div>
                             <div class="value publisher">
-                                {{ $book->publisher->name }}
+                                <a class="link" href="{{ route('publishers-books.show', ['id'=>$book->publisher_id])}}">{{ $book->publisher->name }}</a>
                             </div>
                         </div>
                         <div class="detail">

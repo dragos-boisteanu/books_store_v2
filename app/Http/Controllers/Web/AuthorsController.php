@@ -17,7 +17,7 @@ class AuthorsController extends Controller
      */
     public function __invoke(Request $request, $id)
     {
-        $books = Author::findOrFail($id)->books()->orderBy('created_at','desc')->get();
+        $books = Author::findOrFail($id)->books()->orderBy('created_at','desc')->paginate(15);
 
         return $books;
     }
