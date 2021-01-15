@@ -35,10 +35,12 @@ class Book extends Model
   
     public function getFinalPriceAttribute()
     {
-        $value = $this->price - ( $this->price * $this->discount / 100);
-        return $this->price - ( $this->price * $this->discount / 100);
-    }
 
+        $value = $this->price - ( $this->price * $this->discount / 100);
+        $value = number_format($value, 2, '.', '');
+        return $value;
+    }
+    
     public function addedBy() 
     {
         return $this->belongsTo('App\Models\User', 'created_by');

@@ -5,6 +5,11 @@
         <div class="view__content book">
             <div class="book__header">
                 <div class="header__image">
+                    @if ( $book->discount > 0)
+                        <div class="discount__amount">
+                           - {{$book->discount}} %
+                        </div>
+                    @endif
                     <img src="https://cdn.dc5.ro/img-prod/9781405918992-2750310-240.jpg"/>
                 </div>
                 
@@ -20,17 +25,18 @@
                     <div class="price">
                         @if ( $book->discount > 0)
                             <div class="price__discount">
-                                <div class="discount__original-price">
+                                <div class="discounted__price">
+                                    {{ $book->final_price }} RON
+                                </div>
+                                <div class="original__price">
                                     {{ $book->price }} RON
                                 </div>
-                                <div class="discount__amount">
-                                    {{$book->discount}} %
-                                </div>
+                            </div>
+                        @else
+                            <div class="original__price">
+                                {{ $book->price }} RON
                             </div>
                         @endif
-                        <div class="price__final">
-                            {{ $book->price }} RON
-                        </div>
                     </div>
                     <div class="stock">
                         @if ($book->stock->quantity < 1)

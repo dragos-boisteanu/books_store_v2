@@ -9,6 +9,19 @@
             height: 400px;
             width: 300px;
 
+            position: relative;
+
+            .discount__amount {
+                position: absolute;
+                top: 0;
+                right: 0;
+                padding: 10px;
+                background-color: red;
+                color: $ghost-white;
+                font-style: italic;
+                font-weight: 600;
+            }
+
             img {
                 max-width: 100%;
                 max-height: 100%;
@@ -54,10 +67,24 @@
             .price {
                 padding: 10px;
 
-                .price__final {
+                .original__price {
                     font-size: 24px;
                     font-weight: bold;
                     color: $dark-electric-blue;
+                }
+
+                .price__discount {
+                    .original__price {
+                        text-decoration: line-through;
+                        font-size: 14px;
+                        color: lighten($dark-electric-blue, 40);
+                    }
+
+                    .discounted__price {
+                        font-size: 24px;
+                        color: red;
+                        font-weight: bold;
+                    }
                 }
             }
 
@@ -74,7 +101,7 @@
                 }
 
                 .stock__empty {
-                    color: #d83a13;
+                    color: #d81313;
                 }
             }
 

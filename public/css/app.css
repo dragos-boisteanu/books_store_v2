@@ -988,6 +988,18 @@ footer .map a img {
   flex: 0 0 auto;
   height: 400px;
   width: 300px;
+  position: relative;
+}
+
+.book .book__header .header__image .discount__amount {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 10px;
+  background-color: red;
+  color: #f4f4f9ff;
+  font-style: italic;
+  font-weight: 600;
 }
 
 .book .book__header .header__image img {
@@ -1034,10 +1046,22 @@ footer .map a img {
   padding: 10px;
 }
 
-.book .book__header .header__details .price .price__final {
+.book .book__header .header__details .price .original__price {
   font-size: 24px;
   font-weight: bold;
   color: #586f7cff;
+}
+
+.book .book__header .header__details .price .price__discount .original__price {
+  text-decoration: line-through;
+  font-size: 14px;
+  color: #c8d2d8;
+}
+
+.book .book__header .header__details .price .price__discount .discounted__price {
+  font-size: 24px;
+  color: red;
+  font-weight: bold;
 }
 
 .book .book__header .header__details .stock .stock__status {
@@ -1051,7 +1075,7 @@ footer .map a img {
 }
 
 .book .book__header .header__details .stock .stock__empty {
-  color: #d83a13;
+  color: #d81313;
 }
 
 .book .book__header .header__details .details {
