@@ -1,7 +1,7 @@
 const AddToCartBtnComponent = {
     template:
     `
-        <button @click="addToCart">Add to cart</button>
+        <button @click="addToCart" class="button button-primary">Add to cart</button>
     `,
 
     props: {

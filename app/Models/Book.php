@@ -49,6 +49,11 @@ class Book extends Model
         return $this->belongsTo('App\Models\User', 'updated_by');
     }
     
+    public function cover() 
+    {
+        return $this->belongsTo('App\Models\Cover');
+    }
+
     public function stock() 
     {
         return $this->hasOne('App\Models\Stock');

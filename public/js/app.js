@@ -2199,7 +2199,7 @@ if (token) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 var AddToCartBtnComponent = {
-  template: "\n        <button @click=\"addToCart\">Add to cart</button>\n    ",
+  template: "\n        <button @click=\"addToCart\" class=\"button button-primary\">Add to cart</button>\n    ",
   props: {
     id: {
       type: Number,
