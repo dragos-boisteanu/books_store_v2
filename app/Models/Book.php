@@ -31,7 +31,7 @@ class Book extends Model
     protected $appends = ['final_price'];
 
     protected $with = ['authors:id,first_name,name', 'tags:id,name', 'category:id,name', 
-                        'publisher:id,name', 'language:id,name', 'images', 'stock'];
+                        'publisher:id,name', 'language:id,name', 'stock'];
   
     public function getFinalPriceAttribute()
     {
@@ -81,11 +81,6 @@ class Book extends Model
         return $this->belongsTo('App\Models\Language');
     }
 
-    public function images() 
-    {
-        return $this->hasMany('App\Models\Image');
-    }
-    
     public function authors() 
     {
         return $this->belongsToMany('App\Models\Author');

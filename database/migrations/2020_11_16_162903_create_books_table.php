@@ -18,6 +18,9 @@ class CreateBooksTable extends Migration
             $table->string('title');
 
             $table->string('isbn')->unique();
+
+            $table->string('image_link')->default('');
+
             $table->string('pages');
 
             $table->text('description')->nullable();

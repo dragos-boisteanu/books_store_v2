@@ -49,7 +49,7 @@ class DatabaseSeeder extends Seeder
 
         Book::all()->each(function ($book) use ($authors) { 
             $book->authors()->attach(
-                $authors->random(rand(1, 5))->pluck('id')->toArray()
+                $authors->random(rand(1, 2))->pluck('id')->toArray()
             ); 
         });
 
