@@ -599,6 +599,14 @@ h6 {
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.25), 0 2px 2px rgba(0, 0, 0, 0.2), 0 4px 4px rgba(0, 0, 0, 0.15), 0 8px 8px rgba(0, 0, 0, 0.1), 0 16px 16px rgba(0, 0, 0, 0.05);
 }
 
+.dropdown.categories-dropdown .dropdown__content.categories__list {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
 .dropdown.categories-dropdown .dropdown__content.categories__list .content__link {
   padding: 0;
   padding-left: 10px;
@@ -1246,7 +1254,13 @@ footer .map a img {
 }
 
 .home .home__group {
-  padding-bottom: 15px;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
   border-bottom: 1px solid #586f7cff;
+}
+
+.home .home__group:last-of-type {
+  border-bottom: none;
+  margin-bottom: 0px;
 }
 

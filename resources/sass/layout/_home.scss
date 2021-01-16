@@ -1,7 +1,13 @@
 .home {
     .home__group {
 
-        padding-bottom: 15px;
+        padding-bottom: 20px;
+        margin-bottom: 20px;
         border-bottom: 1px solid $dark-electric-blue;
+
+        &:last-of-type {
+            border-bottom: none;
+            margin-bottom: 0px
+        }
     }
 }

@@ -29,18 +29,12 @@ class HomeController extends Controller
         $newBooks = Book::orderBy('created_at', 'desc')->limit(5)->get();
 
         $mostSoldBooksIds = DB::select('SELECT books.*, SUM(book_order.quantity) AS total_quantity
-        FROM book_order
-        JOIN books ON books.id = book_order.book_id
-        GROUP BY books.id
-        ORDER BY total_quantity desc');
+                                FROM book_order
+                                JOIN books ON books.id = book_order.book_id
+                                GROUP BY books.id
+                                ORDER BY total_quantity desc');
 
         $mostSoldBooks = Book::hydrate($mostSoldBooksIds);
         return view('home', compact('newBooks', 'mostSoldBooks'));
     }
 }
-
-
-// where(function($query) {
-//     $query->join('book_order', 'book.id', '=', 'book_order.book_id')
-//             ->groupBy('book.title')
-//             ->orderBy()
