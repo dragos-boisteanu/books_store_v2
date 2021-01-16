@@ -10,7 +10,7 @@
                            - {{$book->discount}} %
                         </div>
                     @endif
-                    <img src="https://cdn.dc5.ro/img-prod/9781405918992-2750310-240.jpg"/>
+                    <img src="{{ $book->image_link}}"/>
                 </div>
                 
                 <div class="header__details">

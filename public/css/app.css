@@ -742,6 +742,71 @@ table tr.total-row {
   background-color: #b8dbd9ff;
 }
 
+.books-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  -moz-column-gap: 15px;
+       column-gap: 15px;
+  row-gap: 15px;
+}
+
+.books-list .book__item {
+  padding: 10px;
+  position: relative;
+  border-radius: 3px;
+  transition: all 0.3s ease-in-out;
+  display: block;
+}
+
+.books-list .book__item:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.07), 0 4px 8px rgba(0, 0, 0, 0.07), 0 8px 16px rgba(0, 0, 0, 0.07), 0 16px 32px rgba(0, 0, 0, 0.07), 0 32px 64px rgba(0, 0, 0, 0.07);
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  border-radius: 3px;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.books-list .book__item:hover:after {
+  opacity: 1;
+}
+
+.books-list .book__item .book__image {
+  width: 100%;
+  height: 200px;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.books-list .book__item .book__image img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.books-list .book__item .book__title {
+  text-align: center;
+}
+
+.books-list .book__item .book__title .link {
+  font-weight: bold;
+  color: #1f1f1f;
+  text-decoration: none;
+}
+
+.see__more {
+  width: 100%;
+  padding: 10px;
+  text-align: right;
+}
+
 header {
   flex: 0;
   position: relative;
@@ -1180,37 +1245,8 @@ footer .map a img {
   content: "";
 }
 
-.home .books-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  -moz-column-gap: 15px;
-       column-gap: 15px;
-  row-gap: 15px;
-}
-
-.home .books-list .book {
-  padding: 10px;
-  position: relative;
-  border-radius: 3px;
-  transition: all 0.3s ease-in-out;
-}
-
-.home .books-list .book:after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: -1;
-  width: 100%;
-  height: 100%;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.07), 0 4px 8px rgba(0, 0, 0, 0.07), 0 8px 16px rgba(0, 0, 0, 0.07), 0 16px 32px rgba(0, 0, 0, 0.07), 0 32px 64px rgba(0, 0, 0, 0.07);
-  opacity: 0;
-  transition: opacity 0.3s ease-in-out;
-  border-radius: 3px;
-  transition: opacity 0.3s ease-in-out;
-}
-
-.home .books-list .book:hover:after {
-  opacity: 1;
+.home .home__group {
+  padding-bottom: 15px;
+  border-bottom: 1px solid #586f7cff;
 }
 

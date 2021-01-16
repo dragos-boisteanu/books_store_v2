@@ -6,13 +6,21 @@
         <div class="carrousel">
             test
         </div>
-        
-        <div class="newest">
+        <div class="home__group">
+            <h1>Recently added</h1>
             <x-books :books="$newBooks"></x-books>
+            <div class="see__more">
+                <a class="link" href="/">See more</a>
+            </div>
         </div>
-        {{-- <div class="most-sold">
+
+        <div class="home__group">
+            <h1>Best selling</h1>
             <x-books :books="$mostSoldBooks"></x-books>
-        </div> --}}
+            <div class="see__more">
+                <a class="link" href="/">See more</a>
+            </div>
+        </div>
         {{-- <div class="most-viewd">
             <x-books :books="$mostViewdbooks"></x-books>
         </div> --}}

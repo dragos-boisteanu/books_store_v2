@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Book;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -24,9 +25,22 @@ class HomeController extends Controller
      */
     public function index()
     {
-        // $books = Book::orderBy('created_at', 'desc')->simplePaginate(15);
+
         $newBooks = Book::orderBy('created_at', 'desc')->limit(5)->get();
 
-        return view('home', compact('newBooks'));
+        $mostSoldBooksIds = DB::select('SELECT books.*, SUM(book_order.quantity) AS total_quantity
+        FROM book_order
+        JOIN books ON books.id = book_order.book_id
+        GROUP BY books.id
+        ORDER BY total_quantity desc');
+
+        $mostSoldBooks = Book::hydrate($mostSoldBooksIds);
+        return view('home', compact('newBooks', 'mostSoldBooks'));
     }
 }
+
+
+// where(function($query) {
+//     $query->join('book_order', 'book.id', '=', 'book_order.book_id')
+//             ->groupBy('book.title')
+//             ->orderBy()
