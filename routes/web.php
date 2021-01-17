@@ -22,7 +22,7 @@ Route::get('/search', 'Web\Client\SearchController@index')->name('search');
 
 Route::get('books/{id}', 'Web\Client\BookController@show')->name('books.show');
 
-Route::get('/category/{id}', 'Web\CategoryController')->name('category-books.show');
+Route::get('/categories/{id}', 'Web\CategoryController')->name('category-books.show');
 Route::get('/authors/{id}', 'Web\AuthorsController')->name('authors-books.show');
 Route::get('/publishers/{id}', 'Web\PublisherController')->name('publishers-books.show');
 
