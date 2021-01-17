@@ -16,6 +16,10 @@ class BookController extends Controller
     public function show($id)
     {
         $book = Book::findOrFail($id);
+
+        $expiresAt = now()->addHours(24);
+
+        views($book)->cooldown($expiresAt)->record();
         
         return view('client.books.show', ['book'=>$book]);
     }

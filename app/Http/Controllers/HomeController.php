@@ -26,15 +26,21 @@ class HomeController extends Controller
     public function index()
     {
 
+        $limit = 5;
+
         $newBooks = Book::orderBy('created_at', 'desc')->limit(5)->get();
 
         $mostSoldBooksIds = DB::select('SELECT books.*, SUM(book_order.quantity) AS total_quantity
                                 FROM book_order
                                 JOIN books ON books.id = book_order.book_id
                                 GROUP BY books.id
-                                ORDER BY total_quantity desc');
+                                ORDER BY total_quantity desc
+                                LIMIT :limit', ['limit'=>$limit]);
 
         $mostSoldBooks = Book::hydrate($mostSoldBooksIds);
-        return view('home', compact('newBooks', 'mostSoldBooks'));
+
+        $mostViewdBooks = Book::orderByUniqueViews('desc')->limit($limit)->get();
+
+        return view('home', compact('newBooks', 'mostSoldBooks', 'mostViewdBooks'));
     }
 }

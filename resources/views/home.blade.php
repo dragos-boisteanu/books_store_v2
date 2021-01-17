@@ -21,9 +21,13 @@
                 <a class="link" href="/">See more</a>
             </div>
         </div>
-        {{-- <div class="most-viewd">
-            <x-books :books="$mostViewdbooks"></x-books>
-        </div> --}}
+        <div class="most-viewd">
+            <h1>Most Viewd</h1>
+            <x-books :books="$mostViewdBooks"></x-books>
+            <div class="see__more">
+                <a class="link" href="/">See more</a>
+            </div>
+        </div>
        
     </div>
 </div>
