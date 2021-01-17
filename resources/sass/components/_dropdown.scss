@@ -40,7 +40,7 @@
         position: absolute;
         right: 120px;
         top: 84px;
-    
+
         background-color: $ghost-white;
  
         border-bottom-right-radius: $border-radius-value;
@@ -87,8 +87,8 @@
             position: absolute;
             top: 40px;
             left: 0;
-            right: 0;
-            z-index: 1;
+            width: 390px;
+            z-index: 2;
             
             max-height: 250px;
             overflow-y: auto;
@@ -113,6 +113,7 @@
                     padding: 0;
                     padding-left: 10px;
                     text-align: left;
+                    width: 100%;
                 }
             }
 

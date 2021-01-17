@@ -57,7 +57,7 @@ class DatabaseSeeder extends Seeder
 
         Book::all()->each(function ($book) use ($tags) { 
             $book->tags()->attach(
-                $tags->random(rand(1, 10))->pluck('id')->toArray()
+                $tags->random(rand(1, 5))->pluck('id')->toArray()
             ); 
         });
 

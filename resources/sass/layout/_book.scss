@@ -15,10 +15,17 @@
 
             position: relative;
 
+            &.not-in-stock {
+                img {
+                    filter: grayscale(100%);
+                }
+            }
+
             .discount__amount {
                 position: absolute;
                 top: 0;
                 right: 0;
+                z-index: 1;
                 padding: 10px;
                 background-color: red;
                 color: $ghost-white;
@@ -121,7 +128,7 @@
                     justify-content: flex-start;
                     align-items: center;
 
-                    margin: 5px 0;
+                    margin: 10px 0;
 
                     .text {
                         flex: 0 0 100px;

@@ -591,8 +591,8 @@ h6 {
   position: absolute;
   top: 40px;
   left: 0;
-  right: 0;
-  z-index: 1;
+  width: 390px;
+  z-index: 2;
   max-height: 250px;
   overflow-y: auto;
   background-color: #f4f4f9ff;
@@ -611,6 +611,7 @@ h6 {
   padding: 0;
   padding-left: 10px;
   text-align: left;
+  width: 100%;
 }
 
 .filter {
@@ -814,7 +815,11 @@ table tr.total-row {
   position: relative;
   border-radius: 3px;
   transition: all 0.3s ease-in-out;
-  display: block;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 350px;
 }
 
 .books-list .book__item:after {
@@ -845,6 +850,24 @@ table tr.total-row {
   align-items: center;
 }
 
+.books-list .book__item .book__image.not-in-stock img {
+  filter: grayscale(100%);
+}
+
+.books-list .book__item .book__image .discount__amount {
+  font-size: 14px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 1;
+  border-top-right-radius: 3px;
+  padding: 5px;
+  background-color: red;
+  color: #f4f4f9ff;
+  font-style: italic;
+  font-weight: 600;
+}
+
 .books-list .book__item .book__image img {
   max-width: 100%;
   max-height: 100%;
@@ -858,6 +881,47 @@ table tr.total-row {
   font-weight: bold;
   color: #1f1f1f;
   text-decoration: none;
+}
+
+.books-list .book__item .book_authors {
+  text-align: center;
+}
+
+.books-list .book__item .book_authors .author {
+  font-size: 12px;
+}
+
+.books-list .book__item .book__price {
+  padding: 10px;
+}
+
+.books-list .book__item .book__price .original__price {
+  font-size: 18px;
+  font-weight: bold;
+  color: #586f7cff;
+}
+
+.books-list .book__item .book__price .price__discount .original__price {
+  text-decoration: line-through;
+  font-size: 14px;
+  color: #c8d2d8;
+  text-align: center;
+}
+
+.books-list .book__item .book__price .price__discount .discounted__price {
+  font-size: 18px;
+  color: red;
+  font-weight: bold;
+}
+
+.books-list .book__item .book__action .stock__status {
+  font-size: 14px;
+  font-weight: bold;
+  padding: 10px;
+}
+
+.books-list .book__item .book__action .stock__empty {
+  color: #d81313;
 }
 
 .see__more {
@@ -1118,10 +1182,15 @@ footer .map a img {
   position: relative;
 }
 
+.book .book__header .header__image.not-in-stock img {
+  filter: grayscale(100%);
+}
+
 .book .book__header .header__image .discount__amount {
   position: absolute;
   top: 0;
   right: 0;
+  z-index: 1;
   padding: 10px;
   background-color: red;
   color: #f4f4f9ff;
@@ -1216,7 +1285,7 @@ footer .map a img {
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  margin: 5px 0;
+  margin: 10px 0;
 }
 
 .book .book__header .header__details .details .detail .text {

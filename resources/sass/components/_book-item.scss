@@ -10,8 +10,13 @@
         border-radius: $border-radius-value;
         transition: all 0.3s ease-in-out;
 
-        display: block;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
 
+        height: 350px;
+        
         &:after {
             content: '';
             position: absolute;
@@ -49,6 +54,28 @@
             justify-content: center;
             align-items: center;
 
+
+            &.not-in-stock {
+                img {
+                    filter: grayscale(100%);
+                }
+            }
+
+            .discount__amount {
+                font-size: 14px;
+                position: absolute;
+                top: 0;
+                right: 0;
+                z-index: 1;
+                border-top-right-radius: $border-radius-value;
+                padding: 5px;
+                background-color: red;
+                color: $ghost-white;
+                font-style: italic;
+                font-weight: 600;
+            }
+
+
             img {
                 max-width: 100%;
                 max-height: 100%;
@@ -62,6 +89,68 @@
                 font-weight: bold;
                 color: $black;
                 text-decoration: none;
+            }
+        }
+
+
+        .book_authors {
+
+            text-align: center;
+            // display: flex;
+            
+            // justify-content: center;
+            // align-items: center;
+
+            .author {
+                font-size: 12px;
+
+                // &:after {
+                //     content: '|';
+                //     margin: 0 3px;
+                // }
+
+                // &:last-of-type:after {
+                //     content: '';
+                //     margin: 0;
+                // }
+            }
+        }
+
+        .book__price {
+            padding: 10px;
+
+            .original__price {
+                font-size: 18px;
+                font-weight: bold;
+                color: $dark-electric-blue;
+            
+            }
+
+            .price__discount {
+                .original__price {
+                    text-decoration: line-through;
+                    font-size: 14px;
+                    color: lighten($dark-electric-blue, 40);
+                    text-align: center;
+                }
+
+                .discounted__price {
+                    font-size: 18px;
+                    color: red;
+                    font-weight: bold;
+                }
+            }
+        }
+
+        .book__action {
+            .stock__status {
+                font-size: 14px;
+                font-weight: bold;
+                padding: 10px;
+            }
+
+            .stock__empty {
+                color: #d81313;
             }
         }
            

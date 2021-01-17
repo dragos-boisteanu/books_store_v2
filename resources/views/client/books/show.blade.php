@@ -4,7 +4,7 @@
     <div id="book" class="view">
         <div class="view__content book">
             <div class="book__header">
-                <div class="header__image">
+                <div class="header__image {{ $book->stock->qunaity < 1 ? 'not-in-stock' : ''}}">
                     @if ( $book->discount > 0)
                         <div class="discount__amount">
                            - {{$book->discount}} %
