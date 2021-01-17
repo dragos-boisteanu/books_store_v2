@@ -23,12 +23,11 @@ Route::get('/search', 'Web\Client\SearchController@index')->name('search');
 Route::get('books/new', 'Web\Client\BookController@getNewest')->name('books-new.show');
 Route::get('books/best-sold}', 'Web\Client\BookController@getBestSold')->name('books-best.show');
 Route::get('books/most-view', 'Web\Client\BookController@getMostViewed')->name('books-most.show');
-
 Route::get('books/{id}', 'Web\Client\BookController@show')->name('books.show');
 
-Route::get('/categories/{id}', 'Web\CategoryController')->name('category-books.show');
-Route::get('/authors/{id}', 'Web\AuthorsController')->name('authors-books.show');
-Route::get('/publishers/{id}', 'Web\PublisherController')->name('publishers-books.show');
+Route::get('/categories/{id}', 'Web\Client\CategoryController')->name('category-books.show');
+Route::get('/authors/{id}', 'Web\Client\AuthorController')->name('author-books.show');
+Route::get('/publishers/{id}', 'Web\Client\PublisherController')->name('publisher-books.show');
 
 Route::middleware(['auth'])->group(function() {
     

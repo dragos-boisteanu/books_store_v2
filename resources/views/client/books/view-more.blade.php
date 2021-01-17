@@ -9,9 +9,7 @@
             <h1>
                 {{ $title }}
             </h1>
-            {{ $books->links() }}
             <x-books :books="$books"></x-books>
-            {{ $books->links() }}
         </div>
     </div>
 

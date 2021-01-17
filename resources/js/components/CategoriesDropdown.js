@@ -6,7 +6,7 @@ const CategoriesDropdown = {
         <a class="dropdown categories-dropdown main-nav-link" v-click-outside="closeDropdown" @click="toggleContent">
             <ul class="list dropdown__content categories__list" v-if="displayContent">
                 <li class="content__item" v-for="category in categories">
-                    <a class="link content__link" :href="'/category/' + category.id">{{category.name}}</a>
+                    <a class="link content__link" :href="'/categories/' + category.id">{{category.name}}</a>
                 </li>
             </ul>
             <div class="dropdown__header">

@@ -4,7 +4,7 @@
     <div id="book" class="view">
         <div class="view__content book">
             <div class="book__header">
-                <div class="header__image {{ $book->stock->qunaity < 1 ? 'not-in-stock' : ''}}">
+                <div class="header__image {{ $book->stock->quantity < 1 ? 'not-in-stock' : ''}}">
                     @if ( $book->discount > 0)
                         <div class="discount__amount">
                            - {{$book->discount}} %
@@ -18,7 +18,7 @@
                     <ul class="list list-horizontal authors__list">
                         @foreach( $book->authors as $author)
                             <li class="author">
-                                <a class="link" href="{{ route('authors-books.show', ['id'=>$author->id])}}">{{ $author->first_name }} {{ $author->name }}</a>
+                                <a class="link" href="{{ route('author-books.show', ['id'=>$author->id])}}">{{ $author->first_name }} {{ $author->name }}</a>
                             </li>
                         @endforeach
                     </ul>
@@ -63,7 +63,7 @@
                                 Publisher:
                             </div>
                             <div class="value publisher">
-                                <a class="link" href="{{ route('publishers-books.show', ['id'=>$book->publisher_id])}}">{{ $book->publisher->name }}</a>
+                                <a class="link" href="{{ route('publisher-books.show', ['id'=>$book->publisher_id])}}">{{ $book->publisher->name }}</a>
                             </div>
                         </div>
                         <div class="detail">

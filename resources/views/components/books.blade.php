@@ -1,3 +1,4 @@
+{{ $books->links() }}
 <ul class="list books-list">
     @foreach ($books as $book)
         <li class="book__item" >
@@ -16,7 +17,7 @@
                 <ul class="list book_authors">
                     @foreach($book->authors as $author)
                         <li class="author">
-                            <a class="link" href="/{{ $author->id }}">{{ $author->first_name . ' ' . $author->name }}</a>
+                            <a class="link" href="{{ route('author-books.show', ['id'=>$author->id])}}">{{ $author->first_name . ' ' . $author->name }}</a>
                         </li>
                     @endforeach
                 </ul>
@@ -49,7 +50,7 @@
                     @endif
                 </div>  
             </a>
-            
         </li>
     @endforeach
 </ul>
+{{ $books->links() }}
