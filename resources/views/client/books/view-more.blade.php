@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="view">
+    <div id="view" class="view">
         <div class="filter">
 
         </div>
@@ -16,3 +16,15 @@
     </div>
 
 @endsection
+
+@push('vue-scripts')
+    <script>
+        new Vue({
+            el: '#view',
+            created() {
+                console.log('vue instance created from more page');
+            },          
+            
+        });
+    </script>
+@endpush
