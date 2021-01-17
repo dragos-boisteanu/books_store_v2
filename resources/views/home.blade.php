@@ -10,7 +10,7 @@
             <h1>Recently added</h1>
             <x-books :books="$newBooks"></x-books>
             <div class="see__more">
-                <a class="link" href="/">See more</a>
+                <a class="link" href="{{ route('books-new.show') }}">See more</a>
             </div>
         </div>
 

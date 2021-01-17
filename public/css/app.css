@@ -747,7 +747,58 @@ table tr.total-row {
   justify-content: flex-end;
   align-items: center;
   padding: 10px;
+  margin: 25px 0;
   background-color: #b8dbd9ff;
+}
+
+.pagination li {
+  padding: 6px 0;
+  font-size: 14px;
+}
+
+.pagination .page {
+  background-color: #f4f4f9ff;
+  color: #2f4550ff;
+}
+
+.pagination .current-page,
+.pagination .last-page {
+  padding: 6px 10px;
+}
+
+.pagination .separator {
+  color: #1f1f1f;
+}
+
+.pagination .prev-page a,
+.pagination .next-page a {
+  padding: 5px 10px;
+  text-decoration: none;
+  color: #2f4550ff;
+}
+
+.pagination .prev-page a:hover,
+.pagination .next-page a:hover {
+  background-color: #2f4550ff;
+  color: #f4f4f9ff;
+}
+
+.pagination .prev-page,
+.pagination .prev-page a {
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+
+.pagination .next-page,
+.pagination .next-page a {
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+
+.pagination .disabled {
+  pointer-events: none;
+  padding: 6px 10px;
+  color: #f4f4f9ff;
 }
 
 .books-list {

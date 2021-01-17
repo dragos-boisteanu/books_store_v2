@@ -4,6 +4,67 @@
     align-items: center;
 
     padding: 10px;
+    margin: 25px 0;
 
     background-color: $powder-blue;
+
+    li {
+        padding: 6px 0;
+        font-size: 14px;
+    }
+
+    .page {
+        background-color: $ghost-white;
+        color: $charcoal;
+    }
+
+    .current-page,
+    .last-page {
+        padding: 6px 10px;
+    }
+
+    .separator {
+        color: $black;
+    }
+
+    .prev-page,
+    .next-page {
+         
+        
+        a {
+            padding: 5px 10px;  
+            text-decoration: none;
+            color: $charcoal;
+            
+            &:hover {
+                background-color: $charcoal;
+                color: $ghost-white;
+            }
+        }
+    }
+
+    .prev-page,
+    .prev-page a {
+        border-top-left-radius: $border-radius-value;
+        border-bottom-left-radius: $border-radius-value;
+
+
+    }
+
+    .next-page,
+    .next-page a {
+        border-top-right-radius: $border-radius-value;
+        border-bottom-right-radius: $border-radius-value;
+    }
+
+    .disabled {
+        pointer-events: none;
+        padding: 6px 10px; 
+
+        color: $ghost-white;
+    
+    }
+
+
+
 }
