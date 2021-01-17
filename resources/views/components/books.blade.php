@@ -1,11 +1,8 @@
+
 @if(isset($books))
     @if(!empty($books))
         {{ $books->links() }}
-    @endif
-@endif
-<ul class="list books-list">
-    @if(isset($books))
-        @if(!empty($books))
+        <ul class="list books-list">
             @foreach ($books as $book)
                 <li class="book__item" >
                     <a href="{{ route('books.show', ['id'=>$book->id]) }}"> 
@@ -58,12 +55,8 @@
                     </a>
                 </li>
             @endforeach
-        @endif
-    @endif
-    
-</ul>
-@if(isset($books))
-    @if(!empty($books))
+        </ul>
         {{ $books->links() }}
     @endif
 @endif
+
