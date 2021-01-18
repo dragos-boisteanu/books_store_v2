@@ -36,11 +36,7 @@
 @push('vue-scripts')
     <script>
         new Vue({
-            el: '#view',
-            created() {
-                console.log('vue instance created from home page');
-            },          
-            
+            el: '#view',            
         });
     </script>
 @endpush

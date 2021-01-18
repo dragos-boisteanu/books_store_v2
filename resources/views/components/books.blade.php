@@ -1,4 +1,6 @@
-
+@if($books instanceof \Illuminate\Pagination\LengthAwarePaginator)
+    {{ $books->links() }}
+@endif
 <ul class="list books-list">
     @foreach ($books as $book)
         <li class="book__item" >
@@ -53,5 +55,7 @@
         </li>
     @endforeach
 </ul>
-
+@if($books instanceof \Illuminate\Pagination\LengthAwarePaginator)
+    {{ $books->links() }}
+@endif
 

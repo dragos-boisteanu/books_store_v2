@@ -9,7 +9,9 @@
             <h1>
                 {{ $title }}
             </h1>
+            
             <x-books :books="$books"></x-books>
+            
         </div>
     </div>
 

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="view">
+    <div id="view" class="view">
         <div class="view__filter">
 
         </div>
@@ -11,3 +11,11 @@
         </div>
     </div>
 @endsection
+
+@push('vue-scripts')
+    <script>
+        new Vue({
+            el: '#view',            
+        });
+    </script>
+@endpush
