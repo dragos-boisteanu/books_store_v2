@@ -1,10 +1,6 @@
 .view {
-    // max-width: 1000px;
-    // margin-left: auto;
-    // margin-right: auto;
     width: 65%;
     min-width: 600px;
-    // border: 1px solid red;
     
     flex: 1 0 600px;
 
@@ -15,6 +11,17 @@
     .view__content {
         padding: 25px;
         width: 100%;
+    }
+
+    .view__content--center {
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        div {
+            margin: 5px 0;
+        }
     }
 
     .view__action {

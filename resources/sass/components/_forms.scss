@@ -18,10 +18,28 @@ form {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+
+        .invalid-feedback {
+            display: block;
+            width: 100%;
+            text-align: right;
+            color: crimson;
+            font-weight: 600;
+            font-size: 12px;
+            margin: 5px 0;
+        }
     }
 
     .form-action {
         margin: 25px 0;
+
+        .links {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
     }
     
     .form-label {
@@ -34,7 +52,7 @@ form {
 
         display: block;
         width: 100%;
-        padding: .375rem .75rem;
+        padding: 6px 12px;
         font-size: 1rem;
         line-height: 1.5;
         color: #495057;

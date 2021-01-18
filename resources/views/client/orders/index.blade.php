@@ -20,59 +20,65 @@
                     
                 </form>
             </div>
-            <table class="table">
-                <thead>
-                    <tr class="table__head">
-                        <th>
-                            Order #
-                        </th>
-                        <th>
-                            Status
-                        </th>
-                        <th>
-                            Date 
-                        </th>
-                        <th>
-                            Deliver to
-                        </th>
-                        <th>
-                            Quantity
-                        </th>
-                        <th>
-                            Total
-                        </th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($orders as $order)
-                        <tr>
-                            <td>
-                                {{ $order->id }}
-                            </td>
-                            <td>    
-                                {{ $order->status->name}}
-                            </td>
-                            <td>
-                                {{ $order->created_at }}
-                            </td>
-                            <td>
-                                {{ $order->shipping_address->first_name . ' ' . $order->shipping_address->name }}
-                            </td>
-                            <td>
-                                {{ $order->totalQuantity }}
-                            </td>
-                            <td>
-                                {{ $order->totalPrice }}
-                            </td>
-                            <td>
-                                <a href="{{ route('client-orders.show', ['order'=>$order->id]) }}" class="link">View order</a>
-                            </td>
+            @if ( isset($orders) && !empty($orders))
+                <table class="table">
+                    <thead>
+                        <tr class="table__head">
+                            <th>
+                                Order #
+                            </th>
+                            <th>
+                                Status
+                            </th>
+                            <th>
+                                Date 
+                            </th>
+                            <th>
+                                Deliver to
+                            </th>
+                            <th>
+                                Quantity
+                            </th>
+                            <th>
+                                Total
+                            </th>
+                            <th></th>
                         </tr>
-                    @endforeach
-                </tbody>
-            </table>
-            {{ $orders->links()}}
+                    </thead>
+                    <tbody>
+                        @foreach($orders as $order)
+                            <tr>
+                                <td>
+                                    {{ $order->id }}
+                                </td>
+                                <td>    
+                                    {{ $order->status->name}}
+                                </td>
+                                <td>
+                                    {{ $order->created_at }}
+                                </td>
+                                <td>
+                                    {{ $order->shipping_address->first_name . ' ' . $order->shipping_address->name }}
+                                </td>
+                                <td>
+                                    {{ $order->totalQuantity }}
+                                </td>
+                                <td>
+                                    {{ $order->totalPrice }}
+                                </td>
+                                <td>
+                                    <a href="{{ route('client-orders.show', ['order'=>$order->id]) }}" class="link">View order</a>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+                {{ $orders->links() }}
+            @else
+                <div class="no-items-found">
+                    No items found
+                </div>
+            @endif
         </div>
     </div>
 
