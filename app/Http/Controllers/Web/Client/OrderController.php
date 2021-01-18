@@ -25,10 +25,11 @@ class OrderController extends Controller
             if( ($id = $request->id) ) {
                 $query->where('id', $id);
             }
-
             $query->where('user_id', Auth::id());
-        })->orderBy('created_at', 'desc')->paginate(1)->withQueryString();
-    
+
+        })->orderBy('created_at', 'desc')->paginate(5)->withQueryString();
+
+
         $request->flash();
         
         return view('client.orders.index', ['orders'=>$orders]);

@@ -45,9 +45,9 @@
                                     <span class="separator">
                                         |
                                     </span>
-                                    <form method="POST" acction="{{ route('client-addresses.delete', ['address'=>$address->id]) }}" class="address__action">
+                                    <form method="POST" action="{{ route('client-addresses.delete', ['address'=>$address->id]) }}" class="address__action">
                                         @csrf
-                                        @method('DELETE')
+                                        @method('delete')
     
                                         <button type="submit" class="button button--small button-primary">Delete address</button>
                                     </form>

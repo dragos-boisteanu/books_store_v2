@@ -1,0 +1,40 @@
+.create-order {
+    .order__producs {
+        width: 100%;
+    
+       
+    }
+
+    form {
+        width: 100%;
+        .order__addresses {
+            .address {
+                width: 45%;
+            }
+        }
+
+        .radio-section {
+            width: 45%; 
+
+            .form-radio__group {
+                .radio-label {
+                    .name {
+                        width: 150px;
+                    }
+                }
+            }
+            
+        }
+
+       
+        
+    }
+
+    .radio-label {
+        .name {
+            width: 150px;
+        }
+    }
+        
+}
+    

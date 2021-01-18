@@ -82,7 +82,7 @@ class AddressController extends Controller
 
     public function destroy($id) 
     {
-        $address->findOrFail($id)->delete();
+        Address::findOrFail($id)->delete();
 
         return redirect()->route('client-addresses.index');
     }

@@ -55,12 +55,12 @@ class Order extends Model
 
     public function shipping_address() 
     {
-        return $this->belongsTo('App\Models\Address', 'shipping_address_id');
+        return $this->belongsTo('App\Models\Address', 'shipping_address_id')->withTrashed();
     }
 
     public function invoice_address() 
     {
-        return $this->belongsTo('App\Models\Address', 'invoice_address_id');
+        return $this->belongsTo('App\Models\Address', 'invoice_address_id')->withTrashed();
     }
     
     public function shipping_method() 

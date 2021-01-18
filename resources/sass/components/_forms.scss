@@ -10,6 +10,8 @@ form {
         display: flex;
         justify-content: space-between;
         align-items: center;
+
+        margin: 5px 0;
     }
 
     .form-group {
@@ -68,6 +70,9 @@ form {
         }
     }
 
+    .form-radio__group {
+        margin: 5px 0;
+    }
 }
 
 .menu-form,

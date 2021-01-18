@@ -641,6 +641,7 @@ form .form-action {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin: 5px 0;
 }
 
 form .form-group {
@@ -694,6 +695,10 @@ form .form-input {
 
 form .form-input:focus {
   border: 1px solid #586f7cff;
+}
+
+form .form-radio__group {
+  margin: 5px 0;
 }
 
 .menu-form,
@@ -827,13 +832,15 @@ table tr.total-row {
 
 .books-list {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   -moz-column-gap: 15px;
        column-gap: 15px;
   row-gap: 15px;
+  justify-items: start;
 }
 
 .books-list .book__item {
+  justify-self: stretch;
   padding: 10px;
   position: relative;
   border-radius: 3px;
@@ -1427,5 +1434,29 @@ footer .map a img {
 .home .home__group:last-of-type {
   border-bottom: none;
   margin-bottom: 0px;
+}
+
+.create-order .order__producs {
+  width: 100%;
+}
+
+.create-order form {
+  width: 100%;
+}
+
+.create-order form .order__addresses .address {
+  width: 45%;
+}
+
+.create-order form .radio-section {
+  width: 45%;
+}
+
+.create-order form .radio-section .form-radio__group .radio-label .name {
+  width: 150px;
+}
+
+.create-order .radio-label .name {
+  width: 150px;
 }
 

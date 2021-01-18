@@ -95,7 +95,7 @@
                         </td>
                     </tr>
                     <tr class="total-row">
-                        <td colspan="">
+                        <td>
                             Total
                         </td>
                         <td></td>

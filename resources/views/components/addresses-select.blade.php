@@ -1,4 +1,4 @@
-<select name="{{ $name }}">
+<select name="{{ $name }}" class="form-input">
     <option value="0" disabled>{{ $title }}</option>
     @foreach($addresses as $address)
         <option value="{{ $address->id }}" 
