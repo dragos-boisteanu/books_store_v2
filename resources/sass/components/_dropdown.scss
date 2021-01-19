@@ -70,6 +70,14 @@
 
             .content__item {
                 margin: 5px 0;
+
+                &:first-of-type{
+                    margin-top: 0;
+                    
+                    .link {
+                        padding: 13px 0;
+                    }
+                }
             }
         }
     }

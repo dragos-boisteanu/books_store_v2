@@ -4,30 +4,53 @@
     <div class="view">
         @include('includes.dashboard-nav')
         <div class="view__content">
-            <h1>Lista utilizatori</h1>
-            <div class="filter">
+            <h1>Users list</h1>
+          
+            <div class="filter-container">
+                <h2>Filter</h2>
                 <form method="POST" action="{{ route('admin-users.index')}}">
                     @csrf
         
-                    <input type="text" name="first_name" placeholder="Prenume"/>
-                    <input type="text" name="name" placeholder="Nume"/>
+                    <div class="filter">
+                        <div class="col col-1">
+                            <div class="form-group">
+                                <input type="text" name="first_name" class="form-input" placeholder="Prenume"/>
+        
+                            </div>
+                            <div class="form-group">
+                                <input type="text" name="name" class="form-input" placeholder="Nume"/>
+                            </div>
+                            <div class="form-group">
+                                <select name="role" class="form-input">
+                                    <option value="0" disabled selected>Alege rolul</option>
+                                    @foreach ($roles as $role)
+                                        <option value="{{$role->id}}">{{$role->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col col-2">
+                            <div class="form-group">
+                                <label for="created_at" class="form-label">Registered between</label>
+                                <input type="date" id="created_at" name="created_at_start" class="form-input">
+                            </div>
+                            <div class="form-group">
+                                <input type="date" name="created_at_end" class="form-input">
+                            </div>
+                        </div>
+                    </div>
                         
-                    <select name="role">
-                        <option value="0" disabled selected>Alege rolul</option>
-                        @foreach ($roles as $role)
-                            <option value="{{$role->id}}">{{$role->name}}</option>
-                        @endforeach
-                    </select>
-
-                    <label for="created_at">Inregistrat intre</label>
-                    <input type="date" id="created_at" name="created_at_start">
-                    <input type="date" name="created_at_end">
-        
-                    <button type="submit">Aplica filtrul</button>
-        
+                    <div class="filter__actions">
+                        <button type="submit" class="button button-primary">Filter</button>
+                        <button id="reset-btn" class="button button-primary">Reset</button>
+                    </div>
                 </form>
+
+                <form method="GET" id="reset-form" action="{{ route('admin-users.index')}}" style="display: none"></form>
             </div>
+                
             <div class="table-container">
+                <h2>Users</h2>
                 <table>
                     <thead>
                         <tr>
@@ -98,3 +121,19 @@
         </div>
     </div>
 @endsection
+
+
+@push('vue-scripts')
+
+    <script>
+        const clearBtn = document.getElementById('reset-btn');
+        const clearForm = document.getElementById('reset-form');
+
+        clearBtn.addEventListener('click', (event) => {
+            event.preventDefault();
+
+            clearForm.submit();
+        })
+    </script>
+
+@endpush

@@ -1,4 +1,4 @@
-<div class="book_title">
+{{-- <div class="book_title">
     <a href="{{ route('books-client.show', ['id'=>$book->id]) }}">{{$book->title}}</a>
 </div>
 <ul class="list book_authors">
@@ -26,4 +26,4 @@
 
 <add-to-cart-btn-component
     id={{$book->id}}
-></add-to-cart-btn-component>
+></add-to-cart-btn-component> --}}

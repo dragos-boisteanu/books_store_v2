@@ -4,6 +4,7 @@
 @import 'base/reset';
 @import 'base/typography';
 
+@import 'components/dashboard-marker';
 @import 'components/buttons';
 @import 'components/links';
 @import 'components/lists';
@@ -17,6 +18,7 @@
 @import 'components/pagination';
 @import 'components/book-item';
 @import 'components/no-items-found';
+@import 'components/filters';
 
 @import 'layout/haeder';
 @import 'layout/footer';

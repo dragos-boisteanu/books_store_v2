@@ -22,6 +22,17 @@
     <link href="{{ asset(mix('css/app.css')) }}" rel="stylesheet">
 </head>
 <body class="wrapper">
+    @if(Route::is('admin-*') || Route::is('dashboard'))
+        <div class="dashboard-marker">
+            dashboard (
+                @if(Auth::user()->role_id === 2)
+                    admin
+                @else
+                    staff
+                @endif
+            )
+        </div>
+    @endif
     @include('includes.header')
     @include('includes.main-nav')
    

@@ -6,40 +6,59 @@
     @include('includes.dashboard-nav')
 
     <div class="view__content">
-        <div>
-            <h1>Authors List</h1>
-        </div>
-    
-        <div class="filter">
+        <h1>Authors List</h1>
+        <div class="filter-container">
+            <h2>Filter</h2>
             <form method="GET" action="{{ route('admin-authors.index')}}">
-    
-                <input type="number" name="id" placeholder="Order ID" value="{{ old('id') }}"/>
-                <input type="text" name="first_name" placeholder="First name" value="{{ old('first_name') }}"/>
-                <input type="text" name="name" placeholder="Name" value="{{ old('name') }}" />
-    
-                <input type="number" name="created_by" placeholder="Created By ID" value="{{ old('created_by') }}"/>
-                <input type="number" name="updated_by" placeholder="Updated By ID" value="{{ old('updated_by') }}"/>
-    
-                <label for="created-at-after">Added after</label>
-                <input type="date" id="created-at-after" name="created_at_start" value="{{ old('created_at_start') }}">
-    
-                <label for="created-at-before">Added before</label>
-                <input type="date" id="created-at-before" name="created_at_end" value="{{ old('created_at_end') }}">
-    
-                <label for="updated-at-after">Updated after</label>
-                <input type="date" id="updated-at-after" name="updated_at_start" value="{{ old('updated_at_start') }}">
-    
-                <label for="updated-at-before">Updated before</label>
-                <input type="date" id="updated-at-before" name="updated_at_end" value="{{ old('updated_at_end') }}">
-    
-                <button type="submit">Filter</button>
-    
+                <div class="filter">
+                    <div class="form-group">
+                        <div class="form-group">
+                            <input type="number" name="id" class="form-input" placeholder="Author ID" value="{{ old('id') }}"/>
+                        </div>
+                        <div class="form-group">
+                            <input type="number" name="created_by" class="form-input" placeholder="Created By ID" value="{{ old('created_by') }}"/>
+                        </div>
+                        <div class="form-group">
+                            <input type="number" name="updated_by" class="form-input" placeholder="Updated By ID" value="{{ old('updated_by') }}"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-group">
+                            <input type="text" name="first_name" class="form-input" placeholder="First name" value="{{ old('first_name') }}"/>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name="name" class="form-input" placeholder="Name" value="{{ old('name') }}" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-group">
+                            <label for="created-at-after" class="form-label">Added after</label>
+                            <input type="date" id="created-at-after" class="form-input" name="created_at_start" value="{{ old('created_at_start') }}">            
+                        </div>
+                        <div class="form-group">
+                            <label for="created-at-before" class="form-label">Added before</label>
+                            <input type="date" id="created-at-before" class="form-input" name="created_at_end" value="{{ old('created_at_end') }}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-group">
+                            <label for="updated-at-after" class="form-label">Updated after</label>
+                            <input type="date" id="updated-at-after" class="form-input" name="updated_at_start" value="{{ old('updated_at_start') }}">            
+                        </div>
+                        <div class="form-group">
+                            <label for="updated-at-before" class="form-label">Updated before</label>
+                            <input type="date" id="updated-at-before" class="form-input" name="updated_at_end" value="{{ old('updated_at_end') }}">
+                        </div>
+                    </div>
+                </div>   
+                
+                <div class="filter__actions">
+                    <button type="submit" class="button button-primary">Filter</button>
+                    <button id="reset-btn" class="button button-primary">Reset</button>
+                </div>
             </form>
-    
-            
-            <form method="GET" action="{{ route('admin-authors.index')}}">
-                <button>Clear</button>
-            </form>
+          
+            <form method="GET" id="reset-form" action="{{ route('admin-authors.index')}}"></form>
         </div>
     
     
@@ -113,3 +132,19 @@
     
 
 @endsection
+
+
+@push('vue-scripts')
+
+    <script>
+        const resetBtn = document.getElementById('reset-btn');
+        const resetForm = document.getElementById('reset-form');
+
+        resetBtn.addEventListener('click', (event) => {
+            event.preventDefault();
+
+            resetForm.submit();
+        })
+    </script>
+
+@endpush

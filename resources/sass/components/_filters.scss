@@ -1,0 +1,27 @@
+.filter-container {
+    form {
+        width: 100%;
+
+        .filter {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            column-gap: 25px;
+            align-items: start;
+        }
+    }
+
+    .filter__actions {
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+
+        & .button {
+            margin: 10px 15px;
+        }
+
+    }    
+}
+
+
+
