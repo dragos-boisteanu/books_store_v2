@@ -17,6 +17,11 @@
         <li class="side-nav__item">
             <a class="item__link @if(Route::is('admin-categories.*')) item__link--selected @endif" href="{{ route('admin-categories.index') }}">Categories</a>
         </li>
-
+        <li class="side-nav__item">
+            <a class="item__link" href="/dashboard">Languages</a>
+        </li>
+        <li class="side-nav__item">
+            <a class="item__link" href="/dashboard">Statuses</a>
+        </li>
     </ul>
 </nav>

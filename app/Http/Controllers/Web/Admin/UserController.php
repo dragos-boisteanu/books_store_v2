@@ -16,7 +16,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::orderBy('created_at', 'desc')->simplePaginate(15);
+        $users = User::orderBy('created_at', 'desc')->paginate(10)->withQueryString();;
         $roles = Role::all();
         
         return view('admin.users.index', ['users'=>$users, 'roles'=>$roles]);
@@ -33,8 +33,8 @@ class UserController extends Controller
 
         if($user->role->id === 2 || $user->role->id === 3) {
             $user->load(['orders', 'updatedBooks', 'addedBooks']);
-            $addedBooks = $user->addedBooks()->simplePaginate(15);
-            $updatedBooks = $user->updatedBooks()->simplePaginate(15);
+            $addedBooks = $user->addedBooks();
+            $updatedBooks = $user->updatedBooks();
 
             return view('admin.users.show', ['user'=>$user, 'addedBooks'=>$addedBooks, 'updatedBooks'=>$updatedBooks]);
         } else {
@@ -60,15 +60,15 @@ class UserController extends Controller
 
         if($user->role->id === 2 || $user->role->id === 3) {
 
-            $user->load(['orders', 'updatedBooks', 'addedBooks']);
+            $user->load(['orders', 'updatedBooks', 'addedBooks'])->paginate(10);
 
-            $addedBooks = $user->addedBooks()->simplePaginate(15);
-            $updatedBooks = $user->updatedBooks()->simplePaginate(15);
+            $addedBooks = $user->addedBooks()->paginate(15);
+            $updatedBooks = $user->updatedBooks()->paginate(15);
 
             $data = ['user'=>$user, 'addedBooks'=>$addedBooks, 'updatedBooks'=>$updatedBooks];
 
         } else {
-            $user->load('orders');
+            $user->load('orders')->paginate(10);
 
             $data = ['user'=>$user];
         }

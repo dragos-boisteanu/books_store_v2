@@ -52,9 +52,7 @@
                             <th>
                                 Inregistrat la
                             </th>
-                            <th>
-                                Actions
-                            </th>
+                            <th colspan="2"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -82,7 +80,9 @@
                                     {{ $user->created_at}}
                                 </td>
                                 <td>
-                                    <a href="{{ route('admin-users.show', ['user'=>$user->id]) }}">Detalii</a>
+                                    <a class="link" href="{{ route('admin-users.show', ['user'=>$user->id]) }}">Detalii</a>
+                                </td>
+                                <td>
                                     <form method="POST" action="{{ route('admin-users.destroy', ['user'=>$user->id]) }}">
                                         @csrf
                                         @method('DELETE')

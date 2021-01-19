@@ -95,9 +95,7 @@
                             <th>
                                 Last modified at
                             </th>
-                            <th>
-                                
-                            </th>
+                            <th colspan="2"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -142,8 +140,10 @@
                                     {{ $order->updated_at }}
                                 </td>
                                 <td>
-                                    <a href="{{ route('admin-orders.show', ['order'=>$order->id]) }}" >Details</a>
-                                    <a href="{{ route('admin-orders.edit', ['order'=>$order->id]) }}" >Edit</a>
+                                    <a class="link" href="{{ route('admin-orders.show', ['order'=>$order->id]) }}" >Details</a>
+                                </td>
+                                <td>
+                                    <a class="link" href="{{ route('admin-orders.edit', ['order'=>$order->id]) }}" >Edit</a>
                                 </td>
                             </tr>
     

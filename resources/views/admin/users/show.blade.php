@@ -38,9 +38,6 @@
                             <thead>
                                 <tr>
                                     <th>
-                                        Index
-                                    </th>
-                                    <th>
                                         ID
                                     </th>
                                     <th>
@@ -72,11 +69,8 @@
                             <tbody>
                                 @foreach( $user->orders as $order)
                                     <tr>
-                                        <th>
-                                            {{ $loop->iteration  }}
-                                        </th>
                                         <td>
-                                        {{ $order->id }}
+                                            {{ $order->id }}
                                         </td>
                                         <td>
                                             {{ $order->shipping_address->first_name . ' ' . $order->shipping_address->name }}
@@ -100,7 +94,7 @@
                                             {{ $order->updated_at }}
                                         </td>
                                         <td>
-                                            <a href="{{ route('admin-orders.show', ['order'=>$order->id]) }}" >Details</a>
+                                            <a class="link" href="{{ route('admin-orders.show', ['order'=>$order->id]) }}" >Details</a>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -146,7 +140,7 @@
                                             {{ $addedBook->id }}
                                         </td>
                                         <td>
-                                            <a href="{{ route('admin-books.show', ['book'=>$addedBook->id]) }}">{{ $addedBook->title }}</span></a>
+                                            <a class="link" href="{{ route('admin-books.show', ['book'=>$addedBook->id]) }}">{{ $addedBook->title }}</span></a>
                                         </td>
                                         <td>
                                             {{ $addedBook->created_at }}
@@ -197,7 +191,7 @@
                                             {{ $updatedBook->id }}
                                         </td>
                                         <td>
-                                            <a href="{{ route('admin-books.show', ['book'=>$updatedBook->id]) }}">{{ $updatedBook->title }}</span></a>
+                                            <a class="link" href="{{ route('admin-books.show', ['book'=>$updatedBook->id]) }}">{{ $updatedBook->title }}</span></a>
                                         </td>
                                         <td>
                                             {{ $updatedBook->created_at }}
@@ -216,9 +210,6 @@
                 </div>
             @endif
             @endif
-            
-            
-        </div>
-        
+        </div> 
     </div>  
 @endsection 

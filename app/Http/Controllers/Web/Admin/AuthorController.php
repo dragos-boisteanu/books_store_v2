@@ -46,7 +46,7 @@ class AuthorController extends Controller
                 $query->whereDate('updated_at', '<', $updatedAtEnd);
             }
 
-        })->orderBy('authors.first_name', 'desc')->orderBy('authors.name', 'desc')->simplePaginate(15)->withQueryString();;
+        })->orderBy('authors.first_name', 'desc')->orderBy('authors.name', 'desc')->paginate(15)->withQueryString();
 
         $request->flash();
 
@@ -84,7 +84,7 @@ class AuthorController extends Controller
     {
         $author = Author::findOrFail($id);
        
-        $books = $author->books()->orderBy('created_at', 'desc')->simplePaginate(15);
+        $books = $author->books()->orderBy('created_at', 'desc')->paginate(15);
 // dd($books);
         return view('admin.authors.show', ['author'=>$author, 'books'=>$books]);
     }

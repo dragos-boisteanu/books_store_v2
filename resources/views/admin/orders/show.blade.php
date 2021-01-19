@@ -12,7 +12,7 @@
                 {{ $order->created_at }}
             </div>
             <div>
-                Operator: <a href="{{ route('admin-users.show', ['user'=>$order->operator->id]) }}">{{ $order->operator->first_name , ' ' . $order->operator->name }}</a>
+                Operator: <a class="link" href="{{ route('admin-users.show', ['user'=>$order->operator->id]) }}">{{ $order->operator->first_name , ' ' . $order->operator->name }}</a>
             </div>
             <div class="addresses__container">
                 <div class="address">
@@ -94,9 +94,10 @@
                             </tr>
                             @endforeach
                             <tr>
-                                <td colspan="2">
+                                <td>
                                     Shipping tax
                                 </td>
+                                <td></td>
                                 <td>
                                     {{ $order->shipping_method->price }}
                                 </td>
@@ -109,9 +110,11 @@
                             
                             </tr>
                             <tr>
-                                <td colspan="3">
+                                <td>
                                     Total
                                 </td>
+                                <td></td>
+                                <td></td>
                                 <td>
                                     {{ $order->totalQuantity }}
                                 </td>
@@ -125,12 +128,12 @@
             </div>
     
             <div class="action">
-                <a href="{{ route('admin-orders.edit', ['order'=>$order->id]) }}">Edit</a>
+                <a class="link" href="{{ route('admin-orders.edit', ['order'=>$order->id]) }}">Edit</a>
     
                 <form method="POST" action="{{ route('admin-orders.destroy', ['order'=>$order->id]) }}">
                     @csrf
                     @method('DELETE')
-                    <button type="submit">Delete</button>
+                    <button type="submit" class="button button-primary">Delete</button>
                 </form>
             </div>
         </div>

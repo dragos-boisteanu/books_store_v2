@@ -83,7 +83,7 @@ class OrderController extends Controller
                     ->whereDate('updated_at', '<', $updatedAtEnd);
             }
 
-        })->withTrashed()->orderBy('created_at', 'desc')->simplePaginate(15);;
+        })->withTrashed()->orderBy('created_at', 'desc')->paginate(10)->withQueryString();
 
 
 
