@@ -1,3 +1,8 @@
+.table-container {
+    width: 100%;
+    overflow-y: hidden;
+}
+
 table {
     border-spacing: 1;
     border-collapse: collapse;
@@ -8,6 +13,9 @@ table {
     height: 100%;
     margin: 0 auto;
     position: relative;
+
+    overflow-y: hidden;
+
 
     // margin-top: 25px;
 
@@ -29,6 +37,10 @@ table {
     & tbody tr td {
         padding: 15px 0;
         text-align: center;
+
+        &:first-of-type {
+            width: 25px;
+        }
     }
 
     & tbody tr:last-child {
@@ -53,6 +65,10 @@ table {
         color: #646464;
         line-height: 1.2;
         font-weight: unset;
+
+        // display: flex;
+        // align-items: center;
+        // justify-content: flex-start;
     }
 
     & tbody tr:hover {

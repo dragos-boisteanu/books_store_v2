@@ -1,7 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="dashboard"> 
+<div class="view">
+    @include('includes.dashboard-nav')
+
+    <div class="view__content"> 
         <h1>
             {{ $book->id }} - {{ $book->title}} 
         </h1>
@@ -110,5 +113,7 @@
         </div>
         
     </div>  
+</div>
+    
 @endsection 
 

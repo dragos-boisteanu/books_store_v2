@@ -561,6 +561,7 @@ h6 {
   position: absolute;
   right: 120px;
   top: 84px;
+  z-index: 1;
   background-color: #f4f4f9ff;
   border-bottom-right-radius: 3px;
   border-bottom-left-radius: 3px;
@@ -706,6 +707,11 @@ form .form-radio__group {
   width: 100%;
 }
 
+.table-container {
+  width: 100%;
+  overflow-y: hidden;
+}
+
 table {
   border-spacing: 1;
   border-collapse: collapse;
@@ -716,6 +722,7 @@ table {
   height: 100%;
   margin: 0 auto;
   position: relative;
+  overflow-y: hidden;
 }
 
 table td,
@@ -735,6 +742,10 @@ table thead tr th {
 table tbody tr td {
   padding: 15px 0;
   text-align: center;
+}
+
+table tbody tr td:first-of-type {
+  width: 25px;
 }
 
 table tbody tr:last-child {

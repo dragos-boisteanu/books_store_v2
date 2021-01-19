@@ -107,7 +107,7 @@ class BookController extends Controller
 
 
 
-        })->orderBy('books.created_at', 'desc')->simplePaginate(15)->withQueryString();
+        })->orderBy('books.created_at', 'desc')->paginate(10)->withQueryString();
  
         $categories = Category::all();
 

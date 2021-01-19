@@ -13,16 +13,16 @@
             @endif
 
 
-                <li class="page current-page">
-                    {{ $paginator->currentPage() }}
-                </li>
-                <li class="page seprator">
-                    /
-                </li>
-                <li class="page last-page">
-                    {{$paginator->lastPage()}}
-                </li>
-         
+            <li class="page current-page">
+                {{ $paginator->currentPage() }}
+            </li>
+            <li class="page seprator">
+                /
+            </li>
+            <li class="page last-page">
+                {{$paginator->lastPage()}}
+            </li>
+        
            
 
             {{-- Next Page Link --}}
@@ -37,4 +37,25 @@
             @endif
         </ul>
     </nav>
+@else
+
+<nav>
+    <ul class="pagination">
+        <li class="page prev-page disabled" aria-disabled="true" aria-label="@lang('pagination.previous')">
+            <span aria-hidden="true">&lsaquo;</span>
+        </li>
+        <li class="page current-page">
+            1
+        </li>
+        <li class="page seprator">
+            /
+        </li>
+        <li class="page last-page">
+            1
+        </li>   
+        <li class="page next-page disabled" aria-disabled="true" aria-label="@lang('pagination.next')">
+            <span aria-hidden="true">&rsaquo;</span>
+        </li>
+    </ul>
+</nav>
 @endif
