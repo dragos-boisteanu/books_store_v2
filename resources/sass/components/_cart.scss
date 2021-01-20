@@ -2,6 +2,8 @@
     position: absolute;
     right: 50px;
     top: 27px;
+
+    z-index: 2;
     
     background-color: $ghost-white;
     border-radius: $border-radius-value;
