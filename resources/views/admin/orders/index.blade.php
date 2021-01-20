@@ -6,6 +6,7 @@
         <div class="view__content">
             <h1>Orders list</h1>
             <div class="filter-container">
+                {{ Breadcrumbs::render('dashboard-orders.index') }}
                 <h2>Filter</h2>
                 <form method="GET" action="{{ route('admin-orders.index')}}">
                 

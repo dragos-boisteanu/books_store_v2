@@ -4,8 +4,8 @@
     <div class="view">
         @include('includes.dashboard-nav')
         <div class="view__content">
+            {{ Breadcrumbs::render('dashboard-users.list') }}
             <h1>Users list</h1>
-          
             <div class="filter-container">
                 <h2>Filter</h2>
                 <form method="GET" action="{{ route('admin-users.index')}}">

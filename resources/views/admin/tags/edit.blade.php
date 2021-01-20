@@ -4,6 +4,7 @@
     <div class="view">
         @include('includes.dashboard-nav')
         <div class="view__content">
+            {{ Breadcrumbs::render('dashboard-tags.edit', $tag) }}
             <h1>
                 Create tag 
             </h1>

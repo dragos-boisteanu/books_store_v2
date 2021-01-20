@@ -4,6 +4,7 @@
     <div class="view">
         @include('includes.dashboard-nav')
         <div class="view__content">
+            {{ Breadcrumbs::render('dashboard-books.index') }}
             <h1>Books list</h1>
             <div class="filter-container">
                 <h2>Filter</h2>

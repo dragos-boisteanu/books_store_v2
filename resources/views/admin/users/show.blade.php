@@ -4,9 +4,10 @@
     <div class="view">
         @include('includes.dashboard-nav')
         <div class="view__content">
-            <div>
-                <h1>User #{{ $user->id }} informations</h1>
-            </div>
+            {{ Breadcrumbs::render('dashboard-users.show', $user) }}
+            
+            <h1>User #{{ $user->id }}</h1>
+         
             <div>
                 <h2>Account data</h2>
                 <ul class="details">

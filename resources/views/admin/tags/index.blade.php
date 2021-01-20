@@ -6,6 +6,7 @@
     @include('includes.dashboard-nav')
 
         <div class="view__content">
+            {{ Breadcrumbs::render('dashboard-tags.index') }}
             <h1>Tags List</h1>    
             <div class="filter-container">
                 <h2>Filter</h2>

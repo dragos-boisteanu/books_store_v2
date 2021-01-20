@@ -4,6 +4,7 @@
     <div class="view">
         @include('includes.dashboard-nav')
         <div class="view__content">
+            {{ Breadcrumbs::render('dashboard-tags.show', $tag) }}
             <h1>
                 Tag  - {{ $tag->name }} - #{{ $tag->id }}  <a class="link" href="{{ route('admin-tags.edit', ['tag'=>$tag->id]) }}">Edit</a>
             </h1>

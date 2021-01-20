@@ -5,8 +5,9 @@
     <div class="view">
         @include('includes.dashboard-nav')
         <div class="view__content">
+            {{ Breadcrumbs::render('dashboard-order', $order) }}
             <h1 class="view__header">
-                Order {{ $order->id }} # - {{ $order->status->name }} - @if($order->deleted_at) DISABLED @endif
+                Order {{ $order->id }} # - {{ $order->status->name }}  @if($order->deleted_at) - CANCELED @endif
             </h1>
             <ul class="details">
                 <li class="detail">

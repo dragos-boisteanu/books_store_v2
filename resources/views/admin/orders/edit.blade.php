@@ -5,6 +5,7 @@
     <div class="view">
         @include('includes.dashboard-nav')
         <div class="view__content">
+            {{ Breadcrumbs::render('dashboard-order.edit', $order) }}
             <h1 class="view__header">
                 Order {{ $order->id }} # - {{ $order->status->name }}
             </h1>

@@ -4,6 +4,7 @@
 <div class="view">
     @include('includes.dashboard-nav')
     <div class="view__content">
+        {{ Breadcrumbs::render('dashboard-authors.edit', $author) }}
         <h1>
             Edit author  #{{ $author->id }}
         </h1>

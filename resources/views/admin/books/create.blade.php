@@ -4,6 +4,7 @@
     <div id="form" class="view">
         @include('includes.dashboard-nav')
         <div class="view__content">
+            {{ Breadcrumbs::render('dashboard-book.create') }}
             <h1>Add a book</h1>
             <form method="POST" novalidate action="{{ route('admin-books.store') }}">
                 @csrf

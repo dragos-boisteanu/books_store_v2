@@ -4,6 +4,7 @@
     <div class="view">
         @include('includes.dashboard-nav')
         <div class="view__content">
+            {{ Breadcrumbs::render('dashboard-book.edit', $book) }}
             <form id="edit-book" method="POST" action="{{ route('admin-books.update', ['book'=>$book->id]) }}">
                 @csrf
                 @method('PUT')

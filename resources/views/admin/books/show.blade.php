@@ -5,6 +5,7 @@
     @include('includes.dashboard-nav')
 
     <div id="book" class="view__content book book-dashboard">
+        {{ Breadcrumbs::render('dashboard-book', $book) }}
         <div class="book__header">
             <div class="header__image {{ $book->stock->quantity < 1 ? 'not-in-stock' : ''}}">
                 @if ( $book->discount > 0)
