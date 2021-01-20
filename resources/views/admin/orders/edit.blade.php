@@ -129,13 +129,13 @@
                                     {{ $book->id }}
                                 </td>
                                 <td>
-                                    {{ $book->pivot->price }}
+                                    {{ $book->pivot->price }} RON
                                 </td>
                                 <td>
                                     {{ $book->pivot->quantity }}
                                 </td>
                                 <td>
-                                    {{ $book->pivot->price * $book->pivot->quantity }}
+                                    {{ $book->pivot->price * $book->pivot->quantity }} RON
                                 </td>
                             </tr>
                         @endforeach
@@ -145,13 +145,13 @@
                             </td>
                             <td></td>
                             <td>
-                                {{ $order->shipping_method->price }}
+                                {{ $order->shipping_method->price }} RON
                             </td>
                             <td>
                                 1
                             </td>
                             <td>
-                                {{ $order->shipping_method->price }}
+                                {{ $order->shipping_method->price }} RON
                             </td>
                         </tr>
                         <tr>
@@ -164,7 +164,7 @@
                                 {{ $order->totalQuantity }}
                             </td>
                             <td>
-                                {{ $order->totalPrice }}
+                                {{ $order->totalPrice }} RON
                             </td>
                         </tr>
                     </tbody>
