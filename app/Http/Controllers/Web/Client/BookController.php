@@ -9,24 +9,27 @@ use App\Http\Controllers\Controller;
 
 class BookController extends Controller
 {
+
+   
     public function index() 
     {
+    
         $limit = 5;
 
-        $newBooks = Book::orderBy('created_at', 'desc')->limit(5)->get();
+        $newBooks = Book::orderBy('created_at', 'desc')->limit($limit)->get();
 
-        $mostSoldBooksIds = DB::select('SELECT books.*, SUM(book_order.quantity) AS total_quantity
+        $bestSellingIds = DB::select('SELECT books.*, SUM(book_order.quantity) AS total_quantity
                                 FROM book_order
                                 JOIN books ON books.id = book_order.book_id
                                 GROUP BY books.id
                                 ORDER BY total_quantity desc
                                 LIMIT :limit', ['limit'=>$limit]);
 
-        $mostSoldBooks = Book::hydrate($mostSoldBooksIds);
+        $bestSelling = Book::hydrate($bestSellingIds);
 
         $mostViewdBooks = Book::orderByUniqueViews('desc')->limit($limit)->get();
 
-        return view('home', compact('newBooks', 'mostSoldBooks', 'mostViewdBooks'));
+        return view('home', compact('newBooks', 'bestSelling', 'mostViewdBooks'));
     }
 
     public function show($id)
@@ -39,16 +42,5 @@ class BookController extends Controller
         
         return view('client.books.show', ['book'=>$book]);
     }
-
-    public function getNewest() 
-    {
-
-        $books = Book::orderBy('created_at', 'desc')->paginate(20);
-        $title = "Recently added";
-
-        return view('client.books.view-more', compact('books', 'title'));
-    }
-
-
 
 }

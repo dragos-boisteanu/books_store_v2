@@ -20,9 +20,6 @@ Route::get('/', 'Web\Client\BookController@index')->name('home');
 
 Route::get('/search', 'Web\Client\SearchController@index')->name('search');
 
-Route::get('books/new', 'Web\Client\BookController@getNewest')->name('books-new.show');
-Route::get('books/best-sold', 'Web\Client\BookController@getBestSold')->name('books-best.show');
-Route::get('books/most-view', 'Web\Client\BookController@getMostViewed')->name('books-most.show');
 Route::get('books/{id}', 'Web\Client\BookController@show')->name('books.show');
 
 Route::get('/categories/{id}', 'Web\Client\CategoryController')->name('category-books.show');

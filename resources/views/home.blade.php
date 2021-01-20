@@ -10,24 +10,15 @@
         <div class="home__group">
             <h1>Recently added</h1>
             <x-books :books="$newBooks"></x-books>
-            <div class="see__more">
-                <a class="link" href="{{ route('books-new.show') }}">See more</a>
-            </div>
         </div>
 
         <div class="home__group">
             <h1>Best selling</h1>
-            <x-books :books="$mostSoldBooks"></x-books>
-            <div class="see__more">
-                <a class="link" href="/">See more</a>
-            </div>
+            <x-books :books="$bestSelling"></x-books>
         </div>
         <div class="most-viewd">
             <h1>Most Viewd</h1>
             <x-books :books="$mostViewdBooks"></x-books>
-            <div class="see__more">
-                <a class="link" href="/">See more</a>
-            </div>
         </div>
        
     </div>
