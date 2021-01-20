@@ -33,7 +33,7 @@
             </div>
             <div>
                 <h2>User's orders</h2>
-                @if ( count($user->orders) > 0)
+                @if ( isset($user->orders) && $user->orders->isNotEmpty())
                     <div class="table-container">
                         <table>
                             <thead>

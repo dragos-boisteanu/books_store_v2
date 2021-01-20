@@ -81,7 +81,7 @@ Breadcrumbs::for('dashboard', function ($trail) {
 // DASHBOARD BOOKS 
 Breadcrumbs::for('dashboard-books.index', function ($trail) {
     $trail->parent('dashboard');
-    $trail->push('Books index', route('admin-books.index'));
+    $trail->push('Books list', route('admin-books.index'));
 });
 
 Breadcrumbs::for('dashboard-book', function ($trail, $item) {
@@ -102,7 +102,7 @@ Breadcrumbs::for('dashboard-book.create', function ($trail) {
 //  DASHBOARD ORDERS
 Breadcrumbs::for('dashboard-orders.index', function ($trail) {
     $trail->parent('dashboard');
-    $trail->push('Orders index', route('admin-orders.index'));
+    $trail->push('Orders list', route('admin-orders.index'));
 });
 
 Breadcrumbs::for('dashboard-order', function ($trail, $item) {
@@ -152,7 +152,7 @@ Breadcrumbs::for('dashboard-authors.create', function ($trail) {
 // DASHBOARD AUTHORS 
 Breadcrumbs::for('dashboard-tags.index', function ($trail) {
     $trail->parent('dashboard');
-    $trail->push('Tags index', route('admin-tags.index'));
+    $trail->push('Tags list', route('admin-tags.index'));
 });
 
 Breadcrumbs::for('dashboard-tags.show', function ($trail, $item) {
