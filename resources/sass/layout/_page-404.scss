@@ -1,0 +1,22 @@
+.page-404 {
+    height: 100%;
+
+    .view__content {
+        height: 100%;
+
+        .page-404__content {
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+    
+            font-weight: 600;
+            font-size: 28px;
+    
+            color: $black;
+        }   
+    }
+
+   
+   
+}

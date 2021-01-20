@@ -1587,3 +1587,21 @@ footer .map a img {
   width: 150px;
 }
 
+.page-404 {
+  height: 100%;
+}
+
+.page-404 .view__content {
+  height: 100%;
+}
+
+.page-404 .view__content .page-404__content {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+  font-size: 28px;
+  color: #1f1f1f;
+}
+

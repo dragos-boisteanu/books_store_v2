@@ -10,12 +10,20 @@ class SearchController extends Controller
 {
     public function index(Request $request) 
     {
-        $books = Book::where(function($query) use ($request) {
-            if( ($q = $request->q) ) {
-                $query->where('title', 'like', '%'. $q . '%');
-            }
-        })->orderBy('created_at', 'desc')->simplePaginate(15)->withQueryString();
+        if(!empty($request->q)) {
+            $books = Book::where('title', 'like', '%'. $request->q . '%')
+                    ->orderBy('created_at', 'desc')
+                    ->simplePaginate(15)
+                    ->withQueryString();
 
-        return view('client.books.search', ['books'=>$books, 'query'=>$request->q]);
+            return view('client.books.search', ['books'=>$books, 'query'=>$request->q]);
+        } else {
+            return view('client.books.search', ['query'=>$request->q]);
+        }
+
+      
+        
+    
+       
     }
 }

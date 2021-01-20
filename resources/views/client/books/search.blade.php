@@ -7,7 +7,16 @@
             {{ Breadcrumbs::render('search') }}
             <h1>Results: <span>{{ $query }}</span></h1>
 
-            <x-books :books="$books"></x-books>
+            @if ( isset($books) && $books->isNotEmpty()) 
+                <x-books :books="$books"></x-books>
+            @else
+                @if(empty($query))
+                    Nothing to search for !
+                @else
+                    No books found !
+                @endif
+            @endif
+           
         </div>
        
     </div>

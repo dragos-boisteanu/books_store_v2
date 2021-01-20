@@ -171,4 +171,11 @@ Breadcrumbs::for('dashboard-tags.create', function ($trail) {
 });
 
 
+// 404
+
+Breadcrumbs::for('errors.404', function ($trail) {
+    $trail->parent('home');
+    $trail->push('Page Not Found');
+});
+
 ?>
