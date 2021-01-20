@@ -1038,6 +1038,22 @@ table tr.total-row {
   margin: 10px 15px;
 }
 
+.details {
+  width: 400px;
+}
+
+.details .detail {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin: 10px 0;
+}
+
+.details .detail .name {
+  flex: 0 1 200px;
+  font-weight: 600;
+}
+
 header {
   flex: 0;
   position: relative;

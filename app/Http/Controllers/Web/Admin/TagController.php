@@ -14,9 +14,28 @@ class TagController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $tags = Tag::paginate(15);
+        // $tags = Tag::paginate(15);
+
+        $tags = Tag::where( function($query) use ($request) {
+
+            if($id = $request->id) {
+                $query->where('id', $id);
+            }
+
+            if($name = $request->name) {
+                $query->where('name', 'like', '%'.$name.'%');
+            }
+
+            if($creted_by = $request->created_by) {
+                $query->were('created_by', $created_by);
+            }
+
+            if($updated_by = $request->updated_by) {
+                $query->where('updated_by', $updated_by);
+            }
+        })->orderBy('created_at', 'desc')->paginate(10);
 
         return view('admin.tags.index', compact('tags'));
     }

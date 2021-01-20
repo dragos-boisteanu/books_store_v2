@@ -1,0 +1,19 @@
+.details {
+    width: 400px;
+
+    .detail {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+
+
+        margin: 10px 0;
+
+        .name {
+            flex: 0 1 200px;
+            font-weight: 600;
+        }
+
+
+    }
+}

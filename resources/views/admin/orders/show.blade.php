@@ -8,50 +8,43 @@
             <h1 class="view__header">
                 Order {{ $order->id }} # - {{ $order->status->name }} - @if($order->deleted_at) DISABLED @endif
             </h1>
-            <div class="date">
-                {{ $order->created_at }}
-            </div>
-            <div>
-                Operator: <a class="link" href="{{ route('admin-users.show', ['user'=>$order->operator->id]) }}">{{ $order->operator->first_name , ' ' . $order->operator->name }}</a>
-            </div>
-            <div class="addresses__container">
-                <div class="address">
-                    <h2>
-                        Shipping address
-                    </h2>
-                    <div>
+            <ul class="details">
+                <li class="detail">
+                    <span class="name">Operator: </span> 
+                    <span class="value"> <a class="link" href="{{ route('admin-users.show', ['user'=>$order->operator->id]) }}">{{ $order->operator->first_name , ' ' . $order->operator->name }}</a></span>
+                </li>
+                <li class="detail">
+                    <span class="name">Created on:</span>
+                    <span class="value">{{ $order->created_at }}</span>
+                </li>
+                <li class="detail">
+                    <span class="name">Payment method:</span>
+                    <span class="value">{{ $order->payment_method->name }} </span>
+                </li>
+                <li class="detail">
+                    <span class="name">Delivery method:</span>
+                    <span class="value">{{ $order->shipping_method->name }}</span>
+                </li>
+                <li class="detail">
+                    <span class="name">Shipping address:</span>
+                    <span class="value">
                         <x-address
                             :address="$order->shipping_address"
                         />
-                    </div>
-                </div>
-                <div class="address">
-                    <h2>
-                        Invoice address
-                    </h2>
-                    <div>
+                    </span>
+                </li>
+                <li class="detail">
+                    <span class="name">Invoice address:</span>
+                    <span class="value">
                         <x-address
                             :address="$order->invoice_address"
                         />
-                    </div>
-                </div>
-            </div>
-            <div class="methods">
-                <div class="method">
-                    <h2>Payment method</h2>
-                    <div>
-                        {{ $order->payment_method->name }}
-                    </div>
-                </div>
-                <div class="method">
-                    <h2>Shipping method</h2>
-                    <div>
-                        {{ $order->shipping_method->name }}
-                    </div>
-                </div>
-            </div>
+                    </span>
+                </li>
+            </ul>       
+           
             <div class="content">
-                <h2>Ordered books</h2>
+                <h2>Order's content</h2>
                 <div class="table-container">
                     <table>
                         <thead>
@@ -75,23 +68,23 @@
                         </thead>
                         <tbody>
                             @foreach($order->books as $book) 
-                            <tr>
-                                <td>
-                                    {{ $book->title }}
-                                </td>
-                                <td>
-                                    {{ $book->id }}
-                                </td>
-                                <td>
-                                    {{ $book->pivot->price }}
-                                </td>
-                                <td>
-                                    {{ $book->pivot->quantity }}
-                                </td>
-                                <td>
-                                    {{ $book->pivot->price * $book->pivot->quantity }}
-                                </td>
-                            </tr>
+                                <tr>
+                                    <td>
+                                        {{ $book->title }}
+                                    </td>
+                                    <td>
+                                        {{ $book->id }}
+                                    </td>
+                                    <td>
+                                        {{ $book->pivot->price }}
+                                    </td>
+                                    <td>
+                                        {{ $book->pivot->quantity }}
+                                    </td>
+                                    <td>
+                                        {{ $book->pivot->price * $book->pivot->quantity }}
+                                    </td>
+                                </tr>
                             @endforeach
                             <tr>
                                 <td>

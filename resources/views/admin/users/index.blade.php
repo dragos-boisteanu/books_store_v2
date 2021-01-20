@@ -80,7 +80,8 @@
                             <th>
                                 Registered at
                             </th>
-                            <th colspan="2"></th>
+                            <th></th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -108,13 +109,13 @@
                                     {{ $user->created_at }}
                                 </td>
                                 <td>
-                                    <a class="link" href="{{ route('admin-users.show', ['user'=>$user->id]) }}">Detalii</a>
+                                    <a class="link" href="{{ route('admin-users.show', ['user'=>$user->id]) }}">Details</a>
                                 </td>
                                 <td>
-                                    <form method="POST" action="{{ route('admin-users.destroy', ['user'=>$user->id]) }}">
+                                    <a type="submit" id="delete-button" class="link">Delete</a>
+                                    <form method="POST" id="delete-form" action="{{ route('admin-users.destroy', ['user'=>$user->id]) }}" style="display: none">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit">Delete</button>
                                     </form>
                                 </td>
                             </tr>
@@ -134,10 +135,19 @@
         const clearBtn = document.getElementById('reset-btn');
         const clearForm = document.getElementById('reset-form');
 
+        const deleteBtn = document.getElementById('delete-button');
+        const deleteForm = document.getElementById('delete-form');
+
         clearBtn.addEventListener('click', (event) => {
             event.preventDefault();
 
             clearForm.submit();
+        });
+
+        deleteBtn.addEventListener('click', (event) => {
+            event.preventDefault();
+
+            deleteForm.submit();
         })
     </script>
 

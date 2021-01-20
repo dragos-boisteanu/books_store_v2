@@ -46,7 +46,7 @@ class AuthorController extends Controller
                 $query->whereDate('updated_at', '<', $updatedAtEnd);
             }
 
-        })->orderBy('authors.first_name', 'desc')->orderBy('authors.name', 'desc')->paginate(15)->withQueryString();
+        })->orderBy('authors.first_name', 'desc')->orderBy('authors.name', 'desc')->paginate(10)->withQueryString();
 
         $request->flash();
 

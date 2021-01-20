@@ -21,7 +21,7 @@
                             
                             <div class="form-group">
                                 <input type="number" class="form-input" name="operator" placeholder="Operator ID" value="{{ old('operator') }}" />
-                            </div class="form-group">
+                            </div>
                         </div>
                         <div class="form-group">
                             <div class="form-group">

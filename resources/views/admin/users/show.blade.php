@@ -5,33 +5,33 @@
         @include('includes.dashboard-nav')
         <div class="view__content">
             <div>
-                <h1>Informatii utilizator</h1>
+                <h1>User #{{ $user->id }} informations</h1>
             </div>
             <div>
-                <h2>Date cont</h2>
-                <ul>
-                    <li>
-                        <span>ID: </span> <span>{{ $user->id }}</span>
+                <h2>Account data</h2>
+                <ul class="details">
+                    <li class="detail">
+                        <span class="name">ID: </span> <span class="value">{{ $user->id }}</span>
                     </li>
-                    <li>
-                        <span>Rol:</span> <span>{{ $user->role->name }}</span>
+                    <li class="detail">
+                        <span class="name">Role:</span> <span class="value">{{ $user->role->name }}</span>
                     </li>
-                    <li>
-                        <span>Prenume:</span> <span>{{ $user->first_name }}</span>
+                    <li class="detail">
+                        <span class="name">First name:</span> <span class="value">{{ $user->first_name }}</span>
                     </li>
-                    <li>
-                        <span>Nume:</span> <span> {{ $user->name }}</span>
+                    <li class="detail">
+                        <span class="name">Name:</span> <span class="value"> {{ $user->name }}</span>
                     </li>
-                    <li>
-                        <span>E-mail: </span> <span> {{ $user->email }} </span>
+                    <li class="detail">
+                        <span class="name">E-mail: </span> <span class="value"> {{ $user->email }} </span>
                     </li>
-                    <li>
-                        <span>Phone Number:</span> <span> {{ $user->phone_number }} </span>
+                    <li class="detail">
+                        <span class="name">Phone Number:</span> <span class="value"> {{ $user->phone_number }} </span>
                     </li>
                 </ul>
             </div>
             <div>
-                <h2>Comenzi</h2>
+                <h2>User's orders</h2>
                 @if ( count($user->orders) > 0)
                     <div class="table-container">
                         <table>
@@ -44,7 +44,7 @@
                                         Deliver to
                                     </th>
                                     <th>
-                                    Shipping Method
+                                        Shipping Method
                                     </th>
                                     <th>
                                         Payment Method
@@ -53,7 +53,7 @@
                                         Status
                                     </th>
                                     <th>
-                                    Total
+                                        Total
                                     </th>
                                     <th>
                                         Created at
@@ -61,9 +61,7 @@
                                     <th>
                                         Last modified at
                                     </th>
-                                    <th>
-                                        
-                                    </th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -111,31 +109,25 @@
             @if ($user->role_id == 2 || $user->role_id == 3)
                 @if (isset($addedBooks))
                 <div>
-                    <h2>Produse adaugate</h2>
+                    <h2>Added books</h2>
                     <div class="table-container">
                         <table>
                             <thead>
                                 <tr>
                                     <th>
-                                        Index
-                                    </th>
-                                    <th>
                                         ID
                                     </th>
                                     <th>
-                                        Titlu
+                                        Title
                                     </th>
                                     <th>
-                                        Adaugat la
+                                        Created at
                                     </th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach( $addedBooks as $addedBook)
                                     <tr>
-                                        <th>
-                                            {{ $loop->iteration  }}
-                                        </th>
                                         <td>
                                             {{ $addedBook->id }}
                                         </td>
@@ -162,31 +154,25 @@
             
             @if( isset($updatedBooks))
                 <div>
-                    <h2>Produse modificare</h2>
+                    <h2>Updated items</h2>
                     <div class="table-container">
                         <table>
                             <thead>
                                 <tr>
                                     <th>
-                                        Index
-                                    </th>
-                                    <th>
                                         ID
                                     </th>
                                     <th>
-                                        Titlu
+                                        Title
                                     </th>
                                     <th>
-                                        Modificata la
+                                        Updated at
                                     </th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach( $updatedBooks as $updatedBook)
                                     <tr>
-                                        <th>
-                                            {{ $loop->iteration  }}
-                                        </th>
                                         <td>
                                             {{ $updatedBook->id }}
                                         </td>

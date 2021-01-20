@@ -3,49 +3,43 @@
         <thead>
             <tr>
                 <th>
-                    Index
-                </th>
-                <th>
                     ID
                 </th>
                 <th>
-                    Titlu
+                    Title
                 </th>
                 <th>
-                    Pret
+                    Price
                 </th>
                 <th>
-                    Cantitate disponibila in stoc
+                   Stock quantity
                 </th>
                 <th>
                     Discount
                 </th>
                 <th>
-                    Categorie
+                    Category
                 </th>
                 <th>
-                    Statut
+                    Status
                 </th>
                 <th>
-                    Adaugata de
+                    Created by
                 </th>
                 <th>
-                    Ultima modificare de
+                    Last modified by
                 </th>
                 <th>
-                    Adaugata la
+                    Created at
                 </th>
                 <th>
-                    Modificata la
+                    Modified at
                 </th>
             </tr>
         </thead>
         <tbody>
             @foreach($books as $book)
                 <tr>
-                    <td>
-                        {{ $loop->iteration  }} 
-                    </td>
                     <td>
                         {{ $book->id }}
                     </td>
@@ -66,9 +60,9 @@
                     </td>
                     <td>
                         @if( $book->deleted_at) 
-                            INDISPONIBILA
+                            Unavailable
                         @else
-                            DISPONIBILA
+                            Available
                         @endif
                     </td>
                     <td>
@@ -87,50 +81,6 @@
 
             @endforeach
         </tbody>
-        <thead>
-            <tr>
-                <th>
-                    Index
-                </th>
-                <th>
-                    ID
-                </th>
-                <th>
-                    Titlu
-                </th>
-                <th>
-                    Pret
-                </th>
-                <th>
-                    Cantitate disponibila in stoc
-                </th>
-                <th>
-                    Discount
-                </th>
-                <th>
-                    Categorie
-                </th>
-                <th>
-                    Statut
-                </th>
-                <th>
-                    Adaugata de
-                </th>
-                <th>
-                    Ultima modificare de
-                </th>
-                <th>
-                    Adaugata la
-                </th>
-                <th>
-                    Modificata la
-                </th>
-            </tr>
-        </thead>
-       
-
     </table>
-    
-   
 </div>
 {{ $books->links() }}
