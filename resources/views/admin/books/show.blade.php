@@ -4,116 +4,151 @@
 <div class="view">
     @include('includes.dashboard-nav')
 
-    <div class="view__content"> 
-        <h1>
-            {{ $book->id }} - {{ $book->title}} 
-        </h1>
-        
-        <div>
-            <h3>Authors</h3>
-            <ul>
-                @foreach ($book->authors as $author)
-                    <li>
-                        <a href="{{ route('admin-authors.show', ['author'=>$author->id])}} ">{{ $author->first_name }} {{ $author->name }}</a>
-                    </li>
-                @endforeach
-            </ul>
-        </div>
-       
+    <div id="book" class="view__content book book-dashboard">
+        <div class="book__header">
+            <div class="header__image {{ $book->stock->quantity < 1 ? 'not-in-stock' : ''}}">
+                @if ( $book->discount > 0)
+                    <div class="discount__amount">
+                       - {{$book->discount}} %
+                    </div>
+                @endif
+                <img src="{{ $book->image_link}}"/>
+            </div>
+            
+            <div class="header__details">
+                <h1>{{ $book->title }}</h1>
+                <ul class="list list-horizontal authors__list">
+                    @foreach( $book->authors as $author)
+                        <li class="author">
+                            <a class="link" href="{{ route('author-books.show', ['id'=>$author->id])}}">{{ $author->first_name }} {{ $author->name }}</a>
+                        </li>
+                    @endforeach
+                </ul>
+                <div class="price">
+                    @if ( $book->discount > 0)
+                        <div class="price__discount">
+                            <div class="discounted__price">
+                                {{ $book->final_price }} RON
+                            </div>
+                            <div class="original__price">
+                                {{ $book->price }} RON
+                            </div>
+                        </div>
+                    @else
+                        <div class="original__price">
+                            {{ $book->price }} RON
+                        </div>
+                    @endif
+                </div>
+                <div class="stock">
+                    @if ($book->stock->quantity < 1)
+                        <div class="stock__status stock__empty">
+                            Not in stock
+                        </div>
+                    @else
+                        <div class="stock__status stock__exists">
+                            In stock
+                        </div>
+                    @endif
+                </div>
+                <div class="details">
+                    <div class="detail">
+                        <div class="text">
+                            ISBN:
+                        </div>
+                        <div class="value">
+                            {{ $book->isbn }}
+                        </div>
+                    </div>
+                    <div class="detail">
+                        <div class="text">
+                            Publisher:
+                        </div>
+                        <div class="value publisher">
+                            <a class="link" href="{{ route('publisher-books.show', ['id'=>$book->publisher_id])}}">{{ $book->publisher->name }}</a>
+                        </div>
+                    </div>
+                    <div class="detail">
+                        <div class="text">
+                            Pages:
+                        </div>
+                        <div class="value">
+                            {{ $book->pages }}
+                        </div>
+                    </div>
+                    <div class="detail">
+                        <div class="text">
+                            Cover:
+                        </div>
+                        <div class="value">
+                            {{ $book->cover->name }}
+                        </div>
+                    </div>
+                    <div class="detail">
+                        <div class="text">
+                            Category:
+                        </div>
+                        <div class="value publisher">
+                            <a class="link" href="{{ route('category-books.show', ['id'=>$book->category_id])}}">{{ $book->category->name }}</a>
+                        </div>
+                    </div>
+                </div>
 
-        <div>
-            <h3>Tags</h3>
-        </div>
-        <ul>
-            @foreach ($book->tags as $tag)
-                <li>
-                    {{ $tag->id }} - {{ $tag->name }}
-                </li>
-            @endforeach
-        </ul>
-        </div>
+                <div class="header__action">
 
-        <div>
-            <h3>Category</h3>
-            <div>
-                <a href="/">{{ $book->category->name }}</a>
-            </div>
-        </div>
+                    <div>
+                        <a class="link" href="{{ route('admin-books.index') }}">Back</a>
+                    </div>
 
-        <div>
-            <h3>Language</h3>
-            <div>
-                {{ $book->language->name }}
+                    <div>
+                        <a class="link" href="{{ route('admin-books.edit', ['book' => $book->id]) }}">Edit</a>
+                    </div>
+            
+         
+                    <form method="POST" action="{{ route('admin-books.destroy', ['book' => $book->id]) }}">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="button button-primary">Delete</button>
+                    </form>
+
+                </div>  
             </div>
         </div>
-        
-
-        <div>
-            <h3>
-                Description
-            </h3>
-            <div>
-                {!! nl2br($book->description) !!}
+        <div class="book__body">
+            <div class="body__tab-bar">
+                <div v-on:click="toggleTabs" class="tab-bar__tab" :class="{'tab-bar__tab--selected': showDescription}">
+                    Descriere
+                </div>
+                <div v-on:click="toggleTabs" class="tab-bar__tab" :class="{'tab-bar__tab--selected': !showDescription}">
+                    Comentarii
+                </div>
+            </div>
+            <div v-if="showDescription" class="descrption">
+                {{ $book->description }}
+            </div>
+            <div v-else>
+                comments
             </div>
         </div>
-
-
-        <div>
-            <h3>Quantity</h3>
-            <div>
-                <span>Quantity:</span>
-                {{ $book->stock->quantity }}
-            </div>
-        </div>
-
-        <div>
-            <h3>Dates</h3>
-            <div>
-                <span>Last updated at:</span>
-                {{ $book->stock->updated_at }}
-            </div>
-            <div>
-                <span>Last updated by:</span>
-                {{ $book->stock->updated_by }}
-            </div>
-        </div>
-        <div>
-            <h3>Users</h3>
-            <div>
-                <span>Added by</span>
-                {{ $book->added_by }}
-                <span> - at {{ $book->created_at }}</span>
-            </div>
-            <div>
-                <span>Last updated by:</span>
-                {{ $book->updated_by }}
-                <span> - at {{ $book->updated_at }}</span>
-            </div>
-        </div>
-
-
-
-        <div>
-            <h3>Actions</h3>
-            <div>
-                <a href="{{ route('admin-books.edit', ['book' => $book->id]) }}">Edit</a>
-            </div>
-    
-            <div>
-                <a href="{{ route('admin-books.index') }}">Inapoi</a>
-            </div>
-    
-            <div>
-                <form method="POST" action="{{ route('admin-books.destroy', ['book' => $book->id]) }}">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit">Sterge</button>
-                </form>
-            </div>
-        </div>
-        
-    </div>  
+    </div>
 </div>
     
 @endsection 
 
+@push('vue-scripts')
+    <script>
+        new Vue({
+            el: '#book',
+
+            data: {
+                showDescription: true,
+            },
+            
+            methods: {
+                toggleTabs() {
+                    this.showDescription = !this.showDescription;
+                }
+            }  
+        });
+    </script>
+@endpush

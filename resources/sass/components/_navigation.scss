@@ -52,20 +52,34 @@
     
     .side-nav__list {
 
-        .item__link {
-            display: block;
-            width: 100%;
-            padding: 20px 0 20px 10px;     
-            text-decoration: none;
 
-            color: $ghost-white;
-
-            &:hover,
-            &.item__link--selected {
-                color: $charcoal;
-                background-color: $ghost-white;
+        .side-nav__item {
+            .item__link {
+                display: block;
+                width: 100%;
+                padding: 20px 0 20px 10px;     
+                text-decoration: none;
+    
+                color: $ghost-white;
+    
+                &:hover,
+                &.item__link--selected {
+                    color: $charcoal;
+                    background-color: $ghost-white;
+                }
+            }
+    
+            .item__sub-menu {
+                margin-left: 10px;
+                border-left: 2px solid $ghost-white;
+                font-size: 14px;
+    
+                .item__link {
+                    padding: 10px 0 10px 20px;
+                }
             }
         }
+        
     }
 
 }

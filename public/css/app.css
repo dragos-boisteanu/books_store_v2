@@ -338,7 +338,7 @@ h6 {
   border-left: 1px solid #1f1f1f;
 }
 
-.side-nav .side-nav__list .item__link {
+.side-nav .side-nav__list .side-nav__item .item__link {
   display: block;
   width: 100%;
   padding: 20px 0 20px 10px;
@@ -346,10 +346,20 @@ h6 {
   color: #f4f4f9ff;
 }
 
-.side-nav .side-nav__list .item__link:hover,
-.side-nav .side-nav__list .item__link.item__link--selected {
+.side-nav .side-nav__list .side-nav__item .item__link:hover,
+.side-nav .side-nav__list .side-nav__item .item__link.item__link--selected {
   color: #2f4550ff;
   background-color: #f4f4f9ff;
+}
+
+.side-nav .side-nav__list .side-nav__item .item__sub-menu {
+  margin-left: 10px;
+  border-left: 2px solid #f4f4f9ff;
+  font-size: 14px;
+}
+
+.side-nav .side-nav__list .side-nav__item .item__sub-menu .item__link {
+  padding: 10px 0 10px 20px;
 }
 
 .search-bar {
@@ -1457,6 +1467,17 @@ footer .map a img {
   line-height: 1.4;
   text-align: left;
   background-color: #f4f4f9ff;
+}
+
+.book-dashboard .book__header .header__action {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.book-dashboard .book__header .header__action form {
+  flex: 0 0 auto;
 }
 
 .date {

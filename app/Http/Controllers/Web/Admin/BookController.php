@@ -67,16 +67,11 @@ class BookController extends Controller
             }
 
 
-
             if( ($categoryId = $request->category) ) {
                 $query->whereHas('category', function($query) use ($categoryId) {
                     $query->where('id', $categoryId);
                 });
             };
-
-
-
-
 
             if( ($createdAtStart = $request->created_at_start) ) {
                 
@@ -91,9 +86,6 @@ class BookController extends Controller
                     ->whereDate('created_at', '<', $createdAtEnd);
             }
 
-
-
-
             if( ($updatedAtStart = $request->updated_at_start) ) {
                 $query->whereDate('updated_at', '>', $updatedAtStart);
                 
@@ -104,8 +96,6 @@ class BookController extends Controller
                 $query->whereDate('updated_at', '>', $updatedAtStart)
                     ->whereDate('updated_at', '<', $updatedAtEnd);
             }
-
-
 
         })->orderBy('books.created_at', 'desc')->paginate(10)->withQueryString();
  
@@ -226,8 +216,9 @@ class BookController extends Controller
     {
         $book = Book::findOrFail($id);
 
+        
         $input = $request->all();
-
+        // dd($input);
         $input['updated_by'] = Auth::user()->id;
 
         if($input['quantity'] != $book->stock->quantity) {

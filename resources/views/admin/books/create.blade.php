@@ -7,91 +7,101 @@
             <h1>Add a book</h1>
             <form method="POST" novalidate action="{{ route('admin-books.store') }}">
                 @csrf
-                <div>
-                    <label>Titlu</label>
-                    <div v-if="showErrors">
-                        @{{ getError('title')}}
 
-                    </div>
-                    <input type="text" name="title" v-model.trim="book.title" rules="required"/>
+                <div class="form-group">
+                    <label class="form-label">Title</label>
+                    <input type="text" name="title" class="form-input"/>
+                </div>
 
+                <div class="form-group">
+                    <label for="image-link" class="form-label">Image URL</label>
+                    <input type="text" id="image-link" name="image_link" class="form-input" value="{{ old('image_link') }}"/>
                 </div>
-                <div>
-                    <label for="isbn">ISBN</label>
-                    <div v-if="showErrors">
-                        @{{ getError('isbn')}}
 
-                    </div>
-                    <input type="number" id="isbn" name="isbn" v-model.trim="book.isbn" value="{{ old('isbn') }}"/>
+                <div class="form-group">
+                    <label for="isbn" class="form-label">ISBN</label>
+                    <input type="text" id="isbn" name="isbn" class="form-input" value="{{ old('isbn') }}"/>
                 </div>
-                <div>
-                    <label for="pages">Pages count</label>
-                    <input type="number" id="pages" name="pages" value="{{ old('pages') }}"/>
+
+                <div class="form-group">
+                    <label for="pages" class="form-label">Pages count</label>
+                    <input type="text" id="pages" name="pages" class="form-input" value="{{ old('pages') }}"/>
                 </div>
-                <div>
-                    <label for="quantity">Quantity</label>
-                    <input type="number" id="quantity" name="quantity" value="{{ old('quantity') }}"/>
+
+                <div class="form-group">
+                    <label for="quantity" class="form-label">Quantity</label>
+                    <input type="text" id="quantity" name="quantity" class="form-input" value="{{ old('quantity') }}"/>
                 </div>
-                <div>
-                    <label for="price">Price</label>
-                    <input type="nmber" id="price" name="price" value="{{ old('price') }}" />
+
+                <div class="form-group">
+                    <label for="price" class="form-label">Price</label>
+                    <input type="text" id="price" name="price" class="form-input" value="{{ old('price') }}" />
                 </div>
-                <div>
-                    <label for="discount">Discount</label>
-                    <input type="number" id="discount" name="discount" value="{{ old('discount') }}"/>
+
+                <div class="form-group">
+                    <label for="discount" class="form-label">Discount</label>
+                    <input type="text" id="discount" name="discount" class="form-input" value="{{ old('discount') }}"/>
                 </div>
-                <div>
-                    <label>Authors</label>
+
+                <div class="form-group">
+                    <label class="form-label">Authors</label>
                     <dynamic-input-component route="authors" v-on:updated="updateAuthors"></dynamic-input-component>
-                    <input type="hidden" name="authors" v-model="book.authors"/>
+                    <input type="hidden" name="authors" v-model="authors"/>
                 </div>
-                <div>
-                    <label for="published-at">Data publicarii</label>
-                    <input type="date" id="published-at" name="published_at" value="{{ old('published_at') }}"/>
+
+                <div class="form-group">
+                    <label for="published-at" class="form-label">Data publicarii</label>
+                    <input type="date" id="published-at" name="published_at" class="form-input" value="{{ old('published_at') }}"/>
                 </div>
-                <div>
-                    <label>Publisher</label>
-                    <select name="publisher_id">
+
+                <div class="form-group">
+                    <label class="form-label">Publisher</label>
+                    <select name="publisher_id" class="form-input">
                         @foreach($publishers as $publisher)
                             <option value="{{ $publisher->id }}" {{ $publisher->id === old('publisher_id') ? 'selected' : '' }} >{{$publisher->name}}</option>
                         @endforeach
                     </select>    
                 </div>
-                <div>
-                    <label>Language</label>
-                    <select name="language_id">
+
+                <div class="form-group">
+                    <label class="form-label">Language</label>
+                    <select name="language_id" class="form-input">
                         @foreach($languages as $language)
                             <option value="{{ $language->id }}" {{ $language->id === old('language_id') ? 'selected' : '' }}>{{$language->name}}</option>
                         @endforeach
                     </select>
                 </div>
-                <div>
-                    <label>Category</label>
-                    <select name="category_id">
+
+                <div class="form-group">
+                    <label class="form-label">Category</label>
+                    <select name="category_id" class="form-input">
                         @foreach($categories as $category)
                             <option value="{{ $category->id }}" {{ $category->id === old('category_id') ? 'selected' : '' }}>{{$category->name}}</option>
                         @endforeach
                     </select>
                 </div>
-                <div>
-                    <label>Cover type</label>
-                    <select name="cover_id">
+
+                <div class="form-group">
+                    <label class="form-label">Cover type</label>
+                    <select name="cover_id" class="form-input">
                         @foreach($covers as $cover)
-                            <option value="{{ $cover->id }}" {{ $cover->id === old('cover_id') ? 'selected' : '' }}>{{$category->name}} >{{$cover->name}}</option>
+                            <option value="{{ $cover->id }}" {{ $cover->id === old('cover_id') ? 'selected' : '' }}>{{$cover->name}}</option>
                         @endforeach
                     </select>
                 </div>
-                <div>
-                    <label>Descriere</label>
-                    <textarea name="description" placeholder="Book description" value="{{ old('description') }}"></textarea>
+                <div class="form-group">
+                    <label class="form-label">Descriere</label>
+                    <textarea name="description" placeholder="Book description" class="form-input" value="{{ old('description') }}"></textarea>
                 </div>
-                <div>
-                    <label>Tags</label>
+
+                <div class="form-group">
+                    <label class="form-label">Tags</label>
                     <dynamic-input-component route="tags" v-on:updated="updateTags"></dynamic-input-component>
-                    <input type="hidden" name="tags" v-model="book.tags"/>
+                    <input type="hidden" name="tags" v-model="tags"/>
                 </div>
+
                 <div>
-                    <button v-on:click="checkForm">Add</button>
+                    <button type="submit" class="button button-primary">Add</button>
                 </div>
             </form>
         </div>
@@ -104,102 +114,21 @@
         const vue = new Vue({
             el: '#form',
             data: {
-                book: {
-                    title: '',
-                    isbn: '',
-                    pages: '',
-                    price: 0,
-                    discount: 0,
-                    authors: '',
-                    published_at: '',
-                    publisher_id: '',
-                    language_id: '',
-                    cover_id: '',
-                    description: '',
-                    quantity: '',
-                    tags: ''
-                },
-                errors: [],
+                authors: [],
+                tags: []
             },
-            created() {
-                console.log('vue instance from craeting author');
-            },   
-            computed: {
-                showErrors() {
-                    if(this.errors.length > 0){
-                        return true;
-                    }else {
-                        return false;
-                    }
-                }
-            },
+            
             methods: {
-                getError(input) {
-                    let error = this.errors[this.errors.findIndex(error => error.input == input)];
-                    if(error) {
-                        return error.message;
-                    }
-                    
-                },
+            
                 updateAuthors(value) {
                     this.authors = JSON.stringify(value)
                 },
+
                 updateTags(value) {
                     this.tags = JSON.stringify(value);
                 },
-                checkForm( event ) {  
-                    this.errors = [];
-
-                    if (!this.book.title) {
-                        this.errors.push({
-                            input: 'title',
-                            message: "Title trebuie completat."
-                        });
-                    }
-
-                    let isbnRegex = new RegExp("^(?:ISBN(?:-1[03])?:? )?(?=[0-9X]{10}$|(?=(?:[0-9]+[- ]){3})[- 0-9X]{13}$|97[89][0-9]{10}$|(?=(?:[0-9]+[- ]){4})[- 0-9]{17}$)(?:97[89][- ]?)?[0-9]{1,5}[- ]?[0-9]+[- ]?[0-9]+[- ]?[0-9X]$");
-
-                    if (!this.book.isbn) {
-                        this.errors.push({
-                            input: 'isbn',
-                            message: "ISBN trebuie completat."
-                        });
-                    }else if (isbnRegex.test(this.book.isbn)) {
-                        console.log('lenght')
-                        this.errors.push({
-                            input: 'isbn',
-                            message: "ISBN nu este valid"
-                        });
-                    }
-
-
-                    if (!this.book.pages) {
-                        this.errors.push({
-                            input: 'pages',
-                            message: "Pages required."
-                        });
-                    }
-
-
-                    if (!this.book.price) {
-                        this.errors.push({
-                            input: 'price',
-                            message: "Price required."
-                        });
-                    }
-
-
-
-                    if (!this.errors.length) {
-                        return true;
-                    }
-                    else{
-                        console.log(this.errors)
-                    }
-
-                    event.preventDefault();
-                }
-            }       
+            
+            }      
         });
     </script>
 @endpush

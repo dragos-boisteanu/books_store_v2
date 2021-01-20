@@ -24,15 +24,15 @@
                                 <input type="number" name="created_by" class="form-input" placeholder="Created by ID" value="{{ old('created_by')}}"/>
                             </div>
                             <div class="form-group">
-                                <input type="number" name="updated_by" class="form-input" placeholder="UUpdated by ID" value="{{ old('updated_by')}}"/>
+                                <input type="number" name="updated_by" class="form-input" placeholder="Updated by ID" value="{{ old('updated_by')}}"/>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="form-group">
                                 <select name="stock" class="form-input">
                                     <option value="0" disabled selected>Stock</option>
-                                    <option value="1">Unavailable</option>
-                                    <option value="2">Available</option>
+                                    <option value="1" {{ old('stock') == 1 ? 'selected' : ''}}>Unavailable</option>
+                                    <option value="2" {{ old('stock') == 2 ? 'selected' : ''}}>Available</option>
                                 </select>
                             </div>
                             

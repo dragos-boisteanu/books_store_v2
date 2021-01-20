@@ -24,7 +24,7 @@
                                 <select name="role" class="form-input">
                                     <option value="0" disabled selected>Alege rolul</option>
                                     @foreach ($roles as $role)
-                                        <option value="{{$role->id}}">{{$role->name}}</option>
+                                        <option value="{{$role->id}}" {{ old('role') == $role->id ? 'selected' : ''}}>{{$role->name}}</option>
                                     @endforeach
                                 </select>
                             </div>

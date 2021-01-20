@@ -209,3 +209,24 @@
         }
     }
 }
+
+
+.book-dashboard {
+
+    .book__header {
+        .header__action {
+
+            width: 100%;
+    
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+
+            form {
+                flex: 0 0 auto;
+            }
+        
+        }
+    }
+    
+}

@@ -9,19 +9,22 @@ const DynamicInputComponent =  {
                         <button @click.prevent="remove(word.id)">X</button>
                     </span>
                 </span>
-                <input type="text" v-model="input" @keyup="find">
+                <input type="text" v-model="input" @keyup="find" class="form-input">
             </div>
             <ul v-if="!noWords">
                 <li v-for="word in retrievedWords" :key="word.id" @click="add(word)">
                     {{ word.first_name }} {{ word.name}}
                 </li>
             </ul>
-            <div v-if="noWords">
-                <input type="text" v-model="word" placeholder="New item...">
-                <button @click.prevent="addNewWord">+</button>
-            </div>
+            
         </div>
     `,
+
+    // <div v-if="noWords">
+            //     <input type="text" v-model="word" placeholder="New item...">
+            //     <button @click.prevent="addNewWord">+</button>
+            // </div>
+
     props: {
         wordsprop: {
             type: String,
@@ -97,33 +100,34 @@ const DynamicInputComponent =  {
             this.$emit('updated', this.words);
         },
 
-        addNewWord() {
-            if(this.word.length > 0) {
+        // addNewWord() {
+        //     if(this.word.length > 0) {
 
-                this.word = this.word.trim();
+        //         this.word = this.word.trim();
 
-                const first_name =  this.word.substr(0,this.word.indexOf(' ')); 
-                const name = this.word.substr(this.word.indexOf(' ')+1); 
+        //         const first_name =  this.word.substr(0,this.word.indexOf(' ')); 
+        //         const name = this.word.substr(this.word.indexOf(' ')+1); 
 
-                axios.get(`api/${this.route}/check`, {
-                    params: {
-                        first_name,
-                        name
-                    }
-                })
-                .then( response => {
-                    if(response.data.status === 'ok'){
-                        this.saveWord({
-                            first_name,
-                            name
-                        });
-                    }
-                })
-                .catch( error => {
-                    console.log( error );
-                })
-            }
-        },
+        //         axios.get(`api/${this.route}/check`, {
+        //             params: {
+        //                 first_name,
+        //                 name
+        //             }
+        //         })
+        //         .then( response => {
+        //             if(response.data.status === 'ok'){
+        //                 this.saveWord({
+        //                     first_name,
+        //                     name
+        //                 });
+        //             }
+        //         })
+        //         .catch( error => {
+        //             console.log( error );
+        //         })
+        //     }
+        // },
+        
         saveWord(data) {
             axios.post(`api/${this.route}`, {
                 first_name: data.first_name,

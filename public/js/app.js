@@ -2485,7 +2485,11 @@ var DemoComponent = {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 var DynamicInputComponent = {
-  template: "\n        <div>\n            <div>\n                <span>\n                    <span v-for=\"(word, index) in words\" :key=\"index\">\n                        {{word.first_name }} {{ word.name}}\n                        <button @click.prevent=\"remove(word.id)\">X</button>\n                    </span>\n                </span>\n                <input type=\"text\" v-model=\"input\" @keyup=\"find\">\n            </div>\n            <ul v-if=\"!noWords\">\n                <li v-for=\"word in retrievedWords\" :key=\"word.id\" @click=\"add(word)\">\n                    {{ word.first_name }} {{ word.name}}\n                </li>\n            </ul>\n            <div v-if=\"noWords\">\n                <input type=\"text\" v-model=\"word\" placeholder=\"New item...\">\n                <button @click.prevent=\"addNewWord\">+</button>\n            </div>\n        </div>\n    ",
+  template: "\n        <div>\n            <div>\n                <span>\n                    <span v-for=\"(word, index) in words\" :key=\"index\">\n                        {{word.first_name }} {{ word.name}}\n                        <button @click.prevent=\"remove(word.id)\">X</button>\n                    </span>\n                </span>\n                <input type=\"text\" v-model=\"input\" @keyup=\"find\" class=\"form-input\">\n            </div>\n            <ul v-if=\"!noWords\">\n                <li v-for=\"word in retrievedWords\" :key=\"word.id\" @click=\"add(word)\">\n                    {{ word.first_name }} {{ word.name}}\n                </li>\n            </ul>\n            \n        </div>\n    ",
+  // <div v-if="noWords">
+  //     <input type="text" v-model="word" placeholder="New item...">
+  //     <button @click.prevent="addNewWord">+</button>
+  // </div>
   props: {
     wordsprop: {
       type: String,
@@ -2561,44 +2565,44 @@ var DynamicInputComponent = {
     emitUpdate: function emitUpdate() {
       this.$emit('updated', this.words);
     },
-    addNewWord: function addNewWord() {
-      var _this2 = this;
-
-      if (this.word.length > 0) {
-        this.word = this.word.trim();
-        var first_name = this.word.substr(0, this.word.indexOf(' '));
-        var name = this.word.substr(this.word.indexOf(' ') + 1);
-        axios.get("api/".concat(this.route, "/check"), {
-          params: {
-            first_name: first_name,
-            name: name
-          }
-        }).then(function (response) {
-          if (response.data.status === 'ok') {
-            _this2.saveWord({
-              first_name: first_name,
-              name: name
-            });
-          }
-        })["catch"](function (error) {
-          console.log(error);
-        });
-      }
-    },
+    // addNewWord() {
+    //     if(this.word.length > 0) {
+    //         this.word = this.word.trim();
+    //         const first_name =  this.word.substr(0,this.word.indexOf(' ')); 
+    //         const name = this.word.substr(this.word.indexOf(' ')+1); 
+    //         axios.get(`api/${this.route}/check`, {
+    //             params: {
+    //                 first_name,
+    //                 name
+    //             }
+    //         })
+    //         .then( response => {
+    //             if(response.data.status === 'ok'){
+    //                 this.saveWord({
+    //                     first_name,
+    //                     name
+    //                 });
+    //             }
+    //         })
+    //         .catch( error => {
+    //             console.log( error );
+    //         })
+    //     }
+    // },
     saveWord: function saveWord(data) {
-      var _this3 = this;
+      var _this2 = this;
 
       axios.post("api/".concat(this.route), {
         first_name: data.first_name,
         name: data.name
       }).then(function (response) {
         if (response.status === 200) {
-          _this3.add(response.data.message[0]);
+          _this2.add(response.data.message[0]);
 
-          _this3.noWords = false;
-          _this3.word = '';
+          _this2.noWords = false;
+          _this2.word = '';
 
-          _this3.emitUpdate();
+          _this2.emitUpdate();
         }
       })["catch"](function (error) {
         console.error(error);
