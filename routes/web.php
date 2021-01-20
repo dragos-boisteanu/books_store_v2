@@ -129,6 +129,22 @@ Route::middleware(['auth'])->group(function() {
     
                     Route::delete('/{category}', 'CategoryController@destroy')->name('admin-categories.destroy');
                 });
+
+                Route::prefix('tags')->group(function() {
+                    Route::get('/', 'TagController@index')->name('admin-tags.index');
+    
+                    Route::get('/create', 'TagController@create')->name('admin-tags.create');
+                    
+                    Route::post('/', 'TagController@store')->name('admin-tags.store');
+    
+                    Route::get('/{tag}', 'TagController@show')->name('admin-tags.show');
+    
+                    Route::get('/{tag}/edit', 'TagController@edit')->name('admin-tags.edit');
+
+                    Route::put('/{tag}', 'TagController@update')->name('admin-tags.update');
+    
+                    Route::delete('/{tag}', 'TagController@destroy')->name('admin-tags.destroy');
+                });
     
                 Route::prefix('orders')->group(function() {
                     Route::get('/', 'OrderController@index')->name('admin-orders.index');

@@ -8,21 +8,26 @@
           
             <div class="filter-container">
                 <h2>Filter</h2>
-                <form method="POST" action="{{ route('admin-users.index')}}">
+                <form method="GET" action="{{ route('admin-users.index')}}">
                     @csrf
         
                     <div class="filter">
                         <div class="col col-1">
                             <div class="form-group">
-                                <input type="text" name="first_name" class="form-input" placeholder="Prenume"/>
-        
+                                <input type="text" name="first_name" class="form-input" placeholder="First name" value="{{ old('first_name') }}"/>
                             </div>
+
                             <div class="form-group">
-                                <input type="text" name="name" class="form-input" placeholder="Nume"/>
+                                <input type="text" name="name" class="form-input" placeholder="Name" value="{{ old('name') }}"/>
                             </div>
+
+                            <div class="form-group">
+                                <input type="text" name="phone_number" class="form-input" placeholder="Phone number" value="{{ old('phone_number') }}"/>
+                            </div>
+
                             <div class="form-group">
                                 <select name="role" class="form-input">
-                                    <option value="0" disabled selected>Alege rolul</option>
+                                    <option value="0" disabled selected>Role</option>
                                     @foreach ($roles as $role)
                                         <option value="{{$role->id}}" {{ old('role') == $role->id ? 'selected' : ''}}>{{$role->name}}</option>
                                     @endforeach
@@ -32,10 +37,10 @@
                         <div class="col col-2">
                             <div class="form-group">
                                 <label for="created_at" class="form-label">Registered between</label>
-                                <input type="date" id="created_at" name="created_at_start" class="form-input">
+                                <input type="date" id="created_at" name="created_at_start" class="form-input" value="{{ old('created_at_start') }}">
                             </div>
                             <div class="form-group">
-                                <input type="date" name="created_at_end" class="form-input">
+                                <input type="date" name="created_at_end" class="form-input" value="{{ old('created_at_end') }}">
                             </div>
                         </div>
                     </div>
@@ -58,13 +63,13 @@
                                 ID
                             </th>
                             <th>
-                                Prenume
+                                First name
                             </th>
                             <th>
-                                Nume
+                                Name
                             </th>
                             <th>
-                                Numar telefon
+                                Phone number
                             </th>
                             <th>
                                 Email
@@ -73,7 +78,7 @@
                                 Role
                             </th>
                             <th>
-                                Inregistrat la
+                                Registered at
                             </th>
                             <th colspan="2"></th>
                         </tr>
@@ -100,7 +105,7 @@
                                     {{ $user->role->name }}
                                 </td>
                                 <td>
-                                    {{ $user->created_at}}
+                                    {{ $user->created_at }}
                                 </td>
                                 <td>
                                     <a class="link" href="{{ route('admin-users.show', ['user'=>$user->id]) }}">Detalii</a>

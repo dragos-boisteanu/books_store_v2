@@ -14,10 +14,32 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::orderBy('created_at', 'desc')->paginate(10)->withQueryString();;
+
+        $users = User::where( function($query) use ($request) {
+
+            if($first_name = $request->first_name) {
+                $query->where('first_name', 'like', '%'.$first_name.'%');
+            }
+
+            if($name = $request->name) {
+                $query->where('name', 'like', '%'.$name.'%');
+            }
+
+            if($role = $request->role) {
+                $query->where('role_id', $role);   
+            }
+
+            if($phone_number = $request->phone_number) {
+                $query->where('phone_number', $phone_number);
+            }
+
+        })->orderBy('created_at', 'desc')->paginate(10)->withQueryString();
+
         $roles = Role::all();
+
+        $request->flash();
         
         return view('admin.users.index', ['users'=>$users, 'roles'=>$roles]);
     }

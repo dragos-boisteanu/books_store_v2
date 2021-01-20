@@ -160,12 +160,14 @@ class BookController extends Controller
         $authorsIds = array_column($authorsArray, 'id');
         $book->authors()->sync($authorsIds);
 
-        $tagsArray = json_decode($input['tags']);
-        $tagsIds = array_column($tagsArray, 'id');
-        $book->tags()->sync($tagsIds);
+        if(isset($input['tags'])) {
+            $tagsArray = json_decode($input['tags']);
+            $tagsIds = array_column($tagsArray, 'id');
+            $book->tags()->sync($tagsIds);
+        }
 
 
-        return redirect()->route('books.index');
+        return redirect()->route('admin-books.index');
     }
 
     /**
@@ -233,9 +235,12 @@ class BookController extends Controller
         $authorsIds = array_column($authorsArray, 'id');
         $book->authors()->sync($authorsIds);
 
-        $tagsArray = json_decode($input['tags']);
-        $tagsIds = array_column($tagsArray, 'id');
-        $book->tags()->sync($tagsIds);
+        if(isset($input['tags'])) {
+            $tagsArray = json_decode($input['tags']);
+            $tagsIds = array_column($tagsArray, 'id');
+            $book->tags()->sync($tagsIds);
+        }
+        
 
        
         return redirect()->route('admin-books.show', ['book'=>$book->id]);
@@ -249,10 +254,8 @@ class BookController extends Controller
      */
     public function destroy($id)
     {
-        $book = Book::findOrFail($id);
+        Book::findOrFail($id)->delete();
 
-        $book->delete();
-
-        return redirect()->route('books.index');
+        return redirect()->route('admin-books.index');
     }
 }

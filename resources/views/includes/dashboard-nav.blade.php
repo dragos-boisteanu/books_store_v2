@@ -74,5 +74,16 @@
                 </li>
             </ul>
         </li>
+        <li class="side-nav__item">
+            <div class="item__link">Tags</div>
+            <ul class="item__sub-menu">
+                <li>
+                    <a class="item__link" href="{{ route('admin-tags.index')}}">List</a>
+                </li>
+                <li>
+                    <a class="item__link" href="{{ route('admin-tags.create')}}">Create</a>
+                </li>
+            </ul>
+        </li>
     </ul>
 </nav>

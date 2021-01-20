@@ -71,7 +71,14 @@ class AuthorController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $input = $request->all();
+
+        $input['created_by'] = Auth::id();
+        $input['updated_by'] = Auth::id();
+
+        Author::create($input);
+
+        return redirect()->route('admin-authors.index');
     }
 
     /**
@@ -85,7 +92,7 @@ class AuthorController extends Controller
         $author = Author::findOrFail($id);
        
         $books = $author->books()->orderBy('created_at', 'desc')->paginate(15);
-// dd($books);
+
         return view('admin.authors.show', ['author'=>$author, 'books'=>$books]);
     }
 
@@ -118,7 +125,7 @@ class AuthorController extends Controller
 
         $author->update($input);
 
-        return back();
+        return redirect()->route('admin-authors.index');
     }
 
     /**
@@ -129,6 +136,9 @@ class AuthorController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Author::findOrFail($id)->delete();
+
+
+        return redirect()->route('admin-authors.index');
     }
 }

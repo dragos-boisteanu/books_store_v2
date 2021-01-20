@@ -58,7 +58,8 @@
                 </div>
             </form>
           
-            <form method="GET" id="reset-form" action="{{ route('admin-authors.index')}}"></form>
+            <form method="GET" id="reset-form" action="{{ route('admin-authors.index')}}" style="display: none"></form>
+           
         </div>
     
     
@@ -87,6 +88,7 @@
                         <th>
                             Updated At
                         </th>
+                        <th></th>
                         <th></th>
                         <th></th>
                     </tr>
@@ -121,6 +123,14 @@
                             <td>
                                 <a class="link" href="{{ route('admin-authors.show', ['author'=>$author->id]) }}"> View</a>
                             </td>
+                            <td>
+                                <a id="delete-btn" class="link">Delete</a>
+                                <form method="POST" id="delete-form" action="{{ route('admin-authors.destroy', ['author'=>$author->id])}}" style="display: none">
+                                    @csrf
+                                    @method('delete')
+                                   
+                                </form>
+                            </td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -139,12 +149,24 @@
     <script>
         const resetBtn = document.getElementById('reset-btn');
         const resetForm = document.getElementById('reset-form');
+        const deleteBtn = document.getElementById('delete-btn');
+        const deleteForm = document.getElementById('delete-form');
+
 
         resetBtn.addEventListener('click', (event) => {
             event.preventDefault();
 
             resetForm.submit();
         })
+
+        deleteBtn.addEventListener('click', (event) => {
+            event.preventDefault();
+
+            deleteForm.submit();
+        })
+
+
+        
     </script>
 
 @endpush

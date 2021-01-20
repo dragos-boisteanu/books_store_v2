@@ -362,6 +362,10 @@ h6 {
   padding: 10px 0 10px 20px;
 }
 
+.side-nav .side-nav__list .side-nav__item:last-of-type {
+  margin-bottom: 25px;
+}
+
 .search-bar {
   width: 500px;
   position: relative;

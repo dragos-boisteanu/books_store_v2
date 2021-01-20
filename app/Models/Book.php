@@ -15,6 +15,7 @@ class Book extends Model implements Viewable
     
     protected $fillable = [
         'title',
+        'image_link',
         'isbn',
         'pages',
         'description',
