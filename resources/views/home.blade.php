@@ -3,6 +3,7 @@
 @section('content')
 <div id="view" class="view">
     <div class="view__content home">
+        {{ Breadcrumbs::render('home') }}
         <div class="carrousel">
             test
         </div>

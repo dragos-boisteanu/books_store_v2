@@ -3,9 +3,13 @@
 @section('content')
 
     <div id="view" class="view">
-        <h1>Results: <span>{{ $query }}</span></h1>
+        <div class="view__content">
+            {{ Breadcrumbs::render('search') }}
+            <h1>Results: <span>{{ $query }}</span></h1>
 
-        <x-books :books="$books"></x-books>
+            <x-books :books="$books"></x-books>
+        </div>
+       
     </div>
 
 @endsection

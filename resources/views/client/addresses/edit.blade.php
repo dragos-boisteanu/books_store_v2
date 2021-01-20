@@ -4,6 +4,7 @@
     <div id="view" class="view">
         @include('includes.user-account-nav')
         <div class="view__content">
+            {{ Breadcrumbs::render('addresses-edit', $address) }}
             <h1>
                 Edit address
             </h1>

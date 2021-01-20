@@ -5,6 +5,7 @@
     <div class="view">
         @include('includes.user-account-nav')
         <div class="view__content">
+            {{ Breadcrumbs::render('addresses') }}
             <h1>
                 My addresses
             </h1>

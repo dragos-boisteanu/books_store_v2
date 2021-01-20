@@ -4,6 +4,7 @@
     <div id="view" class="view">
         @include('includes.user-account-nav')
         <div class="view__content">
+            {{ Breadcrumbs::render('addresses-create') }}
             <h1>
                 Create address
             </h1>

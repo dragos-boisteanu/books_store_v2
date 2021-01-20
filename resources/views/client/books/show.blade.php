@@ -3,6 +3,7 @@
 @section('content')
     <div id="book" class="view">
         <div class="view__content book">
+            {{ Breadcrumbs::render('book', $book) }}
             <div class="book__header">
                 <div class="header__image {{ $book->stock->quantity < 1 ? 'not-in-stock' : ''}}">
                     @if ( $book->discount > 0)

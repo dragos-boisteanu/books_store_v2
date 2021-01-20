@@ -4,6 +4,7 @@
 <div class="view">
     @include('includes.user-account-nav')
     <div class="view__content">
+        {{ Breadcrumbs::render('orders-show', $order) }}
         <h1>
             Order #{{ $order->id }}  - {{ $order->status->name }}
         </h1>

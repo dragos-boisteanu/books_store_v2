@@ -2,10 +2,8 @@
 
 @section('content')
     <div id="view" class="view">
-        <div class="filter">
-
-        </div>
         <div class="view__content">
+            {{ Breadcrumbs::render('recently-added') }}
             <h1>
                 {{ $title }}
             </h1>
