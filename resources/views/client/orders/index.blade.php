@@ -21,7 +21,7 @@
                     
                 </form>
             </div>
-            @if ( isset($orders) && !empty($orders))
+            @if ( isset($orders) && $orders->isNotEmpty())
                 <table class="table">
                     <thead>
                         <tr class="table__head">
@@ -65,7 +65,7 @@
                                     {{ $order->totalQuantity }}
                                 </td>
                                 <td>
-                                    {{ $order->totalPrice }}
+                                    {{ $order->totalPrice }} RON
                                 </td>
                                 <td>
                                     <a href="{{ route('client-orders.show', ['order'=>$order->id]) }}" class="link">View order</a>
