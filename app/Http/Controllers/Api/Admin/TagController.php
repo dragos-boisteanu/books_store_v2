@@ -28,7 +28,7 @@ class TagController extends Controller
 
     public function find(Request $request) 
     {
-        $tags = Tag::where('name', 'like', $request->input('data').'%')->get();
+        $tags = Tag::where('name', 'like', '%'.$request->input('data').'%')->get();
         
         return response()->json([
             'message'=>$tags

@@ -11,8 +11,8 @@ class AuthorController extends Controller
 
     public function find(Request $request) 
     {
-        $authors = Author::where('first_name', 'like', $request->input('data').'%')
-                        ->orWhere('name', 'like', $request->input('data').'%')->get();
+        $authors = Author::where('first_name', 'like', '%'.$request->input('data').'%')
+                        ->orWhere('name', 'like', '%'.$request->input('data').'%')->get();
         
         return response()->json([
             'message'=>$authors

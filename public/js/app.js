@@ -2485,7 +2485,7 @@ var DemoComponent = {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 var DynamicInputComponent = {
-  template: "\n        <div>\n            <div>\n                <span>\n                    <span v-for=\"(word, index) in words\" :key=\"index\">\n                        {{word.first_name }} {{ word.name}}\n                        <button @click.prevent=\"remove(word.id)\">X</button>\n                    </span>\n                </span>\n                <input type=\"text\" v-model=\"input\" @keyup=\"find\" class=\"form-input\">\n            </div>\n            <ul v-if=\"!noWords\">\n                <li v-for=\"word in retrievedWords\" :key=\"word.id\" @click=\"add(word)\">\n                    {{ word.first_name }} {{ word.name}}\n                </li>\n            </ul>\n            \n        </div>\n    ",
+  template: "\n        <div class=\"dynamic-input\">\n            <ul class=\"words-list\">\n                <li class=\"word\" v-for=\"(word, index) in words\" :key=\"index\">\n                    {{word.first_name }} {{ word.name}}\n                    <button class=\"word-button\" @click.prevent=\"remove(word.id)\">\n                        <svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"black\" width=\"12px\" height=\"12px\">\n                            <path d=\"M0 0h24v24H0z\" fill=\"none\"/>\n                            <path d=\"M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z\"/>\n                        </svg>\n                    </button>\n                </li>\n            </ul>\n            <div class=\"input-container\">\n                <input type=\"text\" v-model=\"input\" @keyup=\"find\" class=\"form-input\">\n                <ul v-if=\"!noWords\" class=\"results-list\">\n                    <li class=\"result\" v-for=\"word in retrievedWords\" :key=\"word.id\" @click=\"add(word)\">\n                        {{ word.first_name }} {{ word.name}}\n                    </li>\n                </ul>\n            </div>\n        </div>\n    ",
   // <div v-if="noWords">
   //     <input type="text" v-model="word" placeholder="New item...">
   //     <button @click.prevent="addNewWord">+</button>
@@ -2536,7 +2536,7 @@ var DynamicInputComponent = {
     find: function find() {
       var _this = this;
 
-      if (this.input.length >= 3) {
+      if (this.input.length >= 2) {
         axios.get("api/".concat(this.route, "/find"), {
           params: {
             data: this.input

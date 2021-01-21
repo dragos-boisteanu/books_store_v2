@@ -1,22 +1,26 @@
 const DynamicInputComponent =  {
     template: 
     `
-        <div>
-            <div>
-                <span>
-                    <span v-for="(word, index) in words" :key="index">
-                        {{word.first_name }} {{ word.name}}
-                        <button @click.prevent="remove(word.id)">X</button>
-                    </span>
-                </span>
-                <input type="text" v-model="input" @keyup="find" class="form-input">
-            </div>
-            <ul v-if="!noWords">
-                <li v-for="word in retrievedWords" :key="word.id" @click="add(word)">
-                    {{ word.first_name }} {{ word.name}}
+        <div class="dynamic-input">
+            <ul class="words-list">
+                <li class="word" v-for="(word, index) in words" :key="index">
+                    {{word.first_name }} {{ word.name}}
+                    <button class="word-button" @click.prevent="remove(word.id)">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" width="12px" height="12px">
+                            <path d="M0 0h24v24H0z" fill="none"/>
+                            <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                        </svg>
+                    </button>
                 </li>
             </ul>
-            
+            <div class="input-container">
+                <input type="text" v-model="input" @keyup="find" class="form-input">
+                <ul v-if="!noWords" class="results-list">
+                    <li class="result" v-for="word in retrievedWords" :key="word.id" @click="add(word)">
+                        {{ word.first_name }} {{ word.name}}
+                    </li>
+                </ul>
+            </div>
         </div>
     `,
 
@@ -68,7 +72,7 @@ const DynamicInputComponent =  {
         },
 
         find() {
-            if(this.input.length >= 3) {
+            if(this.input.length >= 2) {
                 axios.get(`api/${this.route}/find`, {
                     params: {
                         data: this.input
