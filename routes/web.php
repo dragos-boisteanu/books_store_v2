@@ -78,6 +78,8 @@ Route::middleware(['auth'])->group(function() {
                     Route::put('/{book}', 'BookController@update')->name('admin-books.update');
     
                     Route::delete('/{book}', 'BookController@destroy')->name('admin-books.destroy');
+
+                    Route::post('/{book}/restore', 'BookController@restore')->name('admin-books.restore');
     
                 });
     

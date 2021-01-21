@@ -21,6 +21,7 @@ class BookController extends Controller
         $bestSellingIds = DB::select('SELECT books.*, SUM(book_order.quantity) AS total_quantity
                                 FROM book_order
                                 JOIN books ON books.id = book_order.book_id
+                                WHERE books.deleted_at is null
                                 GROUP BY books.id
                                 ORDER BY total_quantity desc
                                 LIMIT :limit', ['limit'=>$limit]);

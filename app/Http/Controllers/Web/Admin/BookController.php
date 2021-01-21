@@ -97,7 +97,7 @@ class BookController extends Controller
                     ->whereDate('updated_at', '<', $updatedAtEnd);
             }
 
-        })->orderBy('books.created_at', 'desc')->paginate(10)->withQueryString();
+        })->withTrashed()->orderBy('books.created_at', 'desc')->paginate(10)->withQueryString();
  
         $categories = Category::all();
 
@@ -178,7 +178,7 @@ class BookController extends Controller
      */
     public function show($id)
     {
-        $book = Book::findOrFail($id);
+        $book = Book::withTrashed()->where('id' , $id)->first();
 
         return view('admin.books.show', ['book'=>$book]);
     }
@@ -241,8 +241,6 @@ class BookController extends Controller
             $book->tags()->sync($tagsIds);
         }
         
-
-       
         return redirect()->route('admin-books.show', ['book'=>$book->id]);
     }
 
@@ -256,6 +254,14 @@ class BookController extends Controller
     {
         Book::findOrFail($id)->delete();
 
-        return redirect()->route('admin-books.index');
+        return redirect()->route('admin-books.show', ['book'=>$id]);
     }
+
+    public function restore($id) 
+    {
+        Book::withTrashed()->find($id)->restore();
+
+        return redirect()->route('admin-books.show', ['book'=>$id]);
+    }   
+    
 }

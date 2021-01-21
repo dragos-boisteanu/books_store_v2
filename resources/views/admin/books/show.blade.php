@@ -7,7 +7,7 @@
     <div id="book" class="view__content book book-dashboard">
         {{ Breadcrumbs::render('dashboard-book', $book) }}
         <div class="book__header">
-            <div class="header__image {{ $book->stock->quantity < 1 ? 'not-in-stock' : ''}}">
+            <div class="header__image {{ $book->stock->quantity < 1 || isset($book->deleted_at) ? 'not-in-stock' : ''}}">
                 @if ( $book->discount > 0)
                     <div class="discount__amount">
                        - {{$book->discount}} %
@@ -106,11 +106,23 @@
                     </div>
             
          
-                    <form method="POST" action="{{ route('admin-books.destroy', ['book' => $book->id]) }}">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="button button-primary">Delete</button>
-                    </form>
+                    @if( isset($book->deleted_at) )
+                    
+                        <form method="POST" action="{{ route('admin-books.restore', ['book' => $book->id]) }}">
+                            @csrf
+                            <button type="submit" class="button button-primary">Restore</button>
+                        </form>
+
+                    @else 
+                        <form method="POST" action="{{ route('admin-books.destroy', ['book' => $book->id]) }}">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="button button-primary">Delete</button>
+                        </form>
+
+                    @endif
+                   
+
 
                 </div>  
             </div>
