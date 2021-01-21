@@ -3,13 +3,13 @@
 @section('content')
 <div id="view" class="view">
     <div class="view__content view__content--center">
-        <form method="POST" action="{{ route('register') }}" @submit.prevent="validate">
+        <form method="POST" action="{{ route('register') }}" @submit="validate">
             @csrf
             <h1>Register</h1>
             <div class="form-group">
                 <label for="first_name" class="form-label">First name</label>
             
-                <input id="first_name" type="text" class="form-input" name="first_name" v-model="firstName">
+                <input id="first_name" type="text" class="form-input" name="first_name" v-model.trim="firstName">
 
                 @error('first_name')
                     <span class="invalid-feedback" role="alert">
@@ -26,7 +26,7 @@
             <div class="form-group row">
                 <label for="name" class="form-label">Name</label>
 
-                <input id="name" type="text" class="form-input" name="name" v-model="name">
+                <input id="name" type="text" class="form-input" name="name" v-model.trim="name">
 
                 @error('name')
                     <span class="invalid-feedback" role="alert">
@@ -43,7 +43,7 @@
             <div class="form-group">
                 <label for="email" class="form-label">Email</label>
 
-                <input id="email" type="text" class="form-input" name="email" v-model="email">
+                <input id="email" type="text" class="form-input" name="email" v-model.trim="email">
 
                 @error('email')
                     <span class="invalid-feedback" role="alert">
@@ -60,7 +60,7 @@
             <div class="form-group">
                 <label for="phone_number" class="form-label">Phone number</label>
 
-                    <input id="phone_number" type="text" class="form-input @error('phone_number') is-invalid @enderror" name="phone_number" v-model="phoneNumber">
+                    <input id="phone_number" type="text" class="form-input @error('phone_number') is-invalid @enderror" name="phone_number" v-model.trim="phoneNumber">
 
                     @error('phone_number')
                         <span class="invalid-feedback" role="alert">
@@ -78,7 +78,7 @@
            <div class="form-group">
                 <label for="password" class="form-label">Password</label>
 
-                <input id="password" type="password" class="form-input" name="password" v-model="password">
+                <input id="password" type="password" class="form-input" name="password" v-model.trim="password">
 
                 @error('password')
                     <span class="invalid-feedback" role="alert">
@@ -95,7 +95,7 @@
             <div class="form-group">
                 <label for="password-confirm" class="form-label">Confirm password</label>
 
-                <input id="password-confirm" type="password" class="form-input" name="password_confirmation" v-model="confirmPassword">
+                <input id="password-confirm" type="password" class="form-input" name="password_confirmation" v-model.trim="confirmPassword">
 
                 @error('password')
                     <span class="invalid-feedback" role="alert">
@@ -170,70 +170,114 @@
             },
 
             methods: {
-                validate() {
-
-                    let errors = 0;
+                validate(event) {
 
                     if(!this.firstName) {
                         this.errors.firstName.show = true;
-                        this.errors.firstName.message = 'First name is required'
+                        this.errors.firstName.message = 'The first name field is required.'
                         this.errorsCounter++;
                     }else {
                         this.errors.firstName.show = false;
                         this.errors.firstName.message = ''
+                        this.errorsCounter - 1;
                     }
 
                     if(!this.name) {
                         this.errors.name.show = true;
-                        this.errors.name.message = 'Name is required'
+                        this.errors.name.message = 'The name field is required.'
                         this.errorsCounter++;
                     }else {
                         this.errors.name.show = false;
                         this.errors.name.message = ''
+                        this.errorsCounter - 1;
                     }
 
                     if(!this.email) {
                         this.errors.email.show = true;
-                        this.errors.email.message = 'Email is required'
+                        this.errors.email.message = 'Email required'
+                        this.errorsCounter++;
+                    }else if(!this.validEmail(this.email)) {
+                        this.errors.email.show = true;
+                        this.errors.email.message = 'The email must be a valid email address.'
                         this.errorsCounter++;
                     }else {
                         this.errors.email.show = false;
                         this.errors.email.message = ''
+                        this.errorsCounter - 1;
                     }
 
                     if(!this.phoneNumber) {
                         this.errors.phoneNumber.show = true;
-                        this.errors.phoneNumber.message = 'Phone number is required'
+                        this.errors.phoneNumber.message = 'The phone number field is required.'
                         this.errorsCounter++;
-                    }else {
+                    }else if(!this.validatePhoneNumber(this.phoneNumber)){
+                        this.errors.phoneNumber.show = true;
+                        this.errors.phoneNumber.message = 'The phone number must be a valid phone number.'
+                        this.errorsCounter++;
+                    } else {
                         this.errors.phoneNumber.show = false;
                         this.errors.phoneNumber.message = ''
+                        this.errorsCounter - 1;
                     }
 
                     if(!this.password) {
                         this.errors.password.show = true;
-                        this.errors.password.message = 'Password is required'
+                        this.errors.password.message = 'The password field is required.'
                         this.errorsCounter++;
-                    }else {
+                    }else if(this.password.length < 8) {
+                        this.errors.password.show = true;
+                        this.errors.password.message = 'The password must be at least 8 characters.'
+                        this.errorsCounter++;
+                    } else if(this.password !== this.confirmPassword) {
+                        this.errors.confirmPassword.show = true;
+                        this.errors.confirmPassword.message = 'The password confirmation does not match.'
+                        this.errorsCounter++;
+                    } else {
                         this.errors.password.show = false;
                         this.errors.password.message = ''
+                        this.errorsCounter - 1;
                     }
 
                     if(!this.confirmPassword) {
                         this.errors.confirmPassword.show = true;
-                        this.errors.confirmPassword.message = 'Password confirmation is required'
+                        this.errors.confirmPassword.message = 'The password field is required.'
                         this.errorsCounter++;
-                    }else {
+                    }else if(this.confirmPassword.length < 8) {
+                        this.errors.password.show = true;
+                        this.errors.password.message = 'The password must be at least 8 characters.'
+                        this.errorsCounter++;
+                    } else if (this.password !== this.confirmPassword) {
+                        this.errors.password.show = true;
+                        this.errors.password.message = 'The password confirmation does not match.'
+                        this.errorsCounter++;
+                    } else {
                         this.errors.confirmPassword.show = false;
                         this.errors.confirmPassword.message = ''
+                        this.errorsCounter - 1;
                     }
 
+
                     if(this.errorsCounter === 0) {
+                        this.errorsCounter = 0;
                         return true;
                     }
 
-                    
+                    this.errorsCounter = 0; 
+
+                    event.preventDefault();   
+                               
+                },
+
+                validEmail(email) {
+                    let re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                    return re.test(email);
+                },
+
+                validatePhoneNumber(phoneNumber) {
+                    let re = /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/;
+                    return re.test(phoneNumber);
                 }
+
             }
         })
     </script>
