@@ -13,7 +13,7 @@ const DynamicInputComponent =  {
                     </button>
                 </li>
             </ul>
-            <div class="input-container">
+            <div class="input-container" v-click-outside="closeDropdown">
                 <input type="text" v-model="input" @keyup="find" class="form-input">
                 <ul v-if="!noWords" class="results-list">
                     <li class="result" v-for="word in retrievedWords" :key="word.id" @click="add(word)">
@@ -54,6 +54,13 @@ const DynamicInputComponent =  {
             noWords: false,
         }
     },
+
+    computed: {
+        noWords() {
+            return this.retrievedWords.length > 0 ? true : false;
+        }
+    },
+
     methods: {
         add(value) {
             if(this.words.findIndex(word => word.id === value.id) < 0 )
@@ -63,7 +70,6 @@ const DynamicInputComponent =  {
             }
             this.input = '';
             this.retrievedWords.splice(0);
-         
         },
         
         remove(id) {
@@ -82,11 +88,11 @@ const DynamicInputComponent =  {
                     console.log(response);
                     if(response.data.message.length > 0){
                         this.retrievedWords = response.data.message;
-                        this.noWords = false;
+                        // this.noWords = false;
                         this.word = '';
                     }else{
                         this.retrievedWords.splice(0);
-                        this.noWords = true;
+                        // this.noWords = true;
                     }
                 })
                 .catch( error => {
@@ -95,7 +101,7 @@ const DynamicInputComponent =  {
             }
             else {
                 this.retrievedWords.splice(0);
-                this.noWords = false;
+                // this.noWords = false;
                 this.word = '';
             }                
         },
@@ -104,6 +110,9 @@ const DynamicInputComponent =  {
             this.$emit('updated', this.words);
         },
 
+        closeDropdown() {
+            this.retrievedWords.splice(0);
+        },
         // addNewWord() {
         //     if(this.word.length > 0) {
 
@@ -140,7 +149,7 @@ const DynamicInputComponent =  {
             .then( response => {
                 if(response.status === 200) {
                     this.add(response.data.message[0]);     
-                    this.noWords = false;
+                    // this.noWords = false;
                     this.word = '';    
                     this.emitUpdate();
                 }

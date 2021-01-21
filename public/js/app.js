@@ -2485,7 +2485,7 @@ var DemoComponent = {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 var DynamicInputComponent = {
-  template: "\n        <div class=\"dynamic-input\">\n            <ul class=\"words-list\">\n                <li class=\"word\" v-for=\"(word, index) in words\" :key=\"index\">\n                    {{word.first_name }} {{ word.name}}\n                    <button class=\"word-button\" @click.prevent=\"remove(word.id)\">\n                        <svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"black\" width=\"12px\" height=\"12px\">\n                            <path d=\"M0 0h24v24H0z\" fill=\"none\"/>\n                            <path d=\"M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z\"/>\n                        </svg>\n                    </button>\n                </li>\n            </ul>\n            <div class=\"input-container\">\n                <input type=\"text\" v-model=\"input\" @keyup=\"find\" class=\"form-input\">\n                <ul v-if=\"!noWords\" class=\"results-list\">\n                    <li class=\"result\" v-for=\"word in retrievedWords\" :key=\"word.id\" @click=\"add(word)\">\n                        {{ word.first_name }} {{ word.name}}\n                    </li>\n                </ul>\n            </div>\n        </div>\n    ",
+  template: "\n        <div class=\"dynamic-input\">\n            <ul class=\"words-list\">\n                <li class=\"word\" v-for=\"(word, index) in words\" :key=\"index\">\n                    {{word.first_name }} {{ word.name}}\n                    <button class=\"word-button\" @click.prevent=\"remove(word.id)\">\n                        <svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"black\" width=\"12px\" height=\"12px\">\n                            <path d=\"M0 0h24v24H0z\" fill=\"none\"/>\n                            <path d=\"M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z\"/>\n                        </svg>\n                    </button>\n                </li>\n            </ul>\n            <div class=\"input-container\" v-click-outside=\"closeDropdown\">\n                <input type=\"text\" v-model=\"input\" @keyup=\"find\" class=\"form-input\">\n                <ul v-if=\"!noWords\" class=\"results-list\">\n                    <li class=\"result\" v-for=\"word in retrievedWords\" :key=\"word.id\" @click=\"add(word)\">\n                        {{ word.first_name }} {{ word.name}}\n                    </li>\n                </ul>\n            </div>\n        </div>\n    ",
   // <div v-if="noWords">
   //     <input type="text" v-model="word" placeholder="New item...">
   //     <button @click.prevent="addNewWord">+</button>
@@ -2514,6 +2514,11 @@ var DynamicInputComponent = {
       word: '',
       noWords: false
     };
+  },
+  computed: {
+    noWords: function noWords() {
+      return this.retrievedWords.length > 0 ? true : false;
+    }
   },
   methods: {
     add: function add(value) {
@@ -2545,25 +2550,27 @@ var DynamicInputComponent = {
           console.log(response);
 
           if (response.data.message.length > 0) {
-            _this.retrievedWords = response.data.message;
-            _this.noWords = false;
+            _this.retrievedWords = response.data.message; // this.noWords = false;
+
             _this.word = '';
           } else {
-            _this.retrievedWords.splice(0);
+            _this.retrievedWords.splice(0); // this.noWords = true;
 
-            _this.noWords = true;
           }
         })["catch"](function (error) {
           console.error(error);
         });
       } else {
-        this.retrievedWords.splice(0);
-        this.noWords = false;
+        this.retrievedWords.splice(0); // this.noWords = false;
+
         this.word = '';
       }
     },
     emitUpdate: function emitUpdate() {
       this.$emit('updated', this.words);
+    },
+    closeDropdown: function closeDropdown() {
+      this.retrievedWords.splice(0);
     },
     // addNewWord() {
     //     if(this.word.length > 0) {
@@ -2597,9 +2604,9 @@ var DynamicInputComponent = {
         name: data.name
       }).then(function (response) {
         if (response.status === 200) {
-          _this2.add(response.data.message[0]);
+          _this2.add(response.data.message[0]); // this.noWords = false;
 
-          _this2.noWords = false;
+
           _this2.word = '';
 
           _this2.emitUpdate();
