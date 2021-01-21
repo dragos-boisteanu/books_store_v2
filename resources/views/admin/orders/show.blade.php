@@ -9,6 +9,9 @@
             <h1 class="view__header">
                 Order {{ $order->id }} # - {{ $order->status->name }}  @if($order->deleted_at) - CANCELED @endif
             </h1>
+            <div class="action">
+                <a class="link" href="{{ route('admin-orders.edit', ['order'=>$order->id]) }}">Edit</a>
+            </div>
             <ul class="details">
                 <li class="detail">
                     <span class="name">Operator: </span> 
@@ -119,16 +122,6 @@
                         </tbody>
                     </table>
                 </div>
-            </div>
-    
-            <div class="action">
-                <a class="link" href="{{ route('admin-orders.edit', ['order'=>$order->id]) }}">Edit</a>
-    
-                <form method="POST" action="{{ route('admin-orders.destroy', ['order'=>$order->id]) }}">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="button button-primary">Delete</button>
-                </form>
             </div>
         </div>
               

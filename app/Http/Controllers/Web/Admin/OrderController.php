@@ -182,6 +182,13 @@ class OrderController extends Controller
     {
         Order::findOrFail($id)->delete();
 
-        return redirect()->route('admin-orders.index');
+        return redirect()->route('admin-orders.edit', ['order'=>$id]);
+    }
+
+    public function restore($id)
+    {
+        Order::withTrashed()->find($id)->restore();
+
+        return redirect()->route('admin-orders.edit', ['order'=>$id]);
     }
 }

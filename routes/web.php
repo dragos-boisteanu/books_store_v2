@@ -158,6 +158,8 @@ Route::middleware(['auth'])->group(function() {
                     Route::put('/{order}', 'OrderController@update')->name('admin-orders.update');
     
                     Route::delete('/{order}', 'OrderController@destroy')->name('admin-orders.destroy');
+
+                    Route::post('/{order}/restore', 'OrderController@restore')->name('admin-orders.restore');
                 });
     
             });

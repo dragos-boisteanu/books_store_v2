@@ -7,7 +7,7 @@
         <div class="view__content">
             {{ Breadcrumbs::render('dashboard-order.edit', $order) }}
             <h1 class="view__header">
-                Order {{ $order->id }} # - {{ $order->status->name }}
+                Order {{ $order->id }} # - {{ $order->status->name }} @if($order->deleted_at) - CANCELED @endif
             </h1>
             <ul class="details">
                 <li class="detail">
@@ -171,13 +171,19 @@
                     </tbody>
                 </table>
             </div>  
-            <form method="POST" action="{{ route('admin-orders.destroy', ['order'=>$order->id]) }}">
-                @csrf
-                @method('DELETE')
-    
-                <button type="submit" class="button button-primary">Delete</button>
-    
-            </form>    
+
+            @if( isset($order->deleted_at))
+                <form method="POST" action="{{ route('admin-orders.restore', ['order'=>$order->id]) }}">
+                    @csrf
+                    <button type="submit" class="button button-primary">Restore</button>
+                </form>    
+            @else
+                <form method="POST" action="{{ route('admin-orders.destroy', ['order'=>$order->id]) }}">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="button button-primary">Cancel</button>
+                </form>
+            @endif
         </div>   
     </div>
 
