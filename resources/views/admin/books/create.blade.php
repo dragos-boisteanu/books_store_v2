@@ -58,6 +58,7 @@
                 <div class="form-group">
                     <label class="form-label">Publisher</label>
                     <select name="publisher_id" class="form-input">
+                        <option value="0" selected disabled>Choose publisher</option>
                         @foreach($publishers as $publisher)
                             <option value="{{ $publisher->id }}" {{ $publisher->id === old('publisher_id') ? 'selected' : '' }} >{{$publisher->name}}</option>
                         @endforeach
@@ -67,6 +68,7 @@
                 <div class="form-group">
                     <label class="form-label">Language</label>
                     <select name="language_id" class="form-input">
+                        <option value="0" selected disabled>Choose language</option>
                         @foreach($languages as $language)
                             <option value="{{ $language->id }}" {{ $language->id === old('language_id') ? 'selected' : '' }}>{{$language->name}}</option>
                         @endforeach
@@ -76,6 +78,7 @@
                 <div class="form-group">
                     <label class="form-label">Category</label>
                     <select name="category_id" class="form-input">
+                        <option value="0" selected disabled>Choose category</option>
                         @foreach($categories as $category)
                             <option value="{{ $category->id }}" {{ $category->id === old('category_id') ? 'selected' : '' }}>{{$category->name}}</option>
                         @endforeach
@@ -85,6 +88,7 @@
                 <div class="form-group">
                     <label class="form-label">Cover type</label>
                     <select name="cover_id" class="form-input">
+                        <option value="0" selected disabled>Choose cover type</option>
                         @foreach($covers as $cover)
                             <option value="{{ $cover->id }}" {{ $cover->id === old('cover_id') ? 'selected' : '' }}>{{$cover->name}}</option>
                         @endforeach
