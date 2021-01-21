@@ -46,11 +46,6 @@
     <script>
         new Vue({
             el: '#header',
-
-            created() {
-                console.log('vue instance created from header');
-            },          
-            
             computed: {
                 showResults() {
                     return this.searchResults.length > 0 ? true : false

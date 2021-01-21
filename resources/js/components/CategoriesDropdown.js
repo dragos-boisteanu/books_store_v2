@@ -49,7 +49,6 @@ const CategoriesDropdown = {
         getCategories() {
             axios.get('/api/categories')
             .then ( response => {
-                console.log(response.data)
                 this.categories = response.data;
             })
             .catch( error => {
