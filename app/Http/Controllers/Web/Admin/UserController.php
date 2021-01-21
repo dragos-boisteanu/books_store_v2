@@ -84,8 +84,8 @@ class UserController extends Controller
 
             $user->load(['orders', 'updatedBooks', 'addedBooks'])->paginate(10);
 
-            $addedBooks = $user->addedBooks()->paginate(15);
-            $updatedBooks = $user->updatedBooks()->paginate(15);
+            $addedBooks = $user->addedBooks()->paginate(10);
+            $updatedBooks = $user->updatedBooks()->paginate(10);
 
             $data = ['user'=>$user, 'addedBooks'=>$addedBooks, 'updatedBooks'=>$updatedBooks];
 
@@ -137,6 +137,6 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id)->delete();
 
-        return view('admin.users.index');
+        return redirect()->route('admin-users.index');
     }
 }

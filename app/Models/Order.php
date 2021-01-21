@@ -80,7 +80,7 @@ class Order extends Model
 
     public function books() 
     {
-        return $this->belongsToMany('App\Models\Book')->withPivot('quantity', 'price')->withTimestamps();
+        return $this->belongsToMany('App\Models\Book')->withPivot('quantity', 'price')->withTimestamps()->withTrashed();
     }
 
     public function user() 

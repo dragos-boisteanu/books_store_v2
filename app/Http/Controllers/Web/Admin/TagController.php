@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web\Admin;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 
 class TagController extends Controller
@@ -28,14 +29,16 @@ class TagController extends Controller
                 $query->where('name', 'like', '%'.$name.'%');
             }
 
-            if($creted_by = $request->created_by) {
-                $query->were('created_by', $created_by);
+            if($created_by = $request->created_by) {
+                $query->where('created_by', $created_by);
             }
 
             if($updated_by = $request->updated_by) {
                 $query->where('updated_by', $updated_by);
             }
         })->orderBy('created_at', 'desc')->paginate(10);
+
+        $request->flash();
 
         return view('admin.tags.index', compact('tags'));
     }
@@ -62,7 +65,6 @@ class TagController extends Controller
 
         $input['created_by'] = Auth::id();
         $input['updated_by'] = Auth::id();
-
 
         Tag::create($input);
 
@@ -110,7 +112,8 @@ class TagController extends Controller
 
         $input['updated_by'] = Auth::id();
 
-        Tag::update($input);
+        $tag = Tag::findOrFail($id);
+        $tag->update($input);
 
         return redirect()->route('admin-tags.index');
     }

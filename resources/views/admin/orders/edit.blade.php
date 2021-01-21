@@ -23,7 +23,7 @@
                         Client: 
                     </span>
                     <span class="value">
-                        <a href="{{ route('admin-users.show', ['user'=>$order->user->id]) }}">{{ $order->user->first_name . ' ' . $order->user->name }}</a>
+                        <a class="link" href="{{ route('admin-users.show', ['user'=>$order->user->id]) }}">{{ $order->user->first_name . ' ' . $order->user->name }}</a>
                     </span>
                 </li>
             </ul>

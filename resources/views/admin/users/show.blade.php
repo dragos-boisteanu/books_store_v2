@@ -7,7 +7,14 @@
             {{ Breadcrumbs::render('dashboard-users.show', $user) }}
             
             <h1>User #{{ $user->id }}</h1>
-         
+             {{-- type="submit" id="delete-button" class="link">Delete</a<a> --}}
+
+            <form method="POST" action="{{ route('admin-users.destroy', ['user'=>$user->id]) }}">
+                @csrf
+                @method('DELETE')
+                <button class="button button-primary">Delete</button>
+            </form>
+
             <div>
                 <h2>Account data</h2>
                 <ul class="details">

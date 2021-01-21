@@ -38,6 +38,7 @@
                         <button id="reset-btn" class="button button-primary">Reset</button>
                     </div>
                 </form>
+                <form method="GET" id="reset-form" action="{{ route('admin-tags.index')}}" style="display: none"></form>
             </div>            
             <div class="table-container">
                 <h2>Tags</h2>
@@ -64,7 +65,7 @@
                             </th>
                             <th></th>
                             <th></th>
-                            <th></th>
+                            {{-- <th></th> --}}
                         </tr>
                     </thead>
                     <tbody>
@@ -94,14 +95,14 @@
                                 <td>
                                     <a class="link" href="{{ route('admin-tags.show', ['tag'=>$tag->id]) }}"> View</a>
                                 </td>
-                                <td>
+                                {{-- <td>
                                     <a id="delete-btn" class="link">Delete</a>
                                     <form method="POST" id="delete-form" action="{{ route('admin-tags.destroy', ['tag'=>$tag->id])}}" style="display: none">
                                         @csrf
                                         @method('delete')
                                        
                                     </form>
-                                </td>
+                                </td> --}}
                             </tr>
                         @endforeach
                     </tbody>
@@ -120,8 +121,8 @@
     <script>
         const resetBtn = document.getElementById('reset-btn');
         const resetForm = document.getElementById('reset-form');
-        const deleteBtn = document.getElementById('delete-btn');
-        const deleteForm = document.getElementById('delete-form');
+        // const deleteBtn = document.getElementById('delete-btn');
+        // const deleteForm = document.getElementById('delete-form');
 
         deleteBtn.addEventListener('click', (event) => {
             event.preventDefault();
@@ -129,13 +130,11 @@
             deleteForm.submit();
         })
 
-     
+        // resetBtn.addEventListener('click', (event) => {
+        //     event.preventDefault();
 
-        resetBtn.addEventListener('click', (event) => {
-            event.preventDefault();
-
-            resetForm.submit();
-        })
+        //     resetForm.submit();
+        // })
         
     </script>
 

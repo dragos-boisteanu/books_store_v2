@@ -81,7 +81,6 @@
                                 Registered at
                             </th>
                             <th></th>
-                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -110,13 +109,6 @@
                                 </td>
                                 <td>
                                     <a class="link" href="{{ route('admin-users.show', ['user'=>$user->id]) }}">Details</a>
-                                </td>
-                                <td>
-                                    <a type="submit" id="delete-button" class="link">Delete</a>
-                                    <form method="POST" id="delete-form" action="{{ route('admin-users.destroy', ['user'=>$user->id]) }}" style="display: none">
-                                        @csrf
-                                        @method('DELETE')
-                                    </form>
                                 </td>
                             </tr>
                         @endforeach
