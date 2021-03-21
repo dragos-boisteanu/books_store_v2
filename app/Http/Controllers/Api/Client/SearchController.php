@@ -11,11 +11,7 @@ class SearchController extends Controller
     public function index(Request $request) 
     {
 
-        $books = Book::where(function($query) use ($request) {
-            if( ($q = $request->q) ) {
-                $query->where('title', 'like', '%'. $q . '%');
-            }
-        })->orderBy('created_at', 'desc')->limit(5)->get();
+        $books = Book::where('title', 'like', '%'. $request->q . '%')->orderBy('created_at', 'desc')->limit(5)->get();
 
         return response()->json($books, 200);
     }

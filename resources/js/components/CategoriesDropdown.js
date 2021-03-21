@@ -31,10 +31,6 @@ const CategoriesDropdown = {
         }
     },
 
-    created() {
-        this.getCategories();
-    },
-
     methods: {
         toggleContent() {
             this.displayContent = !this.displayContent;
@@ -46,15 +42,6 @@ const CategoriesDropdown = {
             this.displayDownArrow = true;           
         },
 
-        getCategories() {
-            axios.get('/api/categories')
-            .then ( response => {
-                this.categories = response.data;
-            })
-            .catch( error => {
-                console.error( error );
-            })
-        }
     }
 }
 

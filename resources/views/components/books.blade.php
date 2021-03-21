@@ -43,9 +43,7 @@
 
             <div class="book__action">
                 @if ($book->stock->quantity >= 1)
-                    <add-to-cart-btn-component
-                        id={{$book->id}}
-                    ></add-to-cart-btn-component>
+                    <button id="{{ $book->id }}" class="button button-primary add-to-cart">Add to cart</button>
                 @else 
                     <div class="stock__empty">
                         Not in stock
@@ -56,6 +54,7 @@
         </li>
     @endforeach
 </ul>
+
 @if($books instanceof \Illuminate\Pagination\LengthAwarePaginator)
     {{ $books->links() }}
 @endif

@@ -3,85 +3,92 @@
         <img class="logo__img" src=""/>
         <span class="logo__text">Books Store</span>
     </a>
-    <div class="search-bar">
-        <form method="GET" action="{{ route('search') }}" class="search-bar__form">
-            <input type="text" id="search" class="search-bar__input" :class="{'search-bar--results' : showResults}" placeholder="Search books" name="q" v-model.tirm="searchInput" @keyup="search">
+    <div id="searchBar" class="search-bar">
+        <form id="searchForm" method="GET" action="{{ route('search') }}" class="search-bar__form">
+            <input type="text" id="search" class="search-bar__input" placeholder="Search books" name="q">
             <button for="search" class="button button-primary search-bar__button">
                 <img class="button__image" src="/storage/icons/search.svg"/>
             </button>
         </form>
-        <ul class="list search-bar__results" v-if="showResults" v-click-outside="closeResults"> 
-            <li v-for="(result, index) in searchResults" :key="index" class="result">
-                <div class="title__authors">
-                    <a class="link result__title" :href="`/books/` + result.id">@{{ result.title }}</a>
-                    <ul class="list list-horizontal">
-                        <li class="result__author" v-for="(author, index) in result.authors" :key="index">
-                           <a class="link" :href="'/authors/' + author.id">@{{author.name}}</a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="result__price">
-                    @{{result.price}} RON
-                </div>
-            </li>
+        <ul id="results" class="list search-bar__results"> 
         </ul>
     </div>
-    <a></a>
+    <a>
+        {{-- cart --}}
+    </a>
 
-    @auth
-        <user-dropdown-component
-            text="{{ Auth::user()->first_name }}"
-            :auth="true"
-            :admin={{ Auth::user()->role_id == 1 || Auth::user()->role_id == 2 ? true : false }}
-        ></user-dropdown-component>
-    @endauth
     
-    @guest
-        <user-dropdown-component></user-dropdown-component>
-    @endguest
-    <cart-component></cart-component>
 </header>
 
-@push('vue-scripts')
+@push('js-scripts')
     <script>
-        new Vue({
-            el: '#header',
-            computed: {
-                showResults() {
-                    return this.searchResults.length > 0 ? true : false
-                }
-            },
+        const searchBarSearchInput = $('#searchBar #search');
+        const searchBarResults =  $('#searchBar #results');
 
-            data() {
-                return {
-                    message: "header vue data",
-                    searchResults: [],
-                    searchInput: '',
-                }
-            },
-            
-            methods: {
-                search() {
-                    if(this.searchInput.length >= 3) {
-                        axios.get('/api/search', {
-                            params: {
-                                q: this.searchInput
-                            }
-                        })
-                        .then( response => {
-                            this.searchResults = response.data;    
-                        })
-                        .catch( error => {
-                            console.error( error )
-                        })
-                    }
-                },
+        searchBarSearchInput.keyup(function (e) {
+            searchBooks();
+        });   
 
-                closeResults() {
-                    this.searchResults.splice(0)
-                }
+        // close results list when clicking outside of it
+        $(document).click(function(event){
+            if(!$(event.target).closest("#searchBar #results").length){
+                closeSearchResults();
             }
-            
         });
+
+        searchBooks = _.debounce( function() {
+            if(searchBarSearchInput[0].value.length > 0) {
+                searchBarResults.empty();
+                $.get( "api/search", { q: searchBarSearchInput[0].value } )
+                .done(function( data ) {
+                    searchBarSearchInput.addClass('search-bar--results');
+                    if(data.length > 0) {
+                        data.forEach(result => {
+                            searchBarResults.append(
+                                `
+                                    <li class="result">
+                                        <div class="title__authors">
+                                            <a class="link result__title" href="/books/${result.id}">${result.title}</a>
+                                            <ul class="list list-horizontal">
+                                                ${generateAuthorsList(result.authors)}
+                                            </ul>
+                                        </div>
+                                        <div class="result__price">
+                                            ${result.price} RON
+                                        </div>
+                                    </li>
+                                `
+                            );
+                        });
+                    } else {
+                        searchBarResults.append('<li class="result">No books found</li>')
+                    }
+                    searchBarResults.slideDown();
+                });
+            }else {
+                closeSearchResults();
+            }
+        }, 500)
+
+        function closeSearchResults() {
+            searchBarResults.slideUp('medium', function () {
+                searchBarSearchInput.removeClass('search-bar--results');
+                searchBarResults.empty();
+            });
+           
+        }
+        
+        function generateAuthorsList(data) {
+            let authors = '';
+            data.forEach(item => {
+                authors += 
+                `
+                <li class="result__author">
+                    <a class="link" href="/authors/${item.id}">${item.name}</a>
+                </li>
+                `
+            });
+            return authors;
+        }
     </script>
 @endpush

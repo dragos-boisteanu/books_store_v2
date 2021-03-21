@@ -23,10 +23,25 @@
 </div>
 @endsection
 
-@push('vue-scripts')
+@push('js-scripts')
     <script>
-        new Vue({
-            el: '#view',            
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
         });
+
+        const addToCartBtns = $('.add-to-cart');
+        addToCartBtns.each( (index, item) => {
+            item.addEventListener('click', function (e) { 
+                $.post(`api/carts/${this.id}`)
+                .done(data => {
+                    console.log(data);
+                })
+                .fail( (jqXHR, textStatus, errorThrown) => {
+                    console.log(errorThrown)
+                })
+            });
+        })
     </script>
 @endpush
