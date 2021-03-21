@@ -9,93 +9,71 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class CartController extends Controller
 {
     public function show() 
     {
 
-        if(!Auth::check() && !Cart::where('session_id', session()->getId())->exists()) {
-            $cart = Cart::createNewCart();
-            $books = Book::getBooksFromCart($cart->id); 
-        }else{
-            $books = Book::getBooksFromCart(Cart::getCart()->id); 
-        }
-        
-        return response()->json([
-            'cart'=> $books
-        ], 200);
     }
 
 
     public function update(Request $request) 
     {
-        $cart = Cart::getCart();
-
-        try {
-            $cart->updateQuantity($request);
-            return response()->json([
-                'message' => 'Quantity updated successfully !' 
-            ], 200);
-        }catch (Exception $ex) {
-            return response()->json([
-                'message' => $ex->getMessage(),
-                'zero' => strpos($ex->getMessage(), '0') > -1 ? true : false
-            ], 412);
-        }                    
+       
     }
 
-    public function addItem($id) 
+    public function store($id) 
     {
-        $cart = Cart::getCart();
-
         try {
-            $book = $cart->addItem($id);
-
-            if(isset($book))
-            {
-                return response()->json([
-                    'message' => 'Book added in cart',
-                    'book'=>$book
-                ], 200);
+            if(auth()->id()) {
+                $cart = Cart::where('user_id', auth()->id())->first();
+            } else {
+                $cart = Cart::where('session_id', session()->getId())->first();
             }
 
-            return response()->json([
-                'message' => 'Book added in cart'
-            ], 200);
+            if(isset($cart)) {
+                $cart->addItem($id);
+            } else {
+                if(auth()->id()) {
+                    $cart = Cart::create([
+                        'user_id'=> auth()->id()
+                    ]);
+                } else {
+                    $cart = Cart::create([
+                        'session_id'=> session()->getId()
+                    ]);
+                }
+                session()->put('cartId', $cart->id);
+                $cart->addItem($id);
+            }
 
-        } catch ( Exception $ex) {
-            dd($ex);
-            return response()->json([
-                'message' => $ex->getMessage()
-            ], 412);
-        }
+            return response()->json("Book added into cart", 200);
+
+        } catch ( ModelNotFoundException $mfe) {
+            return response()->json("Book not found", 404);
+
+        } 
+        // catch ( \Exception $ex) {
+        //     // return response()->json($ex->getMessage(), 200);
+        // }
+        
         
     }
 
     public function getItem($id) 
     {
-        $cart = Cart::getCart();
-
-        $book = Book::getBookFromCart($cart->id, $id);
-
-        return response()->json($book, 200);
-        // return response()->json(null, 404);
+       
     }
 
     public function removeItem(Request $request) 
     {
-        $cart = Cart::getCart();
-
-        $cart->books()->detach($request->id);
-
-        return response()->json([
-            'message' => 'The book was removed from cart'
-        ], 200);
+      
     }
 
 
-    public function empty() 
+    public function destroy() 
     {
         $cart = Cart::getCart();
 

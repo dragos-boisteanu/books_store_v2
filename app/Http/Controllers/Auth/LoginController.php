@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Events\UserLoggedIn;
 use App\Models\Cart;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -39,11 +40,6 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
-    }
-
-    protected function authenticated(Request $request, $user)
-    {
-        Cart::assignCart();
     }
 
 }

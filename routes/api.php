@@ -21,14 +21,11 @@ Route::namespace('Api\Client')->group(function () {
 
     Route::prefix('carts')->group(function() {
 
-        Route::get('/', 'CartController@show')->name('carts.show');
+        Route::get('/', 'CartController@index')->name('carts.index');
         Route::patch('/', 'CartController@update')->name('carts.patch');
       
-        Route::delete('/', 'CartController@empty')->name('carts.empty');
-    
-        Route::get('/{id}', 'CartController@getItem')->name('carts.get-item');
-        Route::post('/{id}', 'CartController@addItem')->name('carts.add-item');
-        
+        Route::delete('/', 'CartController@destroy')->name('carts.delete');
+        Route::post('/{id}', 'CartController@store')->name('carts.store');
         Route::delete('/{id}', 'CartController@removeItem')->name('carts.remove-item');
 
     });        

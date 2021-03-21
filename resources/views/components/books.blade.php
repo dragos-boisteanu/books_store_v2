@@ -1,6 +1,8 @@
+
 @if($books instanceof \Illuminate\Pagination\LengthAwarePaginator)
     {{ $books->links() }}
 @endif
+
 <ul class="list books-list">
     @foreach ($books as $book)
         <li class="book__item">
@@ -42,7 +44,7 @@
             </div>
 
             <div class="book__action">
-                @if ($book->stock->quantity >= 1)
+                @if ($book->stock->quantity > 0)
                     <button id="{{ $book->id }}" class="button button-primary add-to-cart">Add to cart</button>
                 @else 
                     <div class="stock__empty">

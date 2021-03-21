@@ -2,7 +2,7 @@
 
 namespace App\Http\ViewComposers;
 
-use App\Models\Category;
+use App\Models\Cart;
 use Illuminate\View\View;
 
 class CartComposer 
@@ -11,7 +11,12 @@ class CartComposer
 
    public function compose(View $view)
    {
-      $this->cart = Category::all();
+      if(auth()) {
+         $this->cart = Cart::where('user_id', auth()->id());
+      } else {
+         $this->cart = Cart::where('session_id', session()->getId());
+      }
+     
       $view->with('cart', $this->cart);
    }
 }
