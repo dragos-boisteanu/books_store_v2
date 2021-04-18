@@ -4,18 +4,17 @@
             <a class="main-nav-link" href="{{ route('home') }}">Home</a>
         </li>
         <li class="main-nav__item">
-            <div id="categoriesDropdown" class="dropdown categories-dropdown main-nav-link">
+            <div id="categoriesDropdown" class="dropdown categories-dropdown">
                 <ul id="categoriesDropdownContent" class="list dropdown__content categories__list" style="display: none">
                     @foreach ($categories as $category)
                         <li class="content__item">
                             <a class="link content__link" href="{{ route('category-books.show', ['id'=>$category->id])}}">
                                 {{ $category->name }}
                             </a>
-                            {{$category->name}}
                         </li>
                     @endforeach
                 </ul>
-                <div id="categoriesDropdownHeader" class="dropdown__header">
+                <div id="categoriesDropdownHeader" class="dropdown__header main-nav-link">
                     <div>                  
                         Categories
                     </div>
