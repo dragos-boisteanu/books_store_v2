@@ -86,6 +86,512 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./node_modules/lodash/_Symbol.js":
+/*!****************************************!*\
+  !*** ./node_modules/lodash/_Symbol.js ***!
+  \****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var root = __webpack_require__(/*! ./_root */ "./node_modules/lodash/_root.js");
+
+/** Built-in value references. */
+var Symbol = root.Symbol;
+
+module.exports = Symbol;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_baseGetTag.js":
+/*!********************************************!*\
+  !*** ./node_modules/lodash/_baseGetTag.js ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Symbol = __webpack_require__(/*! ./_Symbol */ "./node_modules/lodash/_Symbol.js"),
+    getRawTag = __webpack_require__(/*! ./_getRawTag */ "./node_modules/lodash/_getRawTag.js"),
+    objectToString = __webpack_require__(/*! ./_objectToString */ "./node_modules/lodash/_objectToString.js");
+
+/** `Object#toString` result references. */
+var nullTag = '[object Null]',
+    undefinedTag = '[object Undefined]';
+
+/** Built-in value references. */
+var symToStringTag = Symbol ? Symbol.toStringTag : undefined;
+
+/**
+ * The base implementation of `getTag` without fallbacks for buggy environments.
+ *
+ * @private
+ * @param {*} value The value to query.
+ * @returns {string} Returns the `toStringTag`.
+ */
+function baseGetTag(value) {
+  if (value == null) {
+    return value === undefined ? undefinedTag : nullTag;
+  }
+  return (symToStringTag && symToStringTag in Object(value))
+    ? getRawTag(value)
+    : objectToString(value);
+}
+
+module.exports = baseGetTag;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_freeGlobal.js":
+/*!********************************************!*\
+  !*** ./node_modules/lodash/_freeGlobal.js ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(global) {/** Detect free variable `global` from Node.js. */
+var freeGlobal = typeof global == 'object' && global && global.Object === Object && global;
+
+module.exports = freeGlobal;
+
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js")))
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_getRawTag.js":
+/*!*******************************************!*\
+  !*** ./node_modules/lodash/_getRawTag.js ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Symbol = __webpack_require__(/*! ./_Symbol */ "./node_modules/lodash/_Symbol.js");
+
+/** Used for built-in method references. */
+var objectProto = Object.prototype;
+
+/** Used to check objects for own properties. */
+var hasOwnProperty = objectProto.hasOwnProperty;
+
+/**
+ * Used to resolve the
+ * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
+ * of values.
+ */
+var nativeObjectToString = objectProto.toString;
+
+/** Built-in value references. */
+var symToStringTag = Symbol ? Symbol.toStringTag : undefined;
+
+/**
+ * A specialized version of `baseGetTag` which ignores `Symbol.toStringTag` values.
+ *
+ * @private
+ * @param {*} value The value to query.
+ * @returns {string} Returns the raw `toStringTag`.
+ */
+function getRawTag(value) {
+  var isOwn = hasOwnProperty.call(value, symToStringTag),
+      tag = value[symToStringTag];
+
+  try {
+    value[symToStringTag] = undefined;
+    var unmasked = true;
+  } catch (e) {}
+
+  var result = nativeObjectToString.call(value);
+  if (unmasked) {
+    if (isOwn) {
+      value[symToStringTag] = tag;
+    } else {
+      delete value[symToStringTag];
+    }
+  }
+  return result;
+}
+
+module.exports = getRawTag;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_objectToString.js":
+/*!************************************************!*\
+  !*** ./node_modules/lodash/_objectToString.js ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/** Used for built-in method references. */
+var objectProto = Object.prototype;
+
+/**
+ * Used to resolve the
+ * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
+ * of values.
+ */
+var nativeObjectToString = objectProto.toString;
+
+/**
+ * Converts `value` to a string using `Object.prototype.toString`.
+ *
+ * @private
+ * @param {*} value The value to convert.
+ * @returns {string} Returns the converted string.
+ */
+function objectToString(value) {
+  return nativeObjectToString.call(value);
+}
+
+module.exports = objectToString;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_root.js":
+/*!**************************************!*\
+  !*** ./node_modules/lodash/_root.js ***!
+  \**************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var freeGlobal = __webpack_require__(/*! ./_freeGlobal */ "./node_modules/lodash/_freeGlobal.js");
+
+/** Detect free variable `self`. */
+var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
+
+/** Used as a reference to the global object. */
+var root = freeGlobal || freeSelf || Function('return this')();
+
+module.exports = root;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/debounce.js":
+/*!*****************************************!*\
+  !*** ./node_modules/lodash/debounce.js ***!
+  \*****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var isObject = __webpack_require__(/*! ./isObject */ "./node_modules/lodash/isObject.js"),
+    now = __webpack_require__(/*! ./now */ "./node_modules/lodash/now.js"),
+    toNumber = __webpack_require__(/*! ./toNumber */ "./node_modules/lodash/toNumber.js");
+
+/** Error message constants. */
+var FUNC_ERROR_TEXT = 'Expected a function';
+
+/* Built-in method references for those with the same name as other `lodash` methods. */
+var nativeMax = Math.max,
+    nativeMin = Math.min;
+
+/**
+ * Creates a debounced function that delays invoking `func` until after `wait`
+ * milliseconds have elapsed since the last time the debounced function was
+ * invoked. The debounced function comes with a `cancel` method to cancel
+ * delayed `func` invocations and a `flush` method to immediately invoke them.
+ * Provide `options` to indicate whether `func` should be invoked on the
+ * leading and/or trailing edge of the `wait` timeout. The `func` is invoked
+ * with the last arguments provided to the debounced function. Subsequent
+ * calls to the debounced function return the result of the last `func`
+ * invocation.
+ *
+ * **Note:** If `leading` and `trailing` options are `true`, `func` is
+ * invoked on the trailing edge of the timeout only if the debounced function
+ * is invoked more than once during the `wait` timeout.
+ *
+ * If `wait` is `0` and `leading` is `false`, `func` invocation is deferred
+ * until to the next tick, similar to `setTimeout` with a timeout of `0`.
+ *
+ * See [David Corbacho's article](https://css-tricks.com/debouncing-throttling-explained-examples/)
+ * for details over the differences between `_.debounce` and `_.throttle`.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Function
+ * @param {Function} func The function to debounce.
+ * @param {number} [wait=0] The number of milliseconds to delay.
+ * @param {Object} [options={}] The options object.
+ * @param {boolean} [options.leading=false]
+ *  Specify invoking on the leading edge of the timeout.
+ * @param {number} [options.maxWait]
+ *  The maximum time `func` is allowed to be delayed before it's invoked.
+ * @param {boolean} [options.trailing=true]
+ *  Specify invoking on the trailing edge of the timeout.
+ * @returns {Function} Returns the new debounced function.
+ * @example
+ *
+ * // Avoid costly calculations while the window size is in flux.
+ * jQuery(window).on('resize', _.debounce(calculateLayout, 150));
+ *
+ * // Invoke `sendMail` when clicked, debouncing subsequent calls.
+ * jQuery(element).on('click', _.debounce(sendMail, 300, {
+ *   'leading': true,
+ *   'trailing': false
+ * }));
+ *
+ * // Ensure `batchLog` is invoked once after 1 second of debounced calls.
+ * var debounced = _.debounce(batchLog, 250, { 'maxWait': 1000 });
+ * var source = new EventSource('/stream');
+ * jQuery(source).on('message', debounced);
+ *
+ * // Cancel the trailing debounced invocation.
+ * jQuery(window).on('popstate', debounced.cancel);
+ */
+function debounce(func, wait, options) {
+  var lastArgs,
+      lastThis,
+      maxWait,
+      result,
+      timerId,
+      lastCallTime,
+      lastInvokeTime = 0,
+      leading = false,
+      maxing = false,
+      trailing = true;
+
+  if (typeof func != 'function') {
+    throw new TypeError(FUNC_ERROR_TEXT);
+  }
+  wait = toNumber(wait) || 0;
+  if (isObject(options)) {
+    leading = !!options.leading;
+    maxing = 'maxWait' in options;
+    maxWait = maxing ? nativeMax(toNumber(options.maxWait) || 0, wait) : maxWait;
+    trailing = 'trailing' in options ? !!options.trailing : trailing;
+  }
+
+  function invokeFunc(time) {
+    var args = lastArgs,
+        thisArg = lastThis;
+
+    lastArgs = lastThis = undefined;
+    lastInvokeTime = time;
+    result = func.apply(thisArg, args);
+    return result;
+  }
+
+  function leadingEdge(time) {
+    // Reset any `maxWait` timer.
+    lastInvokeTime = time;
+    // Start the timer for the trailing edge.
+    timerId = setTimeout(timerExpired, wait);
+    // Invoke the leading edge.
+    return leading ? invokeFunc(time) : result;
+  }
+
+  function remainingWait(time) {
+    var timeSinceLastCall = time - lastCallTime,
+        timeSinceLastInvoke = time - lastInvokeTime,
+        timeWaiting = wait - timeSinceLastCall;
+
+    return maxing
+      ? nativeMin(timeWaiting, maxWait - timeSinceLastInvoke)
+      : timeWaiting;
+  }
+
+  function shouldInvoke(time) {
+    var timeSinceLastCall = time - lastCallTime,
+        timeSinceLastInvoke = time - lastInvokeTime;
+
+    // Either this is the first call, activity has stopped and we're at the
+    // trailing edge, the system time has gone backwards and we're treating
+    // it as the trailing edge, or we've hit the `maxWait` limit.
+    return (lastCallTime === undefined || (timeSinceLastCall >= wait) ||
+      (timeSinceLastCall < 0) || (maxing && timeSinceLastInvoke >= maxWait));
+  }
+
+  function timerExpired() {
+    var time = now();
+    if (shouldInvoke(time)) {
+      return trailingEdge(time);
+    }
+    // Restart the timer.
+    timerId = setTimeout(timerExpired, remainingWait(time));
+  }
+
+  function trailingEdge(time) {
+    timerId = undefined;
+
+    // Only invoke if we have `lastArgs` which means `func` has been
+    // debounced at least once.
+    if (trailing && lastArgs) {
+      return invokeFunc(time);
+    }
+    lastArgs = lastThis = undefined;
+    return result;
+  }
+
+  function cancel() {
+    if (timerId !== undefined) {
+      clearTimeout(timerId);
+    }
+    lastInvokeTime = 0;
+    lastArgs = lastCallTime = lastThis = timerId = undefined;
+  }
+
+  function flush() {
+    return timerId === undefined ? result : trailingEdge(now());
+  }
+
+  function debounced() {
+    var time = now(),
+        isInvoking = shouldInvoke(time);
+
+    lastArgs = arguments;
+    lastThis = this;
+    lastCallTime = time;
+
+    if (isInvoking) {
+      if (timerId === undefined) {
+        return leadingEdge(lastCallTime);
+      }
+      if (maxing) {
+        // Handle invocations in a tight loop.
+        clearTimeout(timerId);
+        timerId = setTimeout(timerExpired, wait);
+        return invokeFunc(lastCallTime);
+      }
+    }
+    if (timerId === undefined) {
+      timerId = setTimeout(timerExpired, wait);
+    }
+    return result;
+  }
+  debounced.cancel = cancel;
+  debounced.flush = flush;
+  return debounced;
+}
+
+module.exports = debounce;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/isObject.js":
+/*!*****************************************!*\
+  !*** ./node_modules/lodash/isObject.js ***!
+  \*****************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/**
+ * Checks if `value` is the
+ * [language type](http://www.ecma-international.org/ecma-262/7.0/#sec-ecmascript-language-types)
+ * of `Object`. (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is an object, else `false`.
+ * @example
+ *
+ * _.isObject({});
+ * // => true
+ *
+ * _.isObject([1, 2, 3]);
+ * // => true
+ *
+ * _.isObject(_.noop);
+ * // => true
+ *
+ * _.isObject(null);
+ * // => false
+ */
+function isObject(value) {
+  var type = typeof value;
+  return value != null && (type == 'object' || type == 'function');
+}
+
+module.exports = isObject;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/isObjectLike.js":
+/*!*********************************************!*\
+  !*** ./node_modules/lodash/isObjectLike.js ***!
+  \*********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/**
+ * Checks if `value` is object-like. A value is object-like if it's not `null`
+ * and has a `typeof` result of "object".
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
+ * @example
+ *
+ * _.isObjectLike({});
+ * // => true
+ *
+ * _.isObjectLike([1, 2, 3]);
+ * // => true
+ *
+ * _.isObjectLike(_.noop);
+ * // => false
+ *
+ * _.isObjectLike(null);
+ * // => false
+ */
+function isObjectLike(value) {
+  return value != null && typeof value == 'object';
+}
+
+module.exports = isObjectLike;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/isSymbol.js":
+/*!*****************************************!*\
+  !*** ./node_modules/lodash/isSymbol.js ***!
+  \*****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var baseGetTag = __webpack_require__(/*! ./_baseGetTag */ "./node_modules/lodash/_baseGetTag.js"),
+    isObjectLike = __webpack_require__(/*! ./isObjectLike */ "./node_modules/lodash/isObjectLike.js");
+
+/** `Object#toString` result references. */
+var symbolTag = '[object Symbol]';
+
+/**
+ * Checks if `value` is classified as a `Symbol` primitive or object.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a symbol, else `false`.
+ * @example
+ *
+ * _.isSymbol(Symbol.iterator);
+ * // => true
+ *
+ * _.isSymbol('abc');
+ * // => false
+ */
+function isSymbol(value) {
+  return typeof value == 'symbol' ||
+    (isObjectLike(value) && baseGetTag(value) == symbolTag);
+}
+
+module.exports = isSymbol;
+
+
+/***/ }),
+
 /***/ "./node_modules/lodash/lodash.js":
 /*!***************************************!*\
   !*** ./node_modules/lodash/lodash.js ***!
@@ -17251,6 +17757,117 @@
 
 /***/ }),
 
+/***/ "./node_modules/lodash/now.js":
+/*!************************************!*\
+  !*** ./node_modules/lodash/now.js ***!
+  \************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var root = __webpack_require__(/*! ./_root */ "./node_modules/lodash/_root.js");
+
+/**
+ * Gets the timestamp of the number of milliseconds that have elapsed since
+ * the Unix epoch (1 January 1970 00:00:00 UTC).
+ *
+ * @static
+ * @memberOf _
+ * @since 2.4.0
+ * @category Date
+ * @returns {number} Returns the timestamp.
+ * @example
+ *
+ * _.defer(function(stamp) {
+ *   console.log(_.now() - stamp);
+ * }, _.now());
+ * // => Logs the number of milliseconds it took for the deferred invocation.
+ */
+var now = function() {
+  return root.Date.now();
+};
+
+module.exports = now;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/toNumber.js":
+/*!*****************************************!*\
+  !*** ./node_modules/lodash/toNumber.js ***!
+  \*****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var isObject = __webpack_require__(/*! ./isObject */ "./node_modules/lodash/isObject.js"),
+    isSymbol = __webpack_require__(/*! ./isSymbol */ "./node_modules/lodash/isSymbol.js");
+
+/** Used as references for various `Number` constants. */
+var NAN = 0 / 0;
+
+/** Used to match leading and trailing whitespace. */
+var reTrim = /^\s+|\s+$/g;
+
+/** Used to detect bad signed hexadecimal string values. */
+var reIsBadHex = /^[-+]0x[0-9a-f]+$/i;
+
+/** Used to detect binary string values. */
+var reIsBinary = /^0b[01]+$/i;
+
+/** Used to detect octal string values. */
+var reIsOctal = /^0o[0-7]+$/i;
+
+/** Built-in method references without a dependency on `root`. */
+var freeParseInt = parseInt;
+
+/**
+ * Converts `value` to a number.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to process.
+ * @returns {number} Returns the number.
+ * @example
+ *
+ * _.toNumber(3.2);
+ * // => 3.2
+ *
+ * _.toNumber(Number.MIN_VALUE);
+ * // => 5e-324
+ *
+ * _.toNumber(Infinity);
+ * // => Infinity
+ *
+ * _.toNumber('3.2');
+ * // => 3.2
+ */
+function toNumber(value) {
+  if (typeof value == 'number') {
+    return value;
+  }
+  if (isSymbol(value)) {
+    return NAN;
+  }
+  if (isObject(value)) {
+    var other = typeof value.valueOf == 'function' ? value.valueOf() : value;
+    value = isObject(other) ? (other + '') : other;
+  }
+  if (typeof value != 'string') {
+    return value === 0 ? value : +value;
+  }
+  value = value.replace(reTrim, '');
+  var isBinary = reIsBinary.test(value);
+  return (isBinary || reIsOctal.test(value))
+    ? freeParseInt(value.slice(2), isBinary ? 2 : 8)
+    : (reIsBadHex.test(value) ? NAN : +value);
+}
+
+module.exports = toNumber;
+
+
+/***/ }),
+
 /***/ "./node_modules/webpack/buildin/global.js":
 /*!***********************************!*\
   !*** (webpack)/buildin/global.js ***!
@@ -17319,57 +17936,10 @@ module.exports = function(module) {
 /*!*****************************!*\
   !*** ./resources/js/app.js ***!
   \*****************************/
-/*! no exports provided */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _components_CartComponent__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/CartComponent */ "./resources/js/components/CartComponent.js");
-/* harmony import */ var _components_DemoComponent__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/DemoComponent */ "./resources/js/components/DemoComponent.js");
-/* harmony import */ var _components_AddToCartBtnComponent__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/AddToCartBtnComponent */ "./resources/js/components/AddToCartBtnComponent.js");
-/* harmony import */ var _components_CountyCityComponent__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/CountyCityComponent */ "./resources/js/components/CountyCityComponent.js");
-/* harmony import */ var _components_UpdateCartQuantityComponent__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/UpdateCartQuantityComponent */ "./resources/js/components/UpdateCartQuantityComponent.js");
-/* harmony import */ var _components_DynamicInputComponent__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/DynamicInputComponent */ "./resources/js/components/DynamicInputComponent.js");
-/* harmony import */ var _components_UserDropdowComponent__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/UserDropdowComponent */ "./resources/js/components/UserDropdowComponent.js");
-/* harmony import */ var _components_CategoriesDropdown__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/CategoriesDropdown */ "./resources/js/components/CategoriesDropdown.js");
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
-
-
-
-
-
-
-
-
-
-Vue.component('cart-component', _components_CartComponent__WEBPACK_IMPORTED_MODULE_0__["default"]);
-Vue.component('demo-component', _components_DemoComponent__WEBPACK_IMPORTED_MODULE_1__["default"]);
-Vue.component('add-to-cart-btn-component', _components_AddToCartBtnComponent__WEBPACK_IMPORTED_MODULE_2__["default"]);
-Vue.component('county-city-component', _components_CountyCityComponent__WEBPACK_IMPORTED_MODULE_3__["default"]);
-Vue.component('update-cart-quantity-component', _components_UpdateCartQuantityComponent__WEBPACK_IMPORTED_MODULE_4__["default"]);
-Vue.component('dynamic-input-component', _components_DynamicInputComponent__WEBPACK_IMPORTED_MODULE_5__["default"]);
-Vue.component('user-dropdown-component', _components_UserDropdowComponent__WEBPACK_IMPORTED_MODULE_6__["default"]);
-Vue.component('categories-dropdown-component', _components_CategoriesDropdown__WEBPACK_IMPORTED_MODULE_7__["default"]);
-Vue.prototype.$bus = new Vue();
-Vue.directive('click-outside', {
-  bind: function bind(el, binding, vnode) {
-    el.clickOutsideEvent = function (event) {
-      // here I check that click was outside the el and his children
-      if (!(el == event.target || el.contains(event.target))) {
-        // and if it did, call method provided in attribute value
-        vnode.context[binding.expression](event);
-      }
-    };
-
-    document.body.addEventListener('click', el.clickOutsideEvent);
-  },
-  unbind: function unbind(el) {
-    document.body.removeEventListener('click', el.clickOutsideEvent);
-  }
-});
-new Vue({
-  el: '#app'
-});
 
 /***/ }),
 
@@ -17380,8 +17950,8 @@ new Vue({
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-window._ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js"); // window._debouce = require('lodash/debounce');
-
+window._ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
+window._debouce = __webpack_require__(/*! lodash/debounce */ "./node_modules/lodash/debounce.js");
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
  * to our Laravel back-end. This library automatically handles sending the
@@ -17410,527 +17980,6 @@ window._ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
-
-/***/ }),
-
-/***/ "./resources/js/components/AddToCartBtnComponent.js":
-/*!**********************************************************!*\
-  !*** ./resources/js/components/AddToCartBtnComponent.js ***!
-  \**********************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-var AddToCartBtnComponent = {
-  template: "\n        <button @click=\"addToCart\" class=\"button button-primary\">Add to cart</button>\n    ",
-  props: {
-    id: {
-      type: Number,
-      require: true
-    }
-  },
-  data: function data() {
-    return {
-      cartItems: []
-    };
-  },
-  methods: {
-    reciveItems: function reciveItems(data) {
-      this.cartItems = data;
-    },
-    addToCart: function addToCart() {
-      var _this = this;
-
-      axios.post("api/carts/".concat(this.id)).then(function (response) {
-        if (response.data.book) {
-          _this.$bus.$emit('added', {
-            id: _this.id,
-            book: response.data.book[0],
-            vm: _this
-          });
-        } else {
-          _this.$bus.$emit('added', {
-            id: _this.id,
-            vm: _this
-          });
-        }
-      })["catch"](function (error) {
-        console.error(error);
-      });
-    }
-  }
-};
-/* harmony default export */ __webpack_exports__["default"] = (AddToCartBtnComponent);
-
-/***/ }),
-
-/***/ "./resources/js/components/CartComponent.js":
-/*!**************************************************!*\
-  !*** ./resources/js/components/CartComponent.js ***!
-  \**************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-var CartComponent = {
-  template: "\n        <div class=\"cart\" :class=\"{'cart--active': showCart, 'cart--disabled': !showCartButton}\" v-click-outside=\"closeCart\">\n            <div v-if=\"showCart\" class=\"cart__content\">\n                <div class=\"cart__header\">\n                    <div>\n                        Shopping cart \n                    </div>\n                    <button @click=\"toggleCart\" class=\"button\">\n                        <img src=\"/storage/icons/close.svg\"/>\n                    </button>\n                </div>\n                <ul class=\"items__list\">\n                    <li v-for=\"(book,index) in items\" :key=\"index\" class=\"item\">\n                        <a :href=\"'/books/' + book.id\" class=\"link title\">{{ book.title }}</a>\n                        <div class=\"quantity\">\n                            <span class=\"divider\">x</span>\n                            <span class=\"value\">{{ book.quantity }} buc.</span>\n                        </div>\n                        <div class=\"price\">{{ book.finalPrice }} RON</div>\n                        <button @click=\"removeFromCart(book.id)\" class=\"button\">\n                            <svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"red\" width=\"18px\" height=\"18px\"><path d=\"M0 0h24v24H0z\" fill=\"none\"/>\n                                <path d=\"M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z\"/>\n                            </svg>\n                        </button>\n                    </li>\n                </ul>\n                <form method=\"GET\" action=\"/orders/create\" class=\"order-form\">\n                    <button type=\"submit\" class=\"button button-primary cart__button-order\">Place order</button>\n                </form>\n            </div>\n            <div class=\"button button--small cart__button\"  @click=\"toggleCart\" v-else>\n                <div class=\"button__icon\">\n                    <img src=\"/storage/icons/cart.svg\"/>\n                </div>\n                <div class=\"button__count\">\n                    {{ count }}\n                </div>\n            </div>\n        </div>\n    ",
-  created: function created() {
-    this.getItems();
-  },
-  mounted: function mounted() {
-    this.$bus.$on('added', this.addedToCart);
-  },
-  data: function data() {
-    return {
-      items: [],
-      showCart: false
-    };
-  },
-  computed: {
-    showCartButton: function showCartButton() {
-      return this.items.length > 0 ? true : false;
-    },
-    count: function count() {
-      var total = 0;
-      this.items.forEach(function (item) {
-        total += parseFloat(item.quantity);
-      });
-      return total;
-    }
-  },
-  methods: {
-    removeFromCart: function removeFromCart(id) {
-      var _this = this;
-
-      axios["delete"]("/api/carts/".concat(this.id), {
-        data: {
-          id: id
-        }
-      }).then(function (response) {
-        _this.items.splice(_this.items.findIndex(function (item) {
-          return item.id == id;
-        }), 1);
-
-        if (_this.count === 0) {
-          _this.showCart = false;
-        }
-      })["catch"](function (error) {
-        console.error(error);
-      });
-    },
-    addedToCart: function addedToCart(data) {
-      if (data.book) {
-        this.items.push(data.book);
-      } else {
-        var index = this.items.findIndex(function (item) {
-          return item.id == data.id;
-        });
-
-        if (index > -1) {
-          var item = this.items[index];
-          data.vm.$set(item, 'quantity', parseInt(item.quantity) + 1);
-          data.vm.$set(item, 'finalPrice', parseFloat(item.price) + parseFloat(item.price));
-        }
-      }
-    },
-    getItems: function getItems() {
-      var _this2 = this;
-
-      axios.get('/api/carts').then(function (response) {
-        if (response.data.cart) {
-          _this2.items = response.data.cart;
-        }
-      })["catch"](function (error) {
-        console.error(error);
-      });
-    },
-    toggleCart: function toggleCart() {
-      if (this.count > 0) {
-        this.showCart = !this.showCart;
-      }
-
-      if (this.showCart) {
-        this.getItems();
-      }
-    },
-    closeCart: function closeCart() {
-      this.showCart = false;
-    },
-    sendItems: function sendItems() {
-      this.$bus.$emit('cartItems', this.items);
-    }
-  }
-};
-/* harmony default export */ __webpack_exports__["default"] = (CartComponent);
-
-/***/ }),
-
-/***/ "./resources/js/components/CategoriesDropdown.js":
-/*!*******************************************************!*\
-  !*** ./resources/js/components/CategoriesDropdown.js ***!
-  \*******************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-var CategoriesDropdown = {
-  template: "\n        <a class=\"dropdown categories-dropdown main-nav-link\" v-click-outside=\"closeDropdown\" @click=\"toggleContent\">\n            <ul class=\"list dropdown__content categories__list\" v-if=\"displayContent\">\n                <li class=\"content__item\" v-for=\"category in categories\">\n                    <a class=\"link content__link\" :href=\"'/categories/' + category.id\">{{category.name}}</a>\n                </li>\n            </ul>\n            <div class=\"dropdown__header\">\n                <div>                  \n                    Categories\n                </div>\n                <div>\n                    <img src=\"/storage/icons/downArrowWhite.svg\" v-if=\"displayDownArrow\" />\n                    <img src=\"/storage/icons/upArrowWhite.svg\" v-else />\n                </div>\n            </div>\n        </a>\n     \n    ",
-  data: function data() {
-    return {
-      categories: [],
-      displayContent: false,
-      displayDownArrow: true
-    };
-  },
-  methods: {
-    toggleContent: function toggleContent() {
-      this.displayContent = !this.displayContent;
-      this.displayDownArrow = !this.displayDownArrow;
-    },
-    closeDropdown: function closeDropdown() {
-      this.displayContent = false;
-      this.displayDownArrow = true;
-    }
-  }
-};
-/* harmony default export */ __webpack_exports__["default"] = (CategoriesDropdown);
-
-/***/ }),
-
-/***/ "./resources/js/components/CountyCityComponent.js":
-/*!********************************************************!*\
-  !*** ./resources/js/components/CountyCityComponent.js ***!
-  \********************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-var _CountyCityComponent;
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-var CountyCityComponent = (_CountyCityComponent = {
-  template: "\n        <div class=\"form-section\">\n            <div class=\"form-group\">\n                <label for=\"county\" class=\"form-label\">Judet</label>\n                <select id=\"county\" class=\"form-input\" v-on:change=\"loadCities\" v-model=\"selectedCountyId\">\n                    <option value=\"0\" selected disabled>Alege judetul</option>\n                    <option :value=\"county.id\" v-for=\"(county, index) in countiesList\" :key=\"index\"> {{county.name}}</option>\n                    \n                </select>\n            </div>\n            <div class=\"form-group\">\n                <label for=\"city\" class=\"form-label\">Oras</label>\n                <select id=\"city\" class=\"form-input\" v-on:change=\"cityChanged\" v-model=\"selectedCityId\">\n                    <option value=\"0\" selected disabled> Alege orasul </option>\n                    <option v-for=\"(city, index) in cities\" :value=\"city.id\" :key=\"index\">{{city.name}}</option>\n                </select>           \n            </div>\n        </div>\n    ",
-  created: function created() {
-    console.log(this.selectedCountyId);
-  },
-  props: {
-    counties: {
-      type: String,
-      required: true
-    },
-    selectedcounty: {
-      type: String,
-      "default": 0
-    },
-    selectedcity: {
-      type: String,
-      "default": 0
-    }
-  }
-}, _defineProperty(_CountyCityComponent, "created", function created() {
-  if (this.selectedcounty > 0 && this.selectedcity > 0) {
-    this.loadCities();
-  }
-}), _defineProperty(_CountyCityComponent, "data", function data() {
-  return {
-    selectedCountyId: this.selectedcounty,
-    selectedCityId: this.selectedcity,
-    cities: [],
-    countiesList: JSON.parse(this.counties)
-  };
-}), _defineProperty(_CountyCityComponent, "computed", {
-  citiesLength: function citiesLength() {
-    return this.cities.length;
-  }
-}), _defineProperty(_CountyCityComponent, "methods", {
-  loadCities: function loadCities() {
-    var _this = this;
-
-    axios.get("api/cities/".concat(this.selectedCountyId)).then(function (response) {
-      _this.cities = response.data;
-
-      _this.countyChanged();
-    })["catch"](function (error) {
-      console.error(error);
-    });
-  },
-  countyChanged: function countyChanged() {
-    this.$emit('county-selected', this.selectedCountyId);
-  },
-  cityChanged: function cityChanged() {
-    this.$emit('city-selected', this.selectedCityId);
-  }
-}), _CountyCityComponent);
-/* harmony default export */ __webpack_exports__["default"] = (CountyCityComponent);
-
-/***/ }),
-
-/***/ "./resources/js/components/DemoComponent.js":
-/*!**************************************************!*\
-  !*** ./resources/js/components/DemoComponent.js ***!
-  \**************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-var DemoComponent = {
-  template: "\n        <div>\n            test 23\n        </div>\n    "
-};
-/* harmony default export */ __webpack_exports__["default"] = (DemoComponent);
-
-/***/ }),
-
-/***/ "./resources/js/components/DynamicInputComponent.js":
-/*!**********************************************************!*\
-  !*** ./resources/js/components/DynamicInputComponent.js ***!
-  \**********************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-var DynamicInputComponent = {
-  template: "\n        <div class=\"dynamic-input\">\n            <ul class=\"words-list\">\n                <li class=\"word\" v-for=\"(word, index) in words\" :key=\"index\">\n                    {{word.first_name }} {{ word.name}}\n                    <button class=\"word-button\" @click.prevent=\"remove(word.id)\">\n                        <svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"black\" width=\"12px\" height=\"12px\">\n                            <path d=\"M0 0h24v24H0z\" fill=\"none\"/>\n                            <path d=\"M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z\"/>\n                        </svg>\n                    </button>\n                </li>\n            </ul>\n            <div class=\"input-container\" v-click-outside=\"closeDropdown\">\n                <input type=\"text\" v-model=\"input\" @keyup=\"find\" class=\"form-input\">\n                <ul v-if=\"!noWords\" class=\"results-list\">\n                    <li class=\"result\" v-for=\"word in retrievedWords\" :key=\"word.id\" @click=\"add(word)\">\n                        {{ word.first_name }} {{ word.name}}\n                    </li>\n                </ul>\n            </div>\n        </div>\n    ",
-  // <div v-if="noWords">
-  //     <input type="text" v-model="word" placeholder="New item...">
-  //     <button @click.prevent="addNewWord">+</button>
-  // </div>
-  props: {
-    wordsprop: {
-      type: String,
-      "default": ''
-    },
-    route: {
-      type: String,
-      "default": ''
-    }
-  },
-  created: function created() {
-    if (this.wordsprop.length > 0) {
-      this.words = JSON.parse(this.wordsprop);
-      this.emitUpdate();
-    }
-  },
-  data: function data() {
-    return {
-      input: '',
-      words: [],
-      retrievedWords: [],
-      word: '',
-      noWords: false
-    };
-  },
-  computed: {
-    noWords: function noWords() {
-      return this.retrievedWords.length > 0 ? true : false;
-    }
-  },
-  methods: {
-    add: function add(value) {
-      if (this.words.findIndex(function (word) {
-        return word.id === value.id;
-      }) < 0) {
-        this.words.push(value);
-        this.emitUpdate();
-      }
-
-      this.input = '';
-      this.retrievedWords.splice(0);
-    },
-    remove: function remove(id) {
-      this.words.splice(this.words.findIndex(function (word) {
-        return word.id === id;
-      }), 1);
-      this.emitUpdate();
-    },
-    find: function find() {
-      var _this = this;
-
-      if (this.input.length >= 2) {
-        axios.get("api/".concat(this.route, "/find"), {
-          params: {
-            data: this.input
-          }
-        }).then(function (response) {
-          console.log(response);
-
-          if (response.data.message.length > 0) {
-            _this.retrievedWords = response.data.message; // this.noWords = false;
-
-            _this.word = '';
-          } else {
-            _this.retrievedWords.splice(0); // this.noWords = true;
-
-          }
-        })["catch"](function (error) {
-          console.error(error);
-        });
-      } else {
-        this.retrievedWords.splice(0); // this.noWords = false;
-
-        this.word = '';
-      }
-    },
-    emitUpdate: function emitUpdate() {
-      this.$emit('updated', this.words);
-    },
-    closeDropdown: function closeDropdown() {
-      this.retrievedWords.splice(0);
-    },
-    // addNewWord() {
-    //     if(this.word.length > 0) {
-    //         this.word = this.word.trim();
-    //         const first_name =  this.word.substr(0,this.word.indexOf(' ')); 
-    //         const name = this.word.substr(this.word.indexOf(' ')+1); 
-    //         axios.get(`api/${this.route}/check`, {
-    //             params: {
-    //                 first_name,
-    //                 name
-    //             }
-    //         })
-    //         .then( response => {
-    //             if(response.data.status === 'ok'){
-    //                 this.saveWord({
-    //                     first_name,
-    //                     name
-    //                 });
-    //             }
-    //         })
-    //         .catch( error => {
-    //             console.log( error );
-    //         })
-    //     }
-    // },
-    saveWord: function saveWord(data) {
-      var _this2 = this;
-
-      axios.post("api/".concat(this.route), {
-        first_name: data.first_name,
-        name: data.name
-      }).then(function (response) {
-        if (response.status === 200) {
-          _this2.add(response.data.message[0]); // this.noWords = false;
-
-
-          _this2.word = '';
-
-          _this2.emitUpdate();
-        }
-      })["catch"](function (error) {
-        console.error(error);
-      });
-    }
-  }
-};
-/* harmony default export */ __webpack_exports__["default"] = (DynamicInputComponent);
-
-/***/ }),
-
-/***/ "./resources/js/components/UpdateCartQuantityComponent.js":
-/*!****************************************************************!*\
-  !*** ./resources/js/components/UpdateCartQuantityComponent.js ***!
-  \****************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-var UpdateCartQuantityComponent = {
-  template: "\n    <div>\n        <input type=\"number\" name=\"quantity\" v-model:value=\"localQunatity\"/>\n        <input type=\"hidden\" name=\"bookId\" :value=\"bookid\"/>\n        \n        <button @click=\"update\">Update quantity</button>\n    </div>\n    \n    ",
-  props: {
-    bookid: {
-      type: Number,
-      required: true
-    },
-    quantity: {
-      type: Number,
-      required: true
-    }
-  },
-  data: function data() {
-    return {
-      localQunatity: this.quantity
-    };
-  },
-  methods: {
-    update: function update() {
-      var _this = this;
-
-      axios.patch('api/carts', {
-        bookId: this.bookid,
-        quantity: this.localQunatity
-      }).then(function (response) {
-        if (response.status === 200) {
-          console.log(response.data);
-        }
-
-        if (response.data.zero) {
-          _this.localQunatity = _this.quantity;
-        }
-      })["catch"](function (error) {
-        if (error.response.data.zero) {
-          _this.localQunatity = _this.quantity;
-        }
-
-        console.error(error);
-      });
-    }
-  }
-};
-/* harmony default export */ __webpack_exports__["default"] = (UpdateCartQuantityComponent);
-
-/***/ }),
-
-/***/ "./resources/js/components/UserDropdowComponent.js":
-/*!*********************************************************!*\
-  !*** ./resources/js/components/UserDropdowComponent.js ***!
-  \*********************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-var UserDropdownComponent = {
-  template: "\n        <div class=\"dropdown user-dropdown\" v-click-outside=\"closeDropdown\">\n            <ul class=\"list dropdown__content\" v-if=\"displayContent && auth\">\n                <li class=\"content__item\" v-if=\"admin\">\n                    <a class=\"link content__link dashboard-link\" href=\"/dashboard\">Dashboard</a>\n                </li>\n                <li class=\"content__item\">\n                    <a class=\"link content__link\" href=\"/account\">Account</a>\n                </li>\n                <li class=\"content__item\">\n                    <a class=\"link content__link\" href=\"/account/addresses\">Addresses</a>\n                </li>\n                <li class=\"content__item\">\n                    <a class=\"link content__link\" href=\"/account/orders\">Orders</a>\n                </li>\n                <li class=\"content__item\">\n                    <form method=\"POST\" action=\"/logout\" class=\"menu-form\">\n                        <input type=\"hidden\" name=\"_token\" :value=\"csrf\">\n                        <button type=\"submit\" class=\"button link content__link\">Logout</button>\n                    </form>\n                </li>\n            </ul>\n            <div class=\"dropdown__header\" @click=\"toggleContent\">\n                <div>\n                    <div v-if=\"text\">\n                        {{ text }}\n                    </div>\n                    <a href=\"/login\" v-else>Login</a>\n                </div>\n                <div v-if=\"auth\">\n                    <img src=\"/storage/icons/downArrow.svg\" v-if=\"displayDownArrow\" />\n                    <img src=\"/storage/icons/upArrow.svg\" v-else />\n                </div>\n            </div>\n        </div>\n     \n    ",
-  props: {
-    text: {
-      type: String,
-      "default": null
-    },
-    auth: {
-      type: Boolean,
-      "default": false
-    },
-    admin: {
-      type: Boolean,
-      "default": false
-    }
-  },
-  data: function data() {
-    return {
-      displayContent: false,
-      displayDownArrow: true,
-      csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-    };
-  },
-  methods: {
-    toggleContent: function toggleContent() {
-      this.displayContent = !this.displayContent;
-      this.displayDownArrow = !this.displayDownArrow;
-    },
-    closeDropdown: function closeDropdown() {
-      this.displayContent = false;
-      this.displayDownArrow = true;
-    }
-  }
-};
-/* harmony default export */ __webpack_exports__["default"] = (UserDropdownComponent);
 
 /***/ }),
 

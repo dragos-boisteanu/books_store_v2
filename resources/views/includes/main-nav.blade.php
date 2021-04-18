@@ -3,11 +3,11 @@
         <li class="main-nav__item">
             <a class="main-nav-link" href="{{ route('home') }}">Home</a>
         </li>
-        {{-- <li class="main-nav__item" x-data="{show: false}">
-            <a class="dropdown categories-dropdown main-nav-link" @click="show = true">
-                <ul class="list dropdown__content categories__list" x-show="show">
-                    <li class="content__item" x-for="category in @json($categories)" :key="category.id">
-                        <a class="link content__link" :href="'/categories/' + category.id" x-text="category.name"></a>
+        <li class="main-nav__item">
+            <a class="dropdown categories-dropdown main-nav-link">
+                <ul class="list dropdown__content categories__list">
+                    <li class="content__item">
+                        <a class="link content__link" :href="'/categories/' + category.id">a</a>
                     </li>
                 </ul>
                 <div class="dropdown__header">
@@ -15,12 +15,12 @@
                         Categories
                     </div>
                     <div>
-                        <img src="/storage/icons/downArrowWhite.svg" v-if="displayDownArrow" />
-                        <img src="/storage/icons/upArrowWhite.svg" v-else />
+                        <img src="/storage/icons/downArrowWhite.svg"/>
+                        <img src="/storage/icons/upArrowWhite.svg"/>
                     </div>
                 </div>
             </a>
-        </li> --}}
+        </li>
         <li class="main-nav__item">
             <a class="main-nav-link" href="{{ route('home') }}">About</a>
         </li>
@@ -76,6 +76,9 @@
 
 @push('js-scripts')
     <script>
+
+        const categoriesList = $('#categoriesList');
+      
         const dropdownHeader = $('#dropdownHeader');
         const dropdownContent = $('#dropdownContent');
         const upArrow = $('#upArrow');
@@ -100,6 +103,8 @@
                 upArrow.show();
             });
         }
+
+
 
 
     </script>

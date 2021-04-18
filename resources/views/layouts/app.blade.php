@@ -11,7 +11,7 @@
     <title>Books store</title>
 
     <!-- Scripts -->
-    {{-- <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script> --}}
+    
     {{-- <script src="https://cdn.jsdelivr.net/npm/dayjs@1.9.6/dayjs.min.js"></script> --}}
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 
@@ -40,7 +40,6 @@
     @yield('content')
     
     @include('includes.footer')
-    
     <script src="{{ asset(mix('js/app.js')) }}"></script>
     @stack('js-scripts')
 </body>
