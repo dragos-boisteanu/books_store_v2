@@ -2,15 +2,16 @@
 
 namespace App\Providers;
 
+
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
+use App\Http\ViewComposers\CartComposer;
 use App\Http\ViewComposers\CategoriesComposer;
-use App\Http\ViewComposers\MostViewedComposer;
 
-class ComposerProvider extends ServiceProvider
+class ViewServiceProvider extends ServiceProvider
 {
     /**
-     * Register services.
+     * Register any application services.
      *
      * @return void
      */
@@ -20,15 +21,14 @@ class ComposerProvider extends ServiceProvider
     }
 
     /**
-     * Bootstrap services.
+     * Bootstrap any application services.
      *
      * @return void
      */
     public function boot()
     {
-        View::composer('*',
-            CategoriesComposer::class
-        );
-
+        // Using class based composers...
+        View::composer('*', CategoriesComposer::class);
+        View::composer('*', CartComposer::class);
     }
 }

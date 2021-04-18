@@ -4,22 +4,27 @@
             <a class="main-nav-link" href="{{ route('home') }}">Home</a>
         </li>
         <li class="main-nav__item">
-            <a class="dropdown categories-dropdown main-nav-link">
-                <ul class="list dropdown__content categories__list">
-                    <li class="content__item">
-                        <a class="link content__link" :href="'/categories/' + category.id">a</a>
-                    </li>
+            <div id="categoriesDropdown" class="dropdown categories-dropdown main-nav-link">
+                <ul id="categoriesDropdownContent" class="list dropdown__content categories__list" style="display: none">
+                    @foreach ($categories as $category)
+                        <li class="content__item">
+                            <a class="link content__link" href="{{ route('category-books.show', ['id'=>$category->id])}}">
+                                {{ $category->name }}
+                            </a>
+                            {{$category->name}}
+                        </li>
+                    @endforeach
                 </ul>
-                <div class="dropdown__header">
+                <div id="categoriesDropdownHeader" class="dropdown__header">
                     <div>                  
                         Categories
                     </div>
                     <div>
-                        <img src="/storage/icons/downArrowWhite.svg"/>
-                        <img src="/storage/icons/upArrowWhite.svg"/>
+                        <img id="categoriesDropdownUpArrow" src="/storage/icons/downArrowWhite.svg"/>
+                        <img id="categoriesDropdownDownArrow" src="/storage/icons/upArrowWhite.svg" style="display: none"/>
                     </div>
                 </div>
-            </a>
+            </div>
         </li>
         <li class="main-nav__item">
             <a class="main-nav-link" href="{{ route('home') }}">About</a>
@@ -67,8 +72,8 @@
         </div>
        
         @auth
-            <img id="upArrow" src="/storage/icons/downArrow.svg"/>
-            <img id="downArrow" src="/storage/icons/upArrow.svg" style="display: none"/>
+            <img id="userDropdownUpArrow" src="/storage/icons/downArrow.svg"/>
+            <img id="userDropdownDownArrow" src="/storage/icons/upArrow.svg" style="display: none"/>
         @endauth
         
     </div>
@@ -76,36 +81,46 @@
 
 @push('js-scripts')
     <script>
+        const categoriesDropdownHeader = $('#categoriesDropdown #categoriesDropdownHeader');
+        const categoriesDropdownContent = $('#categoriesDropdown #categoriesDropdownContent');
+        const categoriesDropdownDownArrow = $('#categoriesDropdown #categoriesDropdownHeader #categoriesDropdownDownArrow')
+        const categoriesDropdownUpArrow = $('#categoriesDropdown #categoriesDropdownHeader #categoriesDropdownUpArrow')
+        
+        const userDropdownHeader = $('#userDropdown #dropdownHeader');
+        const userDropdownContent = $('#userDropdown #dropdownContent');
+        const userDropdownUpArrow = $('#userDropdown #dropdownHeader #userDropdownUpArrow');
+        const userDropdownDownArrow = $('#userDropdown #dropdownHeader #userDropdownDownArrow');
 
-        const categoriesList = $('#categoriesList');
-      
-        const dropdownHeader = $('#dropdownHeader');
-        const dropdownContent = $('#dropdownContent');
-        const upArrow = $('#upArrow');
-        const downArrow = $('#downArrow');
-
-        dropdownHeader.click(function() {
-            toggleDropdown();
+        userDropdownHeader.click(function() {
+            toggleDropdownContent(userDropdownContent, userDropdownDownArrow, userDropdownUpArrow);
         });
+
+        categoriesDropdownHeader.click(function() {
+            toggleDropdownContent(categoriesDropdownContent, categoriesDropdownDownArrow, categoriesDropdownUpArrow)
+        })
 
         $(document).on("click", function(event){
             if(!$(event.target).closest("#userDropdown").length){
-                dropdownContent.slideUp(null, function() {
-                downArrow.hide();
-                upArrow.show();
-            });
+                userDropdownContent.slideUp(null, function() {
+                    userDropdownDownArrow.hide();
+                    userDropdownUpArrow.show();
+                });
+            }
+
+            if(!$(event.target).closest("#categoriesDropdown").length){
+                categoriesDropdownContent.slideUp(null, function() {
+                    categoriesDropdownDownArrow.hide();
+                    categoriesDropdownUpArrow.show();
+                });
             }
         });
 
-        function toggleDropdown() {
+        function toggleDropdownContent(dropdownContent, downArrow, upArrow) {
             dropdownContent.slideToggle(null, function() {
-                downArrow.hide();
-                upArrow.show();
+                downArrow.toggle();
+                upArrow.toggle();
             });
         }
-
-
-
 
     </script>
 

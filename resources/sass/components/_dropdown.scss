@@ -5,7 +5,7 @@
         justify-content: space-around;
         align-items: center;
 
-        // width: 150px;
+        min-width: 150px;
 
         a {
             font-size: 14px;
@@ -60,6 +60,10 @@
         .dropdown__header {     
             height: 45px;
             padding: 10px 0;
+
+            &:hover {
+                cursor: pointer;
+            }
         }
 
         .dropdown__content {

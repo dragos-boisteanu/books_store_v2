@@ -557,6 +557,7 @@ h6 {
   display: flex;
   justify-content: space-around;
   align-items: center;
+  min-width: 150px;
 }
 
 .dropdown .dropdown__header a {
@@ -599,6 +600,10 @@ h6 {
 .dropdown.user-dropdown .dropdown__header {
   height: 45px;
   padding: 10px 0;
+}
+
+.dropdown.user-dropdown .dropdown__header:hover {
+  cursor: pointer;
 }
 
 .dropdown.user-dropdown .dropdown__content .button {
