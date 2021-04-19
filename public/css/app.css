@@ -295,6 +295,7 @@ h6 {
 }
 
 .main-nav {
+  position: relative;
   width: 100%;
   background-color: #586f7cff;
   display: flex;
@@ -303,9 +304,10 @@ h6 {
 }
 
 .main-nav .main-nav__list {
-  width: 25%;
   background-color: transparent;
   justify-content: space-between;
+  -moz-column-gap: 12px;
+       column-gap: 12px;
 }
 
 .main-nav .main-nav__list .main-nav__item {
@@ -320,6 +322,7 @@ h6 {
 }
 
 .main-nav .main-nav__list .main-nav__item .main-nav-link {
+  display: block;
   font-size: 17px;
   display: flex;
   align-items: center;
@@ -588,9 +591,9 @@ h6 {
 
 .dropdown.user-dropdown {
   position: absolute;
-  right: 120px;
-  top: 84px;
-  z-index: 1;
+  right: 25px;
+  top: 0px;
+  z-index: 2;
   background-color: #f4f4f9ff;
   border-bottom-right-radius: 3px;
   border-bottom-left-radius: 3px;

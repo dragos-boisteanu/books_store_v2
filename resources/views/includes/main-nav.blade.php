@@ -32,51 +32,53 @@
             <a class="main-nav-link" href="{{ route('home') }}">Contact</a>
         </li>
     </ul>
-</nav>
 
-<div id="userDropdown" class="dropdown user-dropdown">
-    @auth
-        <ul id="dropdownContent" class="list dropdown__content">
-            <li class="content__item">
-                <a class="link content__link dashboard-link" href="{{ route('dashboard')}}">Dashboard</a>
-            </li>
-            <li class="content__item">
-                <a class="link content__link" href="/account">Account</a>
-            </li>
-            <li class="content__item">
-                <a class="link content__link" href="/account/addresses">Addresses</a>
-            </li>
-            <li class="content__item">
-                <a class="link content__link" href="/account/orders">Orders</a>
-            </li>
-            <li class="content__item">
-                <form method="POST" action="{{ route('logout')}}" class="menu-form">
-                    @csrf
-                    <button type="submit" class="button link content__link">Logout</button>
-                </form>
-            </li>
-        </ul>     
-    @endauth
-    
-    <div id="dropdownHeader" class="dropdown__header">
-        <div>
-            @auth
-                {{ Auth::user()->first_name }}
-            @endauth
-            
-            @guest
-                <a href="{{ route('login')}}">Login</a>
-            @endguest
-        
-        </div>
-       
+    <div id="userDropdown" class="dropdown user-dropdown">
         @auth
-            <img id="userDropdownUpArrow" src="/storage/icons/downArrow.svg"/>
-            <img id="userDropdownDownArrow" src="/storage/icons/upArrow.svg" style="display: none"/>
+            <ul id="dropdownContent" class="list dropdown__content">
+                <li class="content__item">
+                    <a class="link content__link dashboard-link" href="{{ route('dashboard')}}">Dashboard</a>
+                </li>
+                <li class="content__item">
+                    <a class="link content__link" href="/account">Account</a>
+                </li>
+                <li class="content__item">
+                    <a class="link content__link" href="/account/addresses">Addresses</a>
+                </li>
+                <li class="content__item">
+                    <a class="link content__link" href="/account/orders">Orders</a>
+                </li>
+                <li class="content__item">
+                    <form method="POST" action="{{ route('logout')}}" class="menu-form">
+                        @csrf
+                        <button type="submit" class="button link content__link">Logout</button>
+                    </form>
+                </li>
+            </ul>     
         @endauth
         
+        <div id="dropdownHeader" class="dropdown__header">
+            <div>
+                @auth
+                    {{ Auth::user()->first_name }}
+                @endauth
+                
+                @guest
+                    <a href="{{ route('login')}}">Login</a>
+                @endguest
+            
+            </div>
+           
+            @auth
+                <img id="userDropdownUpArrow" src="/storage/icons/downArrow.svg"/>
+                <img id="userDropdownDownArrow" src="/storage/icons/upArrow.svg" style="display: none"/>
+            @endauth
+            
+        </div>
     </div>
-</div>
+</nav>
+
+
 
 @push('js-scripts')
     <script>
