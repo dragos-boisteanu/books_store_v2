@@ -100,25 +100,22 @@
 
         $(document).on("click", function(event){
             if(!$(event.target).closest("#userDropdown").length){
-                userDropdownContent.slideUp(null, function() {
-                    userDropdownDownArrow.hide();
-                    userDropdownUpArrow.show();
-                });
+                userDropdownContent.hide();
+                userDropdownDownArrow.hide();
+                userDropdownUpArrow.show();
             }
 
             if(!$(event.target).closest("#categoriesDropdown").length){
-                categoriesDropdownContent.slideUp(null, function() {
-                    categoriesDropdownDownArrow.hide();
-                    categoriesDropdownUpArrow.show();
-                });
+                categoriesDropdownContent.hide();
+                categoriesDropdownDownArrow.hide();
+                categoriesDropdownUpArrow.show();
             }
         });
 
         function toggleDropdownContent(dropdownContent, downArrow, upArrow) {
-            dropdownContent.slideToggle(null, function() {
-                downArrow.toggle();
-                upArrow.toggle();
-            });
+            dropdownContent.toggle();
+            downArrow.toggle();
+            upArrow.toggle();
         }
 
     </script>
