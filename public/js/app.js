@@ -17941,6 +17941,44 @@ module.exports = function(module) {
 
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
+addToCart = function addToCart(bookId) {
+  $.post("/api/carts", {
+    bookId: bookId
+  }).done(function (data) {
+    var book = data.book;
+    var itemExists = false;
+    itemsIdList.forEach(function (id) {
+      if (parseInt(id) === book.id) {
+        itemExists = true;
+      }
+    });
+    var content = "\n            <a href=\"/\" class=\"link title\">".concat(book.title, "</a>\n            <div class=\"quantity\">\n                <span class=\"divider\">x</span>\n                <span class=\"value\">").concat(book.quantity, " buc</span>\n            </div>\n            <div class=\"price\">").concat(book.finalPrice, " RON</div>\n        ");
+
+    if (itemExists) {
+      var item = $("#header #cart #cartContent #itemsList #".concat(book.id)).detach();
+      item.html(content);
+      cartItems.append(item);
+    } else {
+      var _item = document.createElement('li');
+
+      _item.classList.add('item');
+
+      _item.id = book.id;
+      _item.innerHTML = content;
+      cartItems.append(_item);
+      itemsIdList.push(book.id);
+    }
+
+    var cartCountValue = cartCount.html();
+    var newCartContValue = parseInt(cartCountValue) + 1;
+    cartCount.detach();
+    cartCount.html("".concat(newCartContValue));
+    cart.append(cartCount);
+  }).fail(function (jqXHR, textStatus, errorThrown) {
+    console.log(errorThrown);
+  });
+};
+
 /***/ }),
 
 /***/ "./resources/js/bootstrap.js":

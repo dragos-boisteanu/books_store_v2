@@ -95,9 +95,9 @@
 
                     <div class="header__action">
                         @if ($book->stock->quantity >= 1)
-                            <add-to-cart-btn-component
-                                id={{$book->id}}
-                            ></add-to-cart-btn-component>
+                            <button id="{{ $book->id }}" class="button button-primary add-to-cart">
+                                Add to cart
+                            </button>
                         @else 
                             <div class="action__filler">
 
@@ -126,24 +126,12 @@
     </div>
 @endsection 
 
-@push('vue-scripts')
+@push('js-scripts')
     <script>
-        new Vue({
-            el: '#book',
-
-            data: {
-                showDescription: true,
-            },
-
-            created() {
-                console.log('vue instance from craeting home');
-            },  
-
-            methods: {
-                toggleTabs() {
-                    this.showDescription = !this.showDescription;
-                }
-            }  
-        });
+        const bookId = "{{ $book->id }}";
+        const addToCartBtn = $(`#book #${bookId}`)
+        addToCartBtn.click(function() {
+            addToCart(bookId);
+        })
     </script>
 @endpush
