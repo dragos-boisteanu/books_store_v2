@@ -139,8 +139,6 @@
 
         // CART START
 
-       
-
         items.each( (index, item) => {
             itemsIdList.push(item.id);
             $(`#delete${item.id}`).click( function() {
@@ -148,10 +146,6 @@
             });
         })
         
-        // cartContent.click(function() {
-        //     closeCart()
-        // })
-
         cartBtn.click(function (e) { 
             cartBtn.hide();
             cartContent.show();

@@ -22135,7 +22135,10 @@ addToCart = _debouce(function (bookId) {
   }).fail(function (jqXHR, textStatus, errorThrown) {
     console.log(errorThrown);
   });
-}, 250);
+}, 500, {
+  'leading': true,
+  'trailing': false
+});
 removeFromCart = _debouce(function (item) {
   $.ajax({
     method: "DELETE",
@@ -22158,7 +22161,10 @@ removeFromCart = _debouce(function (item) {
   }).fail(function (jqXHR, textStatus, errorThrown) {
     console.log(errorThrown);
   });
-}, 250);
+}, 500, {
+  'leading': true,
+  'trailing': false
+});
 
 closeCart = function closeCart() {
   cartBtn.show();

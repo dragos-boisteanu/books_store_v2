@@ -51,7 +51,10 @@ addToCart = _debouce((bookId) => {
     .fail( (jqXHR, textStatus, errorThrown) => {
         console.log(errorThrown)
     })
-}, 250);
+}, 500, {
+    'leading': true,
+    'trailing': false
+});
 
 removeFromCart = _debouce((item) => {
     $.ajax({
@@ -76,7 +79,10 @@ removeFromCart = _debouce((item) => {
     .fail( (jqXHR, textStatus, errorThrown) => {
         console.log(errorThrown)
     })
-}, 250)
+}, 500, {
+    'leading': true,
+    'trailing': false
+})
 
 
 closeCart = () => {
