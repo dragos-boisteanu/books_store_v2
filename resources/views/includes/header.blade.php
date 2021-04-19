@@ -39,6 +39,11 @@
                             <span class="value">{{ $book->pivot->quantity }} buc</span>
                         </div>
                         <div class="price">{{ $book->finalPrice }} RON</div>
+                        <button id="delete{{ $book->id }}" class="button">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="red" width="18px" height="18px"><path d="M0 0h24v24H0z" fill="none"/>
+                                <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                            </svg>
+                        </button>
                     </li>
                 @endforeach
                 {{-- <li class="item">
@@ -48,11 +53,7 @@
                         <span class="value">{{ book.quantity }} buc.</span>
                     </div>
                     <div class="price">{{ book.finalPrice }} RON</div>
-                    <button @click="removeFromCart(book.id)" class="button">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="red" width="18px" height="18px"><path d="M0 0h24v24H0z" fill="none"/>
-                            <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
-                        </svg>
-                    </button>
+                    
                 </li> --}}
             </ul>
         </div>
@@ -68,16 +69,19 @@
         const cartContent = $('#header #cart #cartContent');
         const cartItems = $('#header #cart #cartContent #itemsList')
         const closeCartBtn = $('#header #cart #cartContent #closeCartBtn');
+        const removeItemBtns = $('#header #cart #cartContnet #cartItems .delete-btn');
 
-        const itemsList = $('#itemsList .item');
+        const itemsList = $('#header #cart #cartContent #itemsList .item');
         const itemsIdList = [];
+
+        const searchBarSearchInput = $('#header #searchBar #search');
+        const searchBarResults =  $('#header #searchBar #results');
 
         itemsList.each( (index, item) => {
             itemsIdList.push(item.id);
+            removeFromCart(item);
+            
         })
-    
-        const searchBarSearchInput = $('#header #searchBar #search');
-        const searchBarResults =  $('#header #searchBar #results');
 
         // SEARCH BAR START
         searchBarSearchInput.keyup(function (e) {
@@ -150,6 +154,16 @@
 
         // CART START
 
+        closeCart = () => {
+            cartBtn.show();
+            cartContent.hide();
+            cartCount.show();
+        }
+        
+        cartContent.click(function() {
+            closeCart()
+        })
+
         cartBtn.click(function (e) { 
             cartBtn.hide();
             cartContent.show();
@@ -157,17 +171,12 @@
         });
 
         closeCartBtn.click(function (e) {
-            cartBtn.show();
-            cartContent.hide();
-            cartCount.show();
+            closeCart()
         });
 
 
 
         // CART END
-
-
-
 
     </script>
 @endpush

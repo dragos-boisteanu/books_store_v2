@@ -56,7 +56,11 @@ class CartController extends Controller
             $book = $cart->books->where('id', $bookdId)->first();
             $bookResource = new BookCartResource($book);
 
-            return response()->json(['message' => 'Book added into cart', 'book'=> $bookResource], 200);
+            return response()->json([
+                'message' => 'Book added into cart', 
+                'booksCount' => $cart->booksCount,
+                'book'=> $bookResource, 
+            ], 200);
 
         } catch ( ModelNotFoundException $mfe) {
             return response()->json("Book not found", 404);
@@ -65,25 +69,37 @@ class CartController extends Controller
         
     }
 
-    public function getItem($id) 
+    public function removeItem($id) 
     {
-       
-    }
+        if(auth()->id()) {
+            $cart = Cart::where('user_id', auth()->id())->first();
+        } else {
+            $cart = Cart::where('session_id', session()->getId())->first();
+        }
 
-    public function removeItem(Request $request) 
-    {
-      
+        $cart->books()->detach($id);
+
+        $cart->refresh();
+
+        return response()->json([
+            'message'=>'Book removed!',
+            'booksCount' => $cart->booksCount,
+        ],200);
     }
 
 
     public function destroy() 
     {
-        $cart = Cart::getCart();
+        if(auth()->id()) {
+            $cart = Cart::where('user_id', auth()->id())->first();
+        } else {
+            $cart = Cart::where('session_id', session()->getId())->first();
+        }
 
-        $cart->delete();
+        $cart->books()->detach();
 
         return response()->json([
-            'message' => 'Cart is empty !'
+            'message' => 'Car was clear!'
         ], 200);
         
     }

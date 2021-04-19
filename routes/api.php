@@ -22,12 +22,13 @@ Route::namespace('Api\Client')->group(function () {
     Route::prefix('carts')->group(function() {
 
         Route::post('/', 'CartController@store')->name('cart.store');
+        Route::delete('/{id}', 'CartController@removeItem')->name('cart.remove-item');
+
         // Route::get('/', 'CartController@index')->name('cart.index');
         // Route::patch('/', 'CartController@update')->name('carts.patch');
       
         // Route::delete('/', 'CartController@destroy')->name('carts.delete');
         
-        // Route::delete('/{id}', 'CartController@removeItem')->name('carts.remove-item');
 
     });        
 });

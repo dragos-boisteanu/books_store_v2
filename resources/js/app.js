@@ -1,6 +1,5 @@
 require('./bootstrap');
 
-
 addToCart = (bookId) => {
     $.post(`/api/carts`, {
         bookId: bookId
@@ -22,6 +21,11 @@ addToCart = (bookId) => {
                 <span class="value">${ book.quantity } buc</span>
             </div>
             <div class="price">${ book.finalPrice } RON</div>
+            <button id="delete${ book.id }" class="button">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="red" width="18px" height="18px"><path d="M0 0h24v24H0z" fill="none"/>
+                    <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                </svg>
+            </button>
         `;
 
         if(itemExists) {
@@ -35,16 +39,34 @@ addToCart = (bookId) => {
             item.innerHTML = content;
             cartItems.append(item);
             itemsIdList.push(book.id);
+
+            removeFromCart(item);
         }
 
-        const cartCountValue = cartCount.html();
-        const newCartContValue = parseInt(cartCountValue) + 1
-
         cartCount.detach();
-        cartCount.html(`${newCartContValue}`);
+        cartCount.html(`${data.booksCount}`);
         cart.append(cartCount)
     })
     .fail( (jqXHR, textStatus, errorThrown) => {
         console.log(errorThrown)
     })
+}
+
+removeFromCart = (item) => {
+    $(`#header #cart #cartContent #itemsList #${item.id} #delete${item.id}`).click( function() {
+        $.ajax({
+            method: "DELETE",
+            url: `/api/carts/${item.id}`,
+            data: { id: item.id }
+        })
+        .done(data => {
+            item.remove();
+            cartCount.detach();
+            cartCount.html(`${data.booksCount}`);
+            cart.append(cartCount);
+        })
+        .fail( (jqXHR, textStatus, errorThrown) => {
+            console.log(errorThrown)
+        })
+    });
 }

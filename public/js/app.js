@@ -17952,7 +17952,7 @@ addToCart = function addToCart(bookId) {
         itemExists = true;
       }
     });
-    var content = "\n            <a href=\"/\" class=\"link title\">".concat(book.title, "</a>\n            <div class=\"quantity\">\n                <span class=\"divider\">x</span>\n                <span class=\"value\">").concat(book.quantity, " buc</span>\n            </div>\n            <div class=\"price\">").concat(book.finalPrice, " RON</div>\n        ");
+    var content = "\n            <a href=\"/\" class=\"link title\">".concat(book.title, "</a>\n            <div class=\"quantity\">\n                <span class=\"divider\">x</span>\n                <span class=\"value\">").concat(book.quantity, " buc</span>\n            </div>\n            <div class=\"price\">").concat(book.finalPrice, " RON</div>\n            <button id=\"delete").concat(book.id, "\" class=\"button\">\n                <svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"red\" width=\"18px\" height=\"18px\"><path d=\"M0 0h24v24H0z\" fill=\"none\"/>\n                    <path d=\"M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z\"/>\n                </svg>\n            </button>\n        ");
 
     if (itemExists) {
       var item = $("#header #cart #cartContent #itemsList #".concat(book.id)).detach();
@@ -17967,15 +17967,33 @@ addToCart = function addToCart(bookId) {
       _item.innerHTML = content;
       cartItems.append(_item);
       itemsIdList.push(book.id);
+      removeFromCart(_item);
     }
 
-    var cartCountValue = cartCount.html();
-    var newCartContValue = parseInt(cartCountValue) + 1;
     cartCount.detach();
-    cartCount.html("".concat(newCartContValue));
+    cartCount.html("".concat(data.booksCount));
     cart.append(cartCount);
   }).fail(function (jqXHR, textStatus, errorThrown) {
     console.log(errorThrown);
+  });
+};
+
+removeFromCart = function removeFromCart(item) {
+  $("#header #cart #cartContent #itemsList #".concat(item.id, " #delete").concat(item.id)).click(function () {
+    $.ajax({
+      method: "DELETE",
+      url: "/api/carts/".concat(item.id),
+      data: {
+        id: item.id
+      }
+    }).done(function (data) {
+      item.remove();
+      cartCount.detach();
+      cartCount.html("".concat(data.booksCount));
+      cart.append(cartCount);
+    }).fail(function (jqXHR, textStatus, errorThrown) {
+      console.log(errorThrown);
+    });
   });
 };
 
@@ -18000,16 +18018,7 @@ $.ajaxSetup({
   headers: {
     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
   }
-}); // window.axios = require('axios');
-// window.axios.defaults.baseURL = 'http://books.test';
-// window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-// const token = document.head.querySelector('meta[name="csrf-token"]');
-// if (token) {
-//     window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
-// } else {
-//     console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
-// }
-
+});
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
  * for events that are broadcast by Laravel. Echo and event broadcasting
