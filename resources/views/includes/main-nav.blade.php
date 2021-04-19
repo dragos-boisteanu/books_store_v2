@@ -82,15 +82,15 @@
 
 @push('js-scripts')
     <script>
-        const categoriesDropdownHeader = $('#categoriesDropdown #categoriesDropdownHeader');
-        const categoriesDropdownContent = $('#categoriesDropdown #categoriesDropdownContent');
-        const categoriesDropdownDownArrow = $('#categoriesDropdown #categoriesDropdownHeader #categoriesDropdownDownArrow')
-        const categoriesDropdownUpArrow = $('#categoriesDropdown #categoriesDropdownHeader #categoriesDropdownUpArrow')
+        const categoriesDropdownHeader = $('#categoriesDropdownHeader');
+        const categoriesDropdownContent = $('#categoriesDropdownContent');
+        const categoriesDropdownDownArrow = $('#categoriesDropdownDownArrow')
+        const categoriesDropdownUpArrow = $('#categoriesDropdownUpArrow')
         
-        const userDropdownHeader = $('#userDropdown #dropdownHeader');
-        const userDropdownContent = $('#userDropdown #dropdownContent');
-        const userDropdownUpArrow = $('#userDropdown #dropdownHeader #userDropdownUpArrow');
-        const userDropdownDownArrow = $('#userDropdown #dropdownHeader #userDropdownDownArrow');
+        const userDropdownHeader = $('#dropdownHeader');
+        const userDropdownContent = $('#dropdownContent');
+        const userDropdownUpArrow = $('#userDropdownUpArrow');
+        const userDropdownDownArrow = $('#userDropdownDownArrow');
 
         userDropdownHeader.click(function() {
             toggleDropdownContent(userDropdownContent, userDropdownDownArrow, userDropdownUpArrow);
@@ -102,9 +102,14 @@
 
         $(document).on("click", function(event){
             if(!$(event.target).closest("#userDropdown").length){
-                userDropdownContent.hide();
-                userDropdownDownArrow.hide();
-                userDropdownUpArrow.show();
+                // userDropdownContent.hide();
+                // userDropdownDownArrow.hide();
+                // userDropdownUpArrow.show();
+                userDropdownContent.slideUp(function() {
+                    userDropdownDownArrow.show();
+                    userDropdownUpArrow.hide();
+                });
+
             }
 
             if(!$(event.target).closest("#categoriesDropdown").length){
@@ -115,9 +120,10 @@
         });
 
         function toggleDropdownContent(dropdownContent, downArrow, upArrow) {
-            dropdownContent.toggle();
-            downArrow.toggle();
-            upArrow.toggle();
+            dropdownContent.slideToggle(function() {
+                downArrow.toggle();
+                upArrow.toggle();
+            });
         }
 
     </script>
