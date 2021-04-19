@@ -97,7 +97,9 @@
         });
 
         categoriesDropdownHeader.click(function() {
-            toggleDropdownContent(categoriesDropdownContent, categoriesDropdownDownArrow, categoriesDropdownUpArrow)
+            categoriesDropdownContent.toggle();
+            categoriesDropdownDownArrow.toggle();
+            categoriesDropdownUpArrow.toggle();
         })
 
         $(document).on("click", function(event){
