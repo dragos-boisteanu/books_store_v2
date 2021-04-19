@@ -23,7 +23,7 @@ addToCart = _debouce((bookId) => {
                 <a href="/" class="link title">${ book.title }</a>
                 <div class="quantity">
                     <span class="divider">x</span>
-                    <span id="item${book.id}Quantity" class="value">${ book.quantity } buc</span>
+                    <span id="item${book.id}Quantity" class="value">${ book.quantity }</span>
                 </div>
                 <div id="item${book.id}Price" class="price">${ book.finalPrice } RON</div>
                 <button id="delete${ book.id }" class="button">
