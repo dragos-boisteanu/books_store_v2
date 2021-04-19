@@ -3,6 +3,7 @@
 namespace App\Models;
 use Exception;
 use App\Models\Book;
+use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -19,22 +20,35 @@ class Cart extends Model
     ];
 
     protected $with = ['books'];
+    protected $appends = array('booksCount');
 
     public function books()
     {
-        return $this->belongsToMany('App\Models\Book')->withPivot('cart_id', 'book_id', 'quantity');
+        return $this->belongsToMany('App\Models\Book')->withPivot('book_id', 'quantity');
     }
 
     public function users() 
     {
         return $this->belongsTo('App\Models\User');
     }
+
+    public function getBooksCountAttribute() 
+    {
+        $books = $this->books;
+        $qunaity = 0;
+        foreach($books as $book) {
+            $qunaity += $book->pivot->quantity;
+        }
+
+        return $qunaity;
+        
+    }
     
 
-    public function addItem($id) 
+    public function addItem($bookdId) 
     {
       
-        $newBook = Book::findOrFail($id);
+        $newBook = Book::findOrFail($bookdId);
 
         $bookInCart = false;
 
@@ -44,7 +58,7 @@ class Cart extends Model
                 // cart is not empty 
                 foreach($this->books as $book) {
                     // search if the book in already in cart
-                    if($book->pivot->book_id == $id) {
+                    if($book->pivot->book_id == $bookdId) {
                         // the book is in cart
                         $bookInCart = true;
                         $newQuantity = $book->pivot->quantity + 1;
@@ -57,7 +71,7 @@ class Cart extends Model
             if(!$bookInCart) {
                 // cart empy or the book is not already in cart
                 //add book in cart
-                $this->books()->attach($id);
+                $this->books()->attach($bookdId);
             }
         } else {
             // not enough books in stock

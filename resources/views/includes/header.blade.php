@@ -14,7 +14,10 @@
         </ul>
     </div>
     <div></div>
-    <div id="cart" class="cart" class="cart cart--active">
+    <div id="cart" class="cart">
+        <div id="cartCount" class="cart__count">
+            {{ $cart->booksCount }}
+        </div>
         <button id="cartBtn" class="button cart__button">
             <img src="/storage/icons/cart.svg"/>
         </button>
@@ -27,8 +30,18 @@
                     <img src="/storage/icons/close.svg"/>
                 </button>
             </div>
-            <ul id="cartContent" class="items__list">
-                {{-- <li v-for="(book,index) in items" :key="index" class="item">
+            <ul id="itemsList" class="items__list">
+                @foreach($cart->books as $book)
+                    <li id="{{ $book->id }}" class="item">
+                        <a href="/" class="link title">{{ $book->title }}</a>
+                        <div class="quantity">
+                            <span class="divider">x</span>
+                            <span class="value">{{ $book->pivot->quantity }} buc</span>
+                        </div>
+                        <div class="price">{{ $book->finalPrice }} RON</div>
+                    </li>
+                @endforeach
+                {{-- <li class="item">
                     <a :href="'/books/' + book.id" class="link title">{{ book.title }}</a>
                     <div class="quantity">
                         <span class="divider">x</span>
@@ -49,11 +62,20 @@
 
 @push('js-scripts')
     <script>
-        // const cart = $('#header #cart');
+        const cart = $('#header #cart');
+        const cartCount =$('#header #cart #cartCount');
         const cartBtn = $('#header #cart #cartBtn');
         const cartContent = $('#header #cart #cartContent');
+        const cartItems = $('#header #cart #cartContent #itemsList')
         const closeCartBtn = $('#header #cart #cartContent #closeCartBtn');
 
+        const itemsList = $('#itemsList .item');
+        const itemsIdList = [];
+
+        itemsList.each( (index, item) => {
+            itemsIdList.push(item.id);
+        })
+    
         const searchBarSearchInput = $('#header #searchBar #search');
         const searchBarResults =  $('#header #searchBar #results');
 
@@ -131,11 +153,13 @@
         cartBtn.click(function (e) { 
             cartBtn.hide();
             cartContent.show();
+            cartCount.hide();
         });
 
         closeCartBtn.click(function (e) {
             cartBtn.show();
             cartContent.hide();
+            cartCount.show();
         });
 
 

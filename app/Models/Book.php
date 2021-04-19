@@ -31,17 +31,21 @@ class Book extends Model implements Viewable
         'language_id'
     ];
 
-    protected $appends = ['final_price'];
+    protected $appends = ['final_price', 'cartQuantity'];
 
-    protected $with = ['authors:id,first_name,name', 'tags:id,name', 'category:id,name', 
-                        'publisher:id,name', 'language:id,name', 'stock'];
+    protected $with = ['authors', 'tags', 'category', 
+                        'publisher', 'language', 'stock'];
   
     public function getFinalPriceAttribute()
     {
-
         $value = $this->price - ( $this->price * $this->discount / 100);
         $value = number_format($value, 2, '.', '');
         return $value;
+    }
+
+    public function getCartQuantity($cartId) 
+    {
+        return  $this->cart()->pivot->where('cart_id', $cartId)->quantity;
     }
     
     public function addedBy() 
@@ -64,9 +68,9 @@ class Book extends Model implements Viewable
         return $this->hasOne('App\Models\Stock');
     }
 
-    public function cart() 
+    public function carts() 
     {
-        return $this->belongsTo('App\Models\Cart');
+        return $this->belongsToMany('App\Models\Cart')->withPivot('quantity', 'cart_id');
     }
 
     public function category() 
@@ -97,11 +101,6 @@ class Book extends Model implements Viewable
     public function tags() 
     {
         return $this->belongsToMany('App\Models\Tag');
-    }
-
-    public function carts() 
-    {
-        return $this->belongsToMany('App\Models\Cart');
     }
 
     public function increaseQuantity($cartId)

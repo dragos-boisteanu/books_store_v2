@@ -17957,7 +17957,12 @@ window._debouce = __webpack_require__(/*! lodash/debounce */ "./node_modules/lod
  * to our Laravel back-end. This library automatically handles sending the
  * CSRF token as a header based on the value of the "XSRF" token cookie.
  */
-// window.axios = require('axios');
+
+$.ajaxSetup({
+  headers: {
+    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+  }
+}); // window.axios = require('axios');
 // window.axios.defaults.baseURL = 'http://books.test';
 // window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 // const token = document.head.querySelector('meta[name="csrf-token"]');

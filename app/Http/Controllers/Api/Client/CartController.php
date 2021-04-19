@@ -8,6 +8,7 @@ use App\Models\Cart;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Resources\BookCartResource;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -24,8 +25,9 @@ class CartController extends Controller
        
     }
 
-    public function store($id) 
+    public function store(Request $request) 
     {
+        $bookdId = $request->bookId;
         try {
             if(auth()->id()) {
                 $cart = Cart::where('user_id', auth()->id())->first();
@@ -34,7 +36,7 @@ class CartController extends Controller
             }
 
             if(isset($cart)) {
-                $cart->addItem($id);
+                $cart->addItem($bookdId);
             } else {
                 if(auth()->id()) {
                     $cart = Cart::create([
@@ -46,19 +48,20 @@ class CartController extends Controller
                     ]);
                 }
                 session()->put('cartId', $cart->id);
-                $cart->addItem($id);
+                $cart->addItem($bookdId);
             }
 
-            return response()->json("Book added into cart", 200);
+            $cart->refresh();
+
+            $book = $cart->books->where('id', $bookdId)->first();
+            $bookResource = new BookCartResource($book);
+
+            return response()->json(['message' => 'Book added into cart', 'book'=> $bookResource], 200);
 
         } catch ( ModelNotFoundException $mfe) {
             return response()->json("Book not found", 404);
 
-        } 
-        // catch ( \Exception $ex) {
-        //     // return response()->json($ex->getMessage(), 200);
-        // }
-        
+        }         
         
     }
 

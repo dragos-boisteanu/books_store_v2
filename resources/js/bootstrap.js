@@ -7,6 +7,12 @@ window._debouce = require('lodash/debounce');
  * CSRF token as a header based on the value of the "XSRF" token cookie.
  */
 
+ $.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
+
 // window.axios = require('axios');
 
 // window.axios.defaults.baseURL = 'http://books.test';
