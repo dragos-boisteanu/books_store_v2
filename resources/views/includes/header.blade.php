@@ -36,9 +36,9 @@
                         <a href="/" class="link title">{{ $book->title }}</a>
                         <div class="quantity">
                             <span class="divider">x</span>
-                            <span class="value">{{ $book->pivot->quantity }} buc</span>
+                            <span id="item{{$book->id}}Quantity" class="value">{{ $book->pivot->quantity }}</span>
                         </div>
-                        <div class="price">{{ $book->finalPrice }} RON</div>
+                        <div id="item{{$book->finalPrice}}price" class="price">{{ $book->finalPrice }} RON</div>
                         <button id="delete{{ $book->id }}" class="button">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="red" width="18px" height="18px"><path d="M0 0h24v24H0z" fill="none"/>
                                 <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
@@ -61,13 +61,11 @@
         const closeCartBtn = $('#closeCartBtn');
         const removeItemBtns = $('#cartItems').find("button");
 
-        const items = $('#itemsList').find('.item');
+        const items = $('#itemsList .item');
         const itemsIdList = [];
 
         const searchBarSearchInput = $('#search');
         const searchBarResults =  $('#results');
-
-       
 
         // SEARCH BAR START
         searchBarSearchInput.keyup(function (e) {
@@ -141,23 +139,18 @@
 
         // CART START
 
-        closeCart = () => {
-            cartBtn.show();
-            cartContent.hide();
-            cartCount.show();
-        }
+       
 
         items.each( (index, item) => {
             itemsIdList.push(item.id);
-            $(`#${item.id} #delete${item.id}`).click( function() {
-                removeFromCart(item, closeCart);
-                console.log(this);
+            $(`#delete${item.id}`).click( function() {
+                removeFromCart(item);
             });
         })
         
-        cartContent.click(function() {
-            closeCart()
-        })
+        // cartContent.click(function() {
+        //     closeCart()
+        // })
 
         cartBtn.click(function (e) { 
             cartBtn.hide();
@@ -168,8 +161,6 @@
         closeCartBtn.click(function (e) {
             closeCart()
         });
-
-
 
         // CART END
 

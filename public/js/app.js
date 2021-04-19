@@ -22114,37 +22114,24 @@ addToCart = _debouce(function (bookId) {
         itemExists = true;
       }
     });
-    var content = "\n            <a href=\"/\" class=\"link title\">".concat(book.title, "</a>\n            <div class=\"quantity\">\n                <span class=\"divider\">x</span>\n                <span class=\"value\">").concat(book.quantity, " buc</span>\n            </div>\n            <div class=\"price\">").concat(book.finalPrice, " RON</div>\n            <button id=\"delete").concat(book.id, "\" class=\"button\">\n                <svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"red\" width=\"18px\" height=\"18px\"><path d=\"M0 0h24v24H0z\" fill=\"none\"/>\n                    <path d=\"M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z\"/>\n                </svg>\n            </button>\n        ");
 
     if (itemExists) {
-      var item = $("#header #cart #cartContent #itemsList #".concat(book.id));
-      console.log(item);
-      item.detach();
-      item.html(content);
-      cartItems.append(item);
-      $("#header #cart #cartContent #itemsList #".concat(book.id, " #delete").concat(book.id))[0].click(function () {
-        console.log(this);
-        removeFromCart(item[0]);
-      });
-      console.log($("#header #cart #cartContent #itemsList #".concat(book.id, " #delete").concat(book.id))[0]);
-      console.log(item[0]);
+      $("#item".concat(book.id, "Quantity")).text("".concat(book.quantity));
+      $("item".concat(book.id, "Price")).text("".concat(book.finalPrice, " RON"));
     } else {
-      var _item = document.createElement('li');
-
-      _item.classList.add('item');
-
-      _item.id = book.id;
-      _item.innerHTML = content;
-      cartItems.append(_item);
+      var content = "\n                <a href=\"/\" class=\"link title\">".concat(book.title, "</a>\n                <div class=\"quantity\">\n                    <span class=\"divider\">x</span>\n                    <span id=\"item").concat(book.id, "Quantity\" class=\"value\">").concat(book.quantity, " buc</span>\n                </div>\n                <div id=\"item").concat(book.id, "Price\" class=\"price\">").concat(book.finalPrice, " RON</div>\n                <button id=\"delete").concat(book.id, "\" class=\"button\">\n                    <svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"red\" width=\"18px\" height=\"18px\"><path d=\"M0 0h24v24H0z\" fill=\"none\"/>\n                        <path d=\"M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z\"/>\n                    </svg>\n                </button>\n            ");
+      var item = document.createElement('li');
+      item.classList.add('item');
+      item.id = book.id;
+      item.innerHTML = content;
+      cartItems.append(item);
       itemsIdList.push(book.id);
-      $("#header #cart #cartContent #itemsList #".concat(_item.id, " #delete").concat(_item.id))[0].click(function () {
-        removeFromCart(_item);
+      $("#delete".concat(item.id)).click(function () {
+        removeFromCart(item);
       });
     }
 
-    cartCount.detach();
-    cartCount.html("".concat(data.booksCount));
-    cart.append(cartCount);
+    cartCount.text("".concat(data.booksCount));
   }).fail(function (jqXHR, textStatus, errorThrown) {
     console.log(errorThrown);
   });
@@ -22172,6 +22159,12 @@ removeFromCart = _debouce(function (item) {
     console.log(errorThrown);
   });
 }, 250);
+
+closeCart = function closeCart() {
+  cartBtn.show();
+  cartContent.hide();
+  cartCount.show();
+};
 
 /***/ }),
 
