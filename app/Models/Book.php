@@ -31,7 +31,7 @@ class Book extends Model implements Viewable
         'language_id'
     ];
 
-    protected $appends = ['final_price', 'cartQuantity'];
+    protected $appends = ['finalPrice', 'cartQuantity'];
 
     protected $with = ['authors', 'tags', 'category', 
                         'publisher', 'language', 'stock'];

@@ -16,7 +16,7 @@ addToCart = _debouce((bookId) => {
 
         if(itemExists) {
            $(`#item${book.id}Quantity`).text(`${book.quantity}`);
-           $(`item${book.id}Price`).text(`${book.finalPrice} RON`);
+           $(`#item${book.id}Price`).text(`${book.finalPrice * book.quantity} RON`);
         } else {
             const content =  
             `
@@ -25,7 +25,7 @@ addToCart = _debouce((bookId) => {
                     <span class="divider">x</span>
                     <span id="item${book.id}Quantity" class="value">${ book.quantity }</span>
                 </div>
-                <div id="item${book.id}Price" class="price">${ book.finalPrice } RON</div>
+                <div id="item${book.id}Price" class="price">${ book.finalPrice * book.quantity } RON</div>
                 <button id="delete${ book.id }" class="button">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="red" width="18px" height="18px"><path d="M0 0h24v24H0z" fill="none"/>
                         <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
@@ -52,6 +52,7 @@ addToCart = _debouce((bookId) => {
     .fail( (jqXHR, textStatus, errorThrown) => {
         console.log(errorThrown)
     })
+
 }, 500, {
     'leading': true,
     'trailing': false
@@ -79,7 +80,8 @@ removeFromCart = _debouce((item) => {
     })
     .fail( (jqXHR, textStatus, errorThrown) => {
         console.log(errorThrown)
-    })
+    });
+
 }, 500, {
     'leading': true,
     'trailing': false
