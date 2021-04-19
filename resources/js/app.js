@@ -7,6 +7,7 @@ addToCart = _debouce((bookId) => {
     .done(data => {
         const book = data.book;
         let itemExists = false;
+
         itemsIdList.forEach(id => {
             if(parseInt(id) === book.id) {
                 itemExists = true;

@@ -139,6 +139,12 @@
 
         // CART START
 
+        $(document).on('click', function (e) {
+            if ($(e.target).closest("#cart").length === 0) {
+                closeCart();
+            }
+        });
+
         items.each( (index, item) => {
             itemsIdList.push(item.id);
             $(`#delete${item.id}`).click( function() {
