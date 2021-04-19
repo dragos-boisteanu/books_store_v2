@@ -1,5 +1,6 @@
 window._ = require('lodash');
 window._debouce = require('lodash/debounce');
+window._findIndex = require('lodash/findIndex');
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests

@@ -29,9 +29,20 @@ addToCart = _debouce((bookId) => {
         `;
 
         if(itemExists) {
-            const item = $(`#header #cart #cartContent #itemsList #${book.id}`).detach();
+            const item = $(`#header #cart #cartContent #itemsList #${book.id}`);
+            console.log(item)
+            item.detach();
             item.html(content)
             cartItems.append(item);
+
+            $(`#header #cart #cartContent #itemsList #${book.id} #delete${book.id}`)[0].click( function() {
+                console.log(this)
+                removeFromCart(item[0]);
+            });
+
+            console.log($(`#header #cart #cartContent #itemsList #${book.id} #delete${book.id}`)[0])
+            
+            console.log(item[0]);
         } else {
             const item = document.createElement('li');
             item.classList.add('item');
@@ -40,7 +51,9 @@ addToCart = _debouce((bookId) => {
             cartItems.append(item);
             itemsIdList.push(book.id);
 
-            removeFromCart(item);
+            $(`#header #cart #cartContent #itemsList #${item.id} #delete${item.id}`)[0].click( function() {
+                removeFromCart(item);
+            });
         }
 
         cartCount.detach();
@@ -53,20 +66,27 @@ addToCart = _debouce((bookId) => {
 }, 250);
 
 removeFromCart = _debouce((item) => {
-    $(`#header #cart #cartContent #itemsList #${item.id} #delete${item.id}`).click( function() {
-        $.ajax({
-            method: "DELETE",
-            url: `/api/carts/${item.id}`,
-            data: { id: item.id }
-        })
-        .done(data => {
-            item.remove();
-            cartCount.detach();
-            cartCount.html(`${data.booksCount}`);
-            cart.append(cartCount);
-        })
-        .fail( (jqXHR, textStatus, errorThrown) => {
-            console.log(errorThrown)
-        })
-    });
+    $.ajax({
+        method: "DELETE",
+        url: `/api/carts/${item.id}`,
+        data: { id: item.id }
+    })
+    .done(data => {
+        item.remove();
+        cartCount.detach();
+        cartCount.html(`${data.booksCount}`);
+        cart.append(cartCount);
+        
+        const itemIndex = _findIndex(itemsIdList, id => {
+            return id === item.id
+        });
+
+        itemsIdList.splice(itemIndex, 1);
+        closeCart();
+
+    })
+    .fail( (jqXHR, textStatus, errorThrown) => {
+        console.log(errorThrown)
+    })
 }, 250)
+

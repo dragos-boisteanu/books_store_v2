@@ -40,6 +40,7 @@
     @yield('content')
     
     @include('includes.footer')
+    
     <script src="{{ asset(mix('js/app.js')) }}"></script>
     @stack('js-scripts')
 </body>

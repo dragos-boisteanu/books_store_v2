@@ -46,42 +46,28 @@
                         </button>
                     </li>
                 @endforeach
-                {{-- <li class="item">
-                    <a :href="'/books/' + book.id" class="link title">{{ book.title }}</a>
-                    <div class="quantity">
-                        <span class="divider">x</span>
-                        <span class="value">{{ book.quantity }} buc.</span>
-                    </div>
-                    <div class="price">{{ book.finalPrice }} RON</div>
-                    
-                </li> --}}
             </ul>
         </div>
-       
     </div>
 </header>
 
 @push('js-scripts')
     <script>
-        const cart = $('#header #cart');
-        const cartCount =$('#header #cart #cartCount');
-        const cartBtn = $('#header #cart #cartBtn');
-        const cartContent = $('#header #cart #cartContent');
-        const cartItems = $('#header #cart #cartContent #itemsList')
-        const closeCartBtn = $('#header #cart #cartContent #closeCartBtn');
-        const removeItemBtns = $('#header #cart #cartContnet #cartItems .delete-btn');
+        const cart = $('#cart');
+        const cartCount =$('#cartCount');
+        const cartBtn = $('#cartBtn');
+        const cartContent = $('#cartContent');
+        const cartItems = $('#itemsList')
+        const closeCartBtn = $('#closeCartBtn');
+        const removeItemBtns = $('#cartItems').find("button");
 
-        const itemsList = $('#header #cart #cartContent #itemsList .item');
+        const items = $('#itemsList').find('.item');
         const itemsIdList = [];
 
-        const searchBarSearchInput = $('#header #searchBar #search');
-        const searchBarResults =  $('#header #searchBar #results');
+        const searchBarSearchInput = $('#search');
+        const searchBarResults =  $('#results');
 
-        itemsList.each( (index, item) => {
-            itemsIdList.push(item.id);
-            removeFromCart(item);
-            
-        })
+       
 
         // SEARCH BAR START
         searchBarSearchInput.keyup(function (e) {
@@ -153,13 +139,21 @@
         // SEARCH BAR END
 
 
-
         // CART START
+
         closeCart = () => {
             cartBtn.show();
             cartContent.hide();
             cartCount.show();
         }
+
+        items.each( (index, item) => {
+            itemsIdList.push(item.id);
+            $(`#${item.id} #delete${item.id}`).click( function() {
+                removeFromCart(item, closeCart);
+                console.log(this);
+            });
+        })
         
         cartContent.click(function() {
             closeCart()
