@@ -152,8 +152,9 @@
 
         // SEARCH BAR END
 
-        // CART START
 
+
+        // CART START
         closeCart = () => {
             cartBtn.show();
             cartContent.hide();

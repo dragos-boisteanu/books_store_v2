@@ -1,6 +1,6 @@
 require('./bootstrap');
 
-addToCart = (bookId) => {
+addToCart = _debouce((bookId) => {
     $.post(`/api/carts`, {
         bookId: bookId
     })
@@ -50,9 +50,9 @@ addToCart = (bookId) => {
     .fail( (jqXHR, textStatus, errorThrown) => {
         console.log(errorThrown)
     })
-}
+}, 250);
 
-removeFromCart = (item) => {
+removeFromCart = _debouce((item) => {
     $(`#header #cart #cartContent #itemsList #${item.id} #delete${item.id}`).click( function() {
         $.ajax({
             method: "DELETE",
@@ -69,4 +69,4 @@ removeFromCart = (item) => {
             console.log(errorThrown)
         })
     });
-}
+}, 250)

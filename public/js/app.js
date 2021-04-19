@@ -17941,7 +17941,7 @@ module.exports = function(module) {
 
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
-addToCart = function addToCart(bookId) {
+addToCart = _debouce(function (bookId) {
   $.post("/api/carts", {
     bookId: bookId
   }).done(function (data) {
@@ -17976,9 +17976,8 @@ addToCart = function addToCart(bookId) {
   }).fail(function (jqXHR, textStatus, errorThrown) {
     console.log(errorThrown);
   });
-};
-
-removeFromCart = function removeFromCart(item) {
+}, 250);
+removeFromCart = _debouce(function (item) {
   $("#header #cart #cartContent #itemsList #".concat(item.id, " #delete").concat(item.id)).click(function () {
     $.ajax({
       method: "DELETE",
@@ -17995,7 +17994,7 @@ removeFromCart = function removeFromCart(item) {
       console.log(errorThrown);
     });
   });
-};
+}, 250);
 
 /***/ }),
 
