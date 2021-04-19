@@ -13,18 +13,51 @@
         <ul id="results" class="list search-bar__results"> 
         </ul>
     </div>
-    <a>
-        {{-- cart --}}
-    </a>
-
-    
+    <div></div>
+    <div id="cart" class="cart" class="cart cart--active">
+        <button id="cartBtn" class="button cart__button">
+            <img src="/storage/icons/cart.svg"/>
+        </button>
+        <div id="cartContent" class="cart__content" style="display: none">
+            <div class="cart__header">
+                <div>
+                    Cart 
+                </div>
+                <button id="closeCartBtn" class="button">
+                    <img src="/storage/icons/close.svg"/>
+                </button>
+            </div>
+            <ul id="cartContent" class="items__list">
+                {{-- <li v-for="(book,index) in items" :key="index" class="item">
+                    <a :href="'/books/' + book.id" class="link title">{{ book.title }}</a>
+                    <div class="quantity">
+                        <span class="divider">x</span>
+                        <span class="value">{{ book.quantity }} buc.</span>
+                    </div>
+                    <div class="price">{{ book.finalPrice }} RON</div>
+                    <button @click="removeFromCart(book.id)" class="button">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="red" width="18px" height="18px"><path d="M0 0h24v24H0z" fill="none"/>
+                            <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                        </svg>
+                    </button>
+                </li> --}}
+            </ul>
+        </div>
+       
+    </div>
 </header>
 
 @push('js-scripts')
     <script>
-        const searchBarSearchInput = $('#searchBar #search');
-        const searchBarResults =  $('#searchBar #results');
+        // const cart = $('#header #cart');
+        const cartBtn = $('#header #cart #cartBtn');
+        const cartContent = $('#header #cart #cartContent');
+        const closeCartBtn = $('#header #cart #cartContent #closeCartBtn');
 
+        const searchBarSearchInput = $('#header #searchBar #search');
+        const searchBarResults =  $('#header #searchBar #results');
+
+        // SEARCH BAR START
         searchBarSearchInput.keyup(function (e) {
             searchBooks();
         });   
@@ -90,5 +123,27 @@
             });
             return authors;
         }
+
+        // SEARCH BAR END
+
+        // CART START
+
+        cartBtn.click(function (e) { 
+            cartBtn.hide();
+            cartContent.show();
+        });
+
+        closeCartBtn.click(function (e) {
+            cartBtn.show();
+            cartContent.hide();
+        });
+
+
+
+        // CART END
+
+
+
+
     </script>
 @endpush

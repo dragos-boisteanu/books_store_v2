@@ -1,16 +1,16 @@
 header {
     flex: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 2;
 
-    position: relative;
     width: 100%;
+
     display: flex;
     justify-content: space-between;
     align-items: center;
 
     padding: 20px 0;
     background-color: $black;
-
-    a {
-        flex: 2;
-    }
 }

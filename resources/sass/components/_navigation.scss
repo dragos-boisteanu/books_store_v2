@@ -1,6 +1,12 @@
 .main-nav {
-    position: relative;
+    position: fixed;
+    top: 0;
+    left: 0;
+    
+    z-index: 2;
 
+    margin-top: 84px;
+    
     width: 100%;
     background-color: $dark-electric-blue;
     display: flex;

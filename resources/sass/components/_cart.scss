@@ -3,8 +3,11 @@
     right: 50px;
     top: 27px;
 
-    z-index: 2;
+    z-index: 3;
     
+    min-width: 30px;
+    min-height: 30px;
+
     background-color: $ghost-white;
     border-radius: $border-radius-value;
     
@@ -14,6 +17,10 @@
  
     .cart__button {
         position: relative;
+        width: 100%;
+        height: 100%;
+
+        padding: 6px 10px;
 
         .button__count {
             position: absolute;
@@ -30,7 +37,6 @@
             font-family: inherit;
         }
     }
-
     .cart__header {
         display: flex;
         justify-content: space-between;
